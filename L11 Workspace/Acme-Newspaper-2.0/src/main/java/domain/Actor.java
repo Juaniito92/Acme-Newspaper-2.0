@@ -1,5 +1,6 @@
-
 package domain;
+
+import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -16,6 +18,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
@@ -24,9 +27,7 @@ import security.UserAccount;
 @Entity
 @Access(AccessType.PROPERTY)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Table(indexes = {
-	@Index(columnList = "userAccount_id")
-})
+@Table(indexes = { @Index(columnList = "userAccount_id") })
 public abstract class Actor extends DomainEntity {
 
 	// Constructors
@@ -35,21 +36,20 @@ public abstract class Actor extends DomainEntity {
 		super();
 	}
 
-
 	// Attributes
 
-	private String	name;
-	private String	surname;
-	private String	email;
-	private String	phone;
-	private String	address;
-
+	private String name;
+	private String surname;
+	private String email;
+	private String phone;
+	private String address;
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return this.name;
 	}
+
 	public void setName(final String name) {
 		this.name = name;
 	}
@@ -92,11 +92,10 @@ public abstract class Actor extends DomainEntity {
 		this.address = address;
 	}
 
-
 	// Relationships
 
-	private UserAccount	userAccount;
-
+	private UserAccount userAccount;
+	private Collection<Folder> folders;
 
 	@Valid
 	@NotNull
@@ -104,8 +103,20 @@ public abstract class Actor extends DomainEntity {
 	public UserAccount getUserAccount() {
 		return this.userAccount;
 	}
+
 	public void setUserAccount(final UserAccount userAccount) {
 		this.userAccount = userAccount;
+	}
+
+	@Valid
+	@NotEmpty
+	@OneToMany(mappedBy = "actor")
+	public Collection<Folder> getFolders() {
+		return folders;
+	}
+
+	public void setFolders(Collection<Folder> folders) {
+		this.folders = folders;
 	}
 
 }

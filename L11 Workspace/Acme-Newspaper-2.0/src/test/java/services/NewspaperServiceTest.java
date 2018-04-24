@@ -310,7 +310,7 @@ public class NewspaperServiceTest extends AbstractTest {
 			Assert.isTrue(!newspaper.getPublisher().getNewspapers()
 					.contains(newspaper));
 			Assert.isTrue(!subscriptionService.findAll().containsAll(
-					newspaper.getSubscriptions()));
+					newspaper.getSubscriptionsNewspaper()));
 			Assert.isTrue(!newspaperService.findAll().contains(newspaper));
 			super.unauthenticate();
 		} catch (final Throwable oops) {

@@ -8,19 +8,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import repositories.SubscriptionRepository;
-import domain.Subscription;
+import domain.SubscriptionNewspaper;
 
 @Component
 @Transactional
-public class StringToSubscriptionConverter implements Converter<String, Subscription> {
+public class StringToSubscriptionConverter implements Converter<String, SubscriptionNewspaper> {
 
 	@Autowired
 	SubscriptionRepository	subscriptionRepository;
 
 
 	@Override
-	public Subscription convert(final String text) {
-		Subscription result;
+	public SubscriptionNewspaper convert(final String text) {
+		SubscriptionNewspaper result;
 		int id;
 
 		try {

@@ -10,7 +10,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.Validator;
 
 import repositories.SubscriptionRepository;
-import domain.Subscription;
+import domain.SubscriptionNewspaper;
 
 @Service
 @Transactional
@@ -34,18 +34,18 @@ public class SubscriptionService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
-	public Collection<Subscription> findAll() {
+	public Collection<SubscriptionNewspaper> findAll() {
 
-		Collection<Subscription> result = subscriptionRepository.findAll();
+		Collection<SubscriptionNewspaper> result = subscriptionRepository.findAll();
 		return result;
 	}
 
-	public void delete(Subscription subscription) {
+	public void delete(SubscriptionNewspaper subscription) {
 
 		Assert.notNull(subscription);
 		Assert.isTrue(subscription.getId() != 0);
 
-		subscription.getCustomer().getSubscriptions().remove(subscription);
+		subscription.getCustomer().getSubscriptionsNewspaper().remove(subscription);
 		subscriptionRepository.delete(subscription);
 
 	}

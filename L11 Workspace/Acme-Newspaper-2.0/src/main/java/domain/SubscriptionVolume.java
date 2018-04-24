@@ -1,33 +1,25 @@
-
 package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.Index;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-		@Index(columnList = "customer_id, newspaper_id")
-	})
-public class Subscription extends DomainEntity {
+public class SubscriptionVolume extends DomainEntity {
 
 	// Constructors
 
-	public Subscription() {
+	public SubscriptionVolume() {
 		super();
 	}
 
-
 	// Attributes
 
-	private CreditCard	creditCard;
-
+	private CreditCard creditCard;
 
 	@Valid
 	@NotNull
@@ -39,15 +31,12 @@ public class Subscription extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
-
 	// Relationships
 
-	private Customer	customer;
-	private Newspaper	newspaper;
-
+	private Customer customer;
+	private Volume volume;
 
 	@Valid
-	@NotNull
 	@ManyToOne(optional = false)
 	public Customer getCustomer() {
 		return this.customer;
@@ -58,14 +47,13 @@ public class Subscription extends DomainEntity {
 	}
 
 	@Valid
-	@NotNull
 	@ManyToOne(optional = false)
-	public Newspaper getNewspaper() {
-		return this.newspaper;
+	public Volume getVolume() {
+		return this.volume;
 	}
 
-	public void setNewspaper(final Newspaper newspaper) {
-		this.newspaper = newspaper;
+	public void setVolume(final Volume volume) {
+		this.volume = volume;
 	}
 
 }

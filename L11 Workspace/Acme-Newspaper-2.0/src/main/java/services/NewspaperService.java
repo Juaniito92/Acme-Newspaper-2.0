@@ -16,7 +16,7 @@ import repositories.NewspaperRepository;
 import domain.Article;
 import domain.Configuration;
 import domain.Newspaper;
-import domain.Subscription;
+import domain.SubscriptionNewspaper;
 import domain.User;
 import forms.NewspaperForm;
 
@@ -64,7 +64,7 @@ public class NewspaperService {
 		result.setIsPrivate(false);
 		result.setPublisher(this.userService.findByPrincipal());
 		result.setArticles(new ArrayList<Article>());
-		result.setSubscriptions(new ArrayList<Subscription>());
+		result.setSubscriptionsNewspaper(new ArrayList<SubscriptionNewspaper>());
 
 		return result;
 	}
@@ -117,7 +117,7 @@ public class NewspaperService {
 		for (Article article : newspaper.getArticles()) {
 			articleService.delete(article);
 		}
-		for (final Subscription subscription : newspaper.getSubscriptions())
+		for (final SubscriptionNewspaper subscription : newspaper.getSubscriptionsNewspaper())
 			this.subscriptionService.delete(subscription);
 
 		this.newspaperRepository.delete(newspaper);

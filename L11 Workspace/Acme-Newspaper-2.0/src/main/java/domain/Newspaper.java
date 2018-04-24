@@ -1,4 +1,3 @@
-
 package domain;
 
 import java.util.Collection;
@@ -9,6 +8,7 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Index;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,9 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-		@Index(columnList = "publisher_id")
-	})
+@Table(indexes = { @Index(columnList = "publisher_id") })
 public class Newspaper extends DomainEntity {
 
 	// Constructors
@@ -36,15 +34,13 @@ public class Newspaper extends DomainEntity {
 		super();
 	}
 
-
 	// Attributes
 
-	private String	title;
-	private String	description;
-	private Date	publicationDate;
-	private String	picture;
-	private boolean	isPrivate;
-
+	private String title;
+	private String description;
+	private Date publicationDate;
+	private String picture;
+	private boolean isPrivate;
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
@@ -94,13 +90,13 @@ public class Newspaper extends DomainEntity {
 		this.isPrivate = isPrivate;
 	}
 
-
 	// Relationships
 
-	private User						publisher;
-	private Collection<Article>			articles;
-	private Collection<Subscription>	subscriptions;
-
+	private User publisher;
+	private Collection<Article> articles;
+	private Collection<SubscriptionNewspaper> subscriptionsNewspaper;
+	private Collection<Advertisement> advertisements;
+	private Collection<Volume> volumes;
 
 	@Valid
 	@NotNull
@@ -127,12 +123,35 @@ public class Newspaper extends DomainEntity {
 	@Valid
 	@NotNull
 	@OneToMany(mappedBy = "newspaper")
-	public Collection<Subscription> getSubscriptions() {
-		return this.subscriptions;
+	public Collection<SubscriptionNewspaper> getSubscriptionsNewspaper() {
+		return this.subscriptionsNewspaper;
 	}
 
-	public void setSubscriptions(final Collection<Subscription> subscriptions) {
-		this.subscriptions = subscriptions;
+	public void setSubscriptionsNewspaper(
+			final Collection<SubscriptionNewspaper> subscriptionsNewspaper) {
+		this.subscriptionsNewspaper = subscriptionsNewspaper;
+	}
+
+	@Valid
+	@NotNull
+	@OneToMany(mappedBy = "newspaper")
+	public Collection<Advertisement> getAdvertisements() {
+		return advertisements;
+	}
+
+	public void setAdvertisements(Collection<Advertisement> advertisements) {
+		this.advertisements = advertisements;
+	}
+
+	@Valid
+	@NotNull
+	@ManyToMany
+	public Collection<Volume> getVolumes() {
+		return volumes;
+	}
+
+	public void setVolumes(Collection<Volume> volumes) {
+		this.volumes = volumes;
 	}
 
 }
