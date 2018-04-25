@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import domain.SubscriptionNewspaper;
 
 @Repository
-public interface SubscriptionNewspaperRepository extends JpaRepository<SubscriptionNewspaper, Integer> {
+public interface SubscriptionRepository extends JpaRepository<SubscriptionNewspaper, Integer> {
 	
 }
