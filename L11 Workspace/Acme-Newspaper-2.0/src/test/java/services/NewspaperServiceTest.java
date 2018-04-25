@@ -33,7 +33,7 @@ public class NewspaperServiceTest extends AbstractTest {
 	private ArticleService articleService;
 
 	@Autowired
-	private SubscriptionService subscriptionService;
+	private SubscriptionNewspaperService subscriptionService;
 
 	// Tests ------------------------------------------------------------------
 
