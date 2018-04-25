@@ -5,20 +5,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.SubscriptionVolume;
+import domain.SubscriptionNewspaper;
 
 @Component
 @Transactional
-public class SubscriptionVolumeToStringConverter implements Converter<SubscriptionVolume, String> {
+public class SubscriptionToStringConverter implements Converter<SubscriptionNewspaper, String> {
 
 	@Override
-	public String convert(final SubscriptionVolume subscriptionVolume) {
+	public String convert(final SubscriptionNewspaper subscription) {
 		String result;
 
-		if (subscriptionVolume == null)
+		if (subscription == null)
 			result = null;
 		else
-			result = String.valueOf(subscriptionVolume.getId());
+			result = String.valueOf(subscription.getId());
 
 		return result;
 	}

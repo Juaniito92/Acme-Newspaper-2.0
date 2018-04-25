@@ -41,7 +41,7 @@ public class NewspaperService {
 	private ArticleService articleService;
 
 	@Autowired
-	private SubscriptionNewspaperService subscriptionService;
+	private SubscriptionService subscriptionService;
 
 	@Autowired
 	private Validator validator;
