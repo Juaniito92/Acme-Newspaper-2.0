@@ -11,6 +11,6 @@ import domain.Agent;
 public interface AgentRepository extends JpaRepository<Agent, Integer> {
 
 	@Query("select a from Agent a where a.userAccount.id=?1")
-	Agent findActorByUserAccountId(int uA);
+	Agent findAgentByUserAccountId(int uA);
 
 }
