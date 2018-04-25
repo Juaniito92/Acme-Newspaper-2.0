@@ -7,6 +7,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -64,6 +65,7 @@ public class Volume extends DomainEntity {
 
 	private User user;
 	private Collection<Newspaper> newspapers;
+	private Collection<SubscriptionVolume> subscriptionsVolume;
 
 	@Valid
 	@ManyToOne(optional = false)
@@ -84,6 +86,18 @@ public class Volume extends DomainEntity {
 
 	public void setNewspapers(Collection<Newspaper> newspapers) {
 		this.newspapers = newspapers;
+	}
+	
+	@Valid
+	@NotNull
+	@OneToMany(mappedBy = "volume")
+	public Collection<SubscriptionVolume> getSubscriptionsVolume() {
+		return subscriptionsVolume;
+	}
+
+	public void setSubscriptionsVolume(
+			Collection<SubscriptionVolume> subscriptionsVolume) {
+		this.subscriptionsVolume = subscriptionsVolume;
 	}
 
 }

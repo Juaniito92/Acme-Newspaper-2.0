@@ -110,7 +110,7 @@ public abstract class Actor extends DomainEntity {
 
 	@Valid
 	@NotEmpty
-	@OneToMany(mappedBy = "actor")
+	@OneToMany
 	public Collection<Folder> getFolders() {
 		return folders;
 	}
