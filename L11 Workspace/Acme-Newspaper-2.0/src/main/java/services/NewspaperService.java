@@ -3,6 +3,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +16,7 @@ import org.springframework.validation.Validator;
 import repositories.NewspaperRepository;
 import domain.Article;
 import domain.Configuration;
+import domain.Customer;
 import domain.Newspaper;
 import domain.SubscriptionNewspaper;
 import domain.User;
@@ -39,6 +41,9 @@ public class NewspaperService {
 
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private CustomerService	customerService;
 
 	@Autowired
 	private SubscriptionNewspaperService subscriptionService;
@@ -272,13 +277,70 @@ public class NewspaperService {
 		return result;
 	}
 
-	public Collection<Newspaper> findByVolumeIdByKeyword(int volumeId, String keyword) {
+	public Collection<Newspaper> findByVolumeIdByKeyword(int volumeId,
+			String keyword) {
 
 		Assert.isTrue(volumeId != 0);
 		Assert.notNull(keyword);
 
 		Collection<Newspaper> result = newspaperRepository
 				.findByVolumeIdByKeyword(volumeId, keyword);
+		return result;
+	}
+	
+	// TODO: Corregir query
+	
+//	public Double ratioNewspapersWithVsWithoutAdvertisements(){
+//		
+//		Double result = newspaperRepository.ratioNewspapersWithVsWithoutAdvertisements();
+//		return result;
+//	}
+
+	public Collection<Newspaper> findNewspapersSubscribedNewspaperByCustomerId(
+			int customerId) {
+
+		Assert.isTrue(customerId != 0);
+
+		Collection<Newspaper> result = newspaperRepository
+				.findNewspapersSubscribedNewspaperByCustomerId(customerId);
+		return result;
+	}
+
+	public Collection<Newspaper> findNewspapersSubscribedVolumeByCustomerId(
+			int customerId) {
+
+		Assert.isTrue(customerId != 0);
+
+		Collection<Newspaper> result = newspaperRepository
+				.findNewspapersSubscribedVolumeByCustomerId(customerId);
+		return result;
+
+	}
+
+	public Collection<Newspaper> findSubscribedNewspapersByCustomerId(
+			int customerId) {
+
+		Assert.isTrue(customerId != 0);
+
+		Collection<Newspaper> result = new ArrayList<Newspaper>();
+		Collection<Newspaper> newspapers1 = findNewspapersSubscribedNewspaperByCustomerId(customerId);
+		Collection<Newspaper> newspapers2 = findNewspapersSubscribedVolumeByCustomerId(customerId);
+
+		LinkedHashSet<Newspaper> set = new LinkedHashSet<Newspaper>();
+		set.addAll(newspapers1);
+		set.addAll(newspapers2);
+		result.addAll(set);
+
+		return result;
+	}
+
+	public Collection<Newspaper> findSubscribedNewspapersByPrincipal() {
+
+		Assert.notNull(customerService.findByPrincipal());
+
+		Customer customer = customerService.findByPrincipal();
+		Collection<Newspaper> result = findSubscribedNewspapersByCustomerId(customer.getId());
+
 		return result;
 	}
 

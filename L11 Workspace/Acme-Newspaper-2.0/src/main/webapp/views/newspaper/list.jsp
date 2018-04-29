@@ -59,7 +59,7 @@
 	</security:authorize>
 
 	<security:authorize access="hasRole('USER')">
-		<jstl:if test="${requestURI == newspaper/user/listAddNewspapers.do}">
+		<jstl:if test="${requestURI == 'newspaper/user/listAddNewspapers.do'}">
 			<display:column>
 				<jstl:choose>
 					<jstl:when test="${volume.contains(row)}">

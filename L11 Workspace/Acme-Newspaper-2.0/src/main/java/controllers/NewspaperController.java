@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ArticleService;
+import services.CustomerService;
 import services.NewspaperService;
+import services.UserService;
 import domain.Article;
 import domain.Newspaper;
 
@@ -23,9 +25,15 @@ public class NewspaperController extends AbstractController {
 
 	@Autowired
 	private NewspaperService newspaperService;
-	
+
 	@Autowired
 	private ArticleService articleService;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private CustomerService customerService;
 
 	// Constructors --------------------------------------------------
 
@@ -36,17 +44,19 @@ public class NewspaperController extends AbstractController {
 	// Listing -------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) String keyword, @RequestParam(required = false) Integer volumeId) {
+	public ModelAndView list(@RequestParam(required = false) String keyword,
+			@RequestParam(required = false) Integer volumeId) {
 
 		Collection<Newspaper> newspapers;
 
 		if (keyword != null && volumeId == null) {
 			newspapers = newspaperService.findPerKeyword(keyword);
-		} else if(keyword == null && volumeId != null){
+		} else if (keyword == null && volumeId != null) {
 			newspapers = newspaperService.findByVolumeId(volumeId);
-		}else if(keyword != null && volumeId != null){
-			newspapers = newspaperService.findByVolumeIdByKeyword(volumeId, keyword);
-		}else{
+		} else if (keyword != null && volumeId != null) {
+			newspapers = newspaperService.findByVolumeIdByKeyword(volumeId,
+					keyword);
+		} else {
 			newspapers = newspaperService.findAvalibleNewspapers();
 		}
 
@@ -60,16 +70,23 @@ public class NewspaperController extends AbstractController {
 	// Display -------------------------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam int newspaperId, @RequestParam (required = false) String keyword) {
+	public ModelAndView display(@RequestParam int newspaperId,
+			@RequestParam(required = false) String keyword) {
 
 		Newspaper newspaper = newspaperService.findOne(newspaperId);
 		Collection<Article> articles;
 		boolean areSubscribe = false;
-		
-		if(keyword!=null){
+
+		if (keyword != null) {
 			articles = this.articleService.findPerKeyword(keyword, newspaperId);
-		}else{
+		} else {
 			articles = newspaper.getArticles();
+		}
+
+		if ((customerService.findByPrincipal() != null && newspaperService
+				.findSubscribedNewspapersByPrincipal().contains(newspaper))
+				|| userService.findByPrincipal() != null) {
+			areSubscribe = true;
 		}
 
 		ModelAndView result = new ModelAndView("newspaper/display");

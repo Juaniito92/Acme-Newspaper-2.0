@@ -53,7 +53,7 @@
 	</h3>
 </jstl:if>
 
-<jstl:if test="${areSubscribe == true}">
+<jstl:if test="${newspaper.isPrivate == false or areSubscribe == true}">
 
 	<h3>
 		<spring:message code="newspaper.articles"/>

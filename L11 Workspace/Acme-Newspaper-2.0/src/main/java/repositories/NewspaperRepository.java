@@ -1,4 +1,3 @@
-
 package repositories;
 
 import java.util.Collection;
@@ -30,16 +29,25 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	@Query("select n from Newspaper n where n.publicationDate > current_date")
 	Collection<Newspaper> findNonPublished();
 
-	//			ACME-NEWSPAPER 2.0
+	// ACME-NEWSPAPER 2.0
 
-	@Query("select sum(case when n.advertisements.size>0 = 1 then 1.0 else 0.0 end)/count(n)from Newspaper n")
-	float ratioNewspapersWithVsWithoutAdvertisements();
-	
+	// TODO: Corregir query
+
+	// @Query("select sum(case when n.advertisements.size>0 = 1 then 1.0 else 0.0 end)/count(n)from Newspaper n")
+	// Double ratioNewspapersWithVsWithoutAdvertisements();
+
 	@Query("select n from Newspaper n join n.volumes v where v.id = ?1")
 	Collection<Newspaper> findByVolumeId(int volumeId);
-	
+
 	@Query("select n from Newspaper n join n.volumes v where v.id = ?1 and (n.title LIKE %?2% or n.description LIKE %?2%)")
 	Collection<Newspaper> findByVolumeIdByKeyword(int volumeId, String keyword);
-	
+
+	@Query("select sn.newspaper from SubscriptionNewspaper sn where sn.customer.id = ?1")
+	Collection<Newspaper> findNewspapersSubscribedNewspaperByCustomerId(
+			int customerId);
+
+	@Query("select distinct sv.volume.newspapers from SubscriptionVolume sv where sv.customer.id = ?1")
+	Collection<Newspaper> findNewspapersSubscribedVolumeByCustomerId(
+			int customerId);
 
 }

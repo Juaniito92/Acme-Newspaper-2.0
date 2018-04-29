@@ -27,13 +27,13 @@ public interface FolderRepository extends JpaRepository<Folder, Integer> {
 	@Query("select f from Actor a join a.folders f where a.id = ?1 and f.name='notification box'")
 	Folder getNotificationBoxFolderFromActorId(int id);
 
-	@Query("select f from Folder f where f.actor.id=?1 and f.parentFolder=null")
+	@Query("select f from Actor a join a.folders f where a.id=?1 and f.parent is null")
 	Collection<Folder> getFirstLevelFoldersFromActorId(int actorId);
 
 	@Query("select f from Folder f join f.messages m where m.id=?1")
 	Folder getFolderFromMessageId(int messageId);
 
-	@Query("select f from Folder f where f.parentFolder.id=?1")
+	@Query("select f from Folder f where f.parent.id=?1")
 	Collection<Folder> getChildFolders(int folderId);
 
 }
