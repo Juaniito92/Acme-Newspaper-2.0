@@ -7,15 +7,15 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.SubscriptionNewspaperRepository;
+import repositories.SubscriptionRepository;
 import domain.SubscriptionNewspaper;
 
 @Component
 @Transactional
-public class StringToSubscriptionNewspaperConverter implements Converter<String, SubscriptionNewspaper> {
+public class StringToSubscriptionConverter implements Converter<String, SubscriptionNewspaper> {
 
 	@Autowired
-	SubscriptionNewspaperRepository	subscriptionNewspaperRepository;
+	SubscriptionRepository	subscriptionRepository;
 
 
 	@Override
@@ -28,7 +28,7 @@ public class StringToSubscriptionNewspaperConverter implements Converter<String,
 				result = null;
 			else {
 				id = Integer.valueOf(text);
-				result = this.subscriptionNewspaperRepository.findOne(id);
+				result = this.subscriptionRepository.findOne(id);
 			}
 		} catch (final Throwable oops) {
 			throw new IllegalArgumentException(oops);

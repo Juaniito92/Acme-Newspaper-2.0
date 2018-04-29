@@ -9,16 +9,16 @@ import domain.SubscriptionNewspaper;
 
 @Component
 @Transactional
-public class SubscriptionNewspaperToStringConverter implements Converter<SubscriptionNewspaper, String> {
+public class SubscriptionToStringConverter implements Converter<SubscriptionNewspaper, String> {
 
 	@Override
-	public String convert(final SubscriptionNewspaper subscriptionNewspaper) {
+	public String convert(final SubscriptionNewspaper subscription) {
 		String result;
 
-		if (subscriptionNewspaper == null)
+		if (subscription == null)
 			result = null;
 		else
-			result = String.valueOf(subscriptionNewspaper.getId());
+			result = String.valueOf(subscription.getId());
 
 		return result;
 	}
