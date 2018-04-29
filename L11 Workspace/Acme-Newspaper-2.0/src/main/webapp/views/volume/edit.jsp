@@ -25,10 +25,6 @@
 	<acme:textbox code="volume.year" path="year" placeholder="yyyy"/>
 	<br/>
 	
-	<jstl:if test="${volumeForm.id != 0}">
-		<a href="newspaper/user/listAddNewspapers.do?volumeId=${volumeForm.id}"><spring:message code="volume.addNewspapers"/></a>
-	</jstl:if>
-	
 	<acme:submit name="save" code="volume.save"/>
 	&nbsp;
 	<acme:cancel url="volume/list.do" code="voluem.back"/>
