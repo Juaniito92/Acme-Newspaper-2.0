@@ -26,21 +26,26 @@
 <h3>
 	<jstl:choose>
 		<jstl:when test="${requestURI == 'newspaper/list.do'  }">
-			<spring:message code="newspaper.availableNewspapers"/>
+			<spring:message code="newspaper.availableNewspapers" />
 		</jstl:when>
 		<jstl:when test="${requestURI == 'newspaper/user/list.do'  }">
-			<spring:message code="newspaper.yourNewspapers"/>
+			<spring:message code="newspaper.yourNewspapers" />
 		</jstl:when>
-		<jstl:when test="${requestURI == 'newspaper/user/list-nonPublished.do'  }">
-			<spring:message code="newspaper.nonPublished"/>
+		<jstl:when
+			test="${requestURI == 'newspaper/user/list-nonPublished.do'  }">
+			<spring:message code="newspaper.nonPublished" />
+		</jstl:when>
+		<jstl:when
+			test="${requestURI == 'newspaper/user/listaddNewspapers.do'  }">
+			<spring:message code="newspaper.listAddNewspapers" />
 		</jstl:when>
 	</jstl:choose>
 </h3>
 
 <jstl:if test="${requestURI == 'newspaper/list.do'}">
 	<input type="text" id="keyword"
-	placeholder="<spring:message code="newspaper.search" />"
-	onkeypress="searchByKeyword(event)" />
+		placeholder="<spring:message code="newspaper.search" />"
+		onkeypress="searchByKeyword(event)" />
 </jstl:if>
 
 <display:table name="newspapers" id="row" requestURI="${requestURI}"
@@ -51,6 +56,27 @@
 			<a href="newspaper/admin/delete.do?newspaperId=${row.id}"><spring:message
 					code="newspaper.delete" /></a>
 		</display:column>
+	</security:authorize>
+
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${requestURI == newspaper/user/listAddNewspapers.do}">
+			<display:column>
+				<jstl:choose>
+					<jstl:when test="${volume.contains(row)}">
+						<a
+							href="volume/user/addNewspaper.do?newspaperId=${row.id}&volumeId=${volume.id}"><spring:message
+								code="newspaper.addNewspaper" /></a>
+					</jstl:when>
+					<jstl:otherwise>
+						<a
+							href="volume/user/removeNewspaper.do?newspaperId=${row.id}&volumeId=${volume.id}"><spring:message
+								code="newspaper.removeNewspaper" /></a>
+					</jstl:otherwise>
+				</jstl:choose>
+				<a href="newspaper/admin/delete.do?newspaperId=${row.id}"><spring:message
+						code="newspaper.delete" /></a>
+			</display:column>
+		</jstl:if>
 	</security:authorize>
 
 	<display:column>
@@ -97,7 +123,14 @@
 </security:authorize>
 
 <spring:message var="backValue" code="newspaper.back" />
-<input type="button" name="back" value="${backValue}"
-	onclick="javascript: relativeRedir('welcome/index.do');" />
-
-
+<jstl:choose>
+	<jstl:when
+		test="${requestURI == 'newspaper/user/listAddNewspapers.do' }">
+		<input type="button" name="back" value="${backValue}"
+			onclick="javascript: relativeRedir('../../volume/user/edit.do?volumeId=${volume.id}');" />
+	</jstl:when>
+	<jstl:otherwise>
+		<input type="button" name="back" value="${backValue}"
+			onclick="javascript: relativeRedir('welcome/index.do');" />
+	</jstl:otherwise>
+</jstl:choose>

@@ -23,6 +23,13 @@
 
 <display:table name="volumes" id="row" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">
+	
+	<security:authorize access="hasRole('USER')">
+	<jstl:if test="${row.user.userAccount.id eq loggedactor.id}">
+		<a href="volume/user/edit.do?volumeId=${row.id}"><spring:message
+					code="volume.edit" /></a>
+	</jstl:if>
+	</security:authorize>
 
 	<display:column>
 		<jstl:if test="${not empty row.newspapers}">
