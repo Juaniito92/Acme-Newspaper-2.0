@@ -36,13 +36,17 @@ public class NewspaperController extends AbstractController {
 	// Listing -------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) String keyword) {
+	public ModelAndView list(@RequestParam(required = false) String keyword, @RequestParam(required = false) Integer volumeId) {
 
 		Collection<Newspaper> newspapers;
 
-		if (keyword != null) {
+		if (keyword != null && volumeId == null) {
 			newspapers = newspaperService.findPerKeyword(keyword);
-		} else {
+		} else if(keyword == null && volumeId != null){
+			newspapers = newspaperService.findByVolumeId(volumeId);
+		}else if(keyword != null && volumeId != null){
+			newspapers = newspaperService.findByVolumeIdByKeyword(volumeId, keyword);
+		}else{
 			newspapers = newspaperService.findAvalibleNewspapers();
 		}
 
@@ -60,6 +64,7 @@ public class NewspaperController extends AbstractController {
 
 		Newspaper newspaper = newspaperService.findOne(newspaperId);
 		Collection<Article> articles;
+		boolean areSubscribe = false;
 		
 		if(keyword!=null){
 			articles = this.articleService.findPerKeyword(keyword, newspaperId);
@@ -70,6 +75,7 @@ public class NewspaperController extends AbstractController {
 		ModelAndView result = new ModelAndView("newspaper/display");
 		result.addObject("newspaper", newspaper);
 		result.addObject("articles", articles);
+		result.addObject("areSubscribe", areSubscribe);
 		result.addObject("date", new Date());
 
 		return result;

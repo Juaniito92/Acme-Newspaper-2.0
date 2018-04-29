@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -9,16 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
-import domain.Actor;
-import domain.Advertisement;
-import domain.Agent;
-import domain.Folder;
-import domain.User;
 import repositories.AgentRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
+import domain.Advertisement;
+import domain.Agent;
+import domain.Folder;
+import forms.AgentForm;
 
 @Service
 @Transactional
@@ -27,15 +30,16 @@ public class AgentService {
 	// Managed repository
 
 	@Autowired
-	private AgentRepository agentRepository;
+	private AgentRepository	agentRepository;
 
 	// Supporting services
 
 	@Autowired
-	private ActorService actorService;
+	private ActorService	actorService;
 
-	// @Autowired
-	// private Validator validator;
+	@Autowired
+	private Validator		validator;
+
 
 	// Constructors
 
@@ -47,15 +51,15 @@ public class AgentService {
 
 	public Agent create() {
 
-		Actor principal = actorService.findByPrincipal();
+		final Actor principal = this.actorService.findByPrincipal();
 		Assert.isTrue(principal == null);
 
 		final Agent res = new Agent();
 
 		final UserAccount agentAccount = new UserAccount();
 		final Authority authority = new Authority();
-		Collection<Folder> folders = new ArrayList<Folder>();
-		Collection<Advertisement> advertisements = new ArrayList<Advertisement>();
+		final Collection<Folder> folders = new ArrayList<Folder>();
+		final Collection<Advertisement> advertisements = new ArrayList<Advertisement>();
 
 		authority.setAuthority(Authority.AGENT);
 		agentAccount.addAuthority(authority);
@@ -99,10 +103,10 @@ public class AgentService {
 
 	// Other business methods
 
-	public Agent findAgentByUserAccountId(int uA) {
+	public Agent findAgentByUserAccountId(final int uA) {
 		return this.agentRepository.findAgentByUserAccountId(uA);
 	}
-	
+
 	public Agent findByPrincipal() {
 		Agent res;
 		UserAccount userAccount;
@@ -110,10 +114,52 @@ public class AgentService {
 		if (userAccount == null)
 			res = null;
 		else
-			res = this.agentRepository.findAgentByUserAccountId(userAccount
-					.getId());
+			res = this.agentRepository.findAgentByUserAccountId(userAccount.getId());
 		return res;
 	}
 
+	public Agent reconstruct(final AgentForm agentForm, final BindingResult binding) {
+
+		Assert.notNull(agentForm);
+		Assert.isTrue(agentForm.getTermsAndConditions() == true);
+
+		Agent res = new Agent();
+
+		if (agentForm.getId() != 0)
+			res = this.findOne(agentForm.getId());
+		else
+			res = this.create();
+
+		res.setName(agentForm.getName());
+		res.setSurname(agentForm.getSurname());
+		res.setEmail(agentForm.getEmail());
+		res.setPhone(agentForm.getPhone());
+		res.setAddress(agentForm.getAddress());
+		res.getUserAccount().setUsername(agentForm.getUsername());
+		res.getUserAccount().setPassword(agentForm.getPassword());
+
+		this.validator.validate(res, binding);
+
+		return res;
+	}
+
+	public AgentForm construct(final Agent agent) {
+
+		Assert.notNull(agent);
+		final AgentForm editAgentForm = new AgentForm();
+
+		editAgentForm.setId(agent.getId());
+		editAgentForm.setName(agent.getName());
+		editAgentForm.setSurname(agent.getSurname());
+		editAgentForm.setEmail(agent.getEmail());
+		editAgentForm.setPhone(agent.getPhone());
+		editAgentForm.setAddress(agent.getAddress());
+		editAgentForm.setUsername(agent.getUserAccount().getUsername());
+		editAgentForm.setPassword(agent.getUserAccount().getPassword());
+		editAgentForm.setRepeatPassword(agent.getUserAccount().getPassword());
+		editAgentForm.setTermsAndConditions(false);
+
+		return editAgentForm;
+	}
 
 }
