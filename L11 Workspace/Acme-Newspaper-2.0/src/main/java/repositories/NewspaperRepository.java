@@ -34,5 +34,12 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 
 	@Query("select sum(case when n.advertisements.size>0 = 1 then 1.0 else 0.0 end)/count(n)from Newspaper n")
 	float ratioNewspapersWithVsWithoutAdvertisements();
+	
+	@Query("select n from Newspaper n join n.volumes v where v.id = ?1")
+	Collection<Newspaper> findByVolumeId(int volumeId);
+	
+	@Query("select n from Newspaper n join n.volumes v where v.id = ?1 and (n.title LIKE %?2% or n.description LIKE %?2%)")
+	Collection<Newspaper> findByVolumeIdByKeyword(int volumeId, String keyword);
+	
 
 }
