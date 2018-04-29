@@ -9,11 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.NewspaperService;
+import services.VolumeService;
 import controllers.AbstractController;
 import domain.Newspaper;
+import domain.Volume;
 import forms.NewspaperForm;
 
 @Controller
@@ -24,6 +27,9 @@ public class NewspaperUserController extends AbstractController {
 
 	@Autowired
 	private NewspaperService newspaperService;
+	
+	@Autowired
+	private VolumeService volumeService;
 
 	// Constructors --------------------------------------------------
 
@@ -57,6 +63,22 @@ public class NewspaperUserController extends AbstractController {
 		ModelAndView result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
 		result.addObject("requestURI", "newspaper/user/list-nonPublished.do");
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/listAddNewspapers", method = RequestMethod.GET)
+	public ModelAndView listAddNewspapers(@RequestParam int volumeId) {
+
+		Collection<Newspaper> newspapers;
+		Volume volume = volumeService.findOne(volumeId);
+
+		newspapers = newspaperService.findAll();
+
+		ModelAndView result = new ModelAndView("newspaper/list");
+		result.addObject("newspapers", newspapers);
+		result.addObject("volume", volume);
+		result.addObject("requestURI", "newspaper/user/listAddNewspapers.do");
 
 		return result;
 	}
