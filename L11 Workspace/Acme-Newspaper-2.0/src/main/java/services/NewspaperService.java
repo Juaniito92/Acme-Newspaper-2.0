@@ -41,11 +41,11 @@ public class NewspaperService {
 	private ArticleService articleService;
 
 	@Autowired
-	private SubscriptionService subscriptionService;
+	private SubscriptionNewspaperService subscriptionService;
 
 	@Autowired
 	private Validator validator;
-	
+
 	@Autowired
 	private ConfigurationService configurationService;
 
@@ -117,7 +117,8 @@ public class NewspaperService {
 		for (Article article : newspaper.getArticles()) {
 			articleService.delete(article);
 		}
-		for (final SubscriptionNewspaper subscription : newspaper.getSubscriptionsNewspaper())
+		for (final SubscriptionNewspaper subscription : newspaper
+				.getSubscriptionsNewspaper())
 			this.subscriptionService.delete(subscription);
 
 		this.newspaperRepository.delete(newspaper);
@@ -198,7 +199,8 @@ public class NewspaperService {
 		} else {
 			aux = keyword;
 			newspapers1 = this.newspaperRepository.findPerKeyword(aux);
-			newspapers2 = newspaperRepository.findPerKeywordNonFinalArticle(aux);
+			newspapers2 = newspaperRepository
+					.findPerKeywordNonFinalArticle(aux);
 			newspapers1.removeAll(newspapers2);
 		}
 
@@ -229,23 +231,26 @@ public class NewspaperService {
 
 		return newspapers;
 	}
-	
-	public Collection<Newspaper> newspaperContainTabooWord(){
+
+	public Collection<Newspaper> newspaperContainTabooWord() {
 		Assert.notNull(adminService.findByPrincipal());
 		Collection<Newspaper> res = new ArrayList<>();
 		Configuration configuration;
 		Collection<String> tabooWords = new ArrayList<>();
 		Collection<Newspaper> allNewspaper = new ArrayList<>();
-		
+
 		configuration = this.configurationService.findAll().iterator().next();
 		tabooWords = Arrays.asList(configuration.getTabooWords().split(","));
 		allNewspaper = this.findAll();
-		
-		for(Newspaper newspaper: allNewspaper){
-			for(String tabooWord: tabooWords){
+
+		for (Newspaper newspaper : allNewspaper) {
+			for (String tabooWord : tabooWords) {
 				String lowTabooWord = tabooWord.toLowerCase();
-				if(newspaper.getTitle().toLowerCase().contains(lowTabooWord.trim()) || newspaper.getDescription().toLowerCase().contains(lowTabooWord.trim())){
-					if(!res.contains(newspaper)){
+				if (newspaper.getTitle().toLowerCase()
+						.contains(lowTabooWord.trim())
+						|| newspaper.getDescription().toLowerCase()
+								.contains(lowTabooWord.trim())) {
+					if (!res.contains(newspaper)) {
 						res.add(newspaper);
 					}
 				}
@@ -253,9 +258,28 @@ public class NewspaperService {
 		}
 		return res;
 	}
-	
+
 	public void flush() {
 		this.newspaperRepository.flush();
+	}
+
+	public Collection<Newspaper> findByVolumeId(int volumeId) {
+
+		Assert.isTrue(volumeId != 0);
+
+		Collection<Newspaper> result = newspaperRepository
+				.findByVolumeId(volumeId);
+		return result;
+	}
+
+	public Collection<Newspaper> findByVolumeIdByKeyword(int volumeId, String keyword) {
+
+		Assert.isTrue(volumeId != 0);
+		Assert.notNull(keyword);
+
+		Collection<Newspaper> result = newspaperRepository
+				.findByVolumeIdByKeyword(volumeId, keyword);
+		return result;
 	}
 
 }

@@ -87,5 +87,7 @@ public class VolumeService {
 
 		this.volumeRepository.delete(volume);
 	}
+	
+	// Other bussiness methods
 
 }

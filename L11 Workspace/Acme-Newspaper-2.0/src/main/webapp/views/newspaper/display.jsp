@@ -53,39 +53,42 @@
 	</h3>
 </jstl:if>
 
-<h3>
-	<spring:message code="newspaper.articles"/>
-</h3>
+<jstl:if test="${areSubscribe == true}">
 
-<input type="text" id="keyword"
-		placeholder="<spring:message code="newspaper.search"/>"
-		onkeypress="searchByKeyword(event,${newspaper.id})" />
-<display:table name="${articles}" id="row"
-	requestURI="newspaper/display.do" pagesize="5" class="displaytag">
+	<h3>
+		<spring:message code="newspaper.articles"/>
+	</h3>
 	
-	<security:authorize access="hasRole('ADMIN')">
-		<display:column>
-			<a href="article/admin/delete.do?articleId=${row.id}"><spring:message
-					code="newspaper.delete" /></a>
+	<input type="text" id="keyword"
+			placeholder="<spring:message code="newspaper.search"/>"
+			onkeypress="searchByKeyword(event,${newspaper.id})" />
+	<display:table name="${articles}" id="row"
+		requestURI="newspaper/display.do" pagesize="5" class="displaytag">
+		
+		<security:authorize access="hasRole('ADMIN')">
+			<display:column>
+				<a href="article/admin/delete.do?articleId=${row.id}"><spring:message
+						code="newspaper.delete" /></a>
+			</display:column>
+		</security:authorize>
+	
+		<spring:message var="titleHeader" code="newspaper.title" />
+		<display:column title="${titleHeader}">
+			<a href="article/display.do?articleId=${row.id}"><jstl:out
+					value="${row.title}" /></a>
 		</display:column>
-	</security:authorize>
-
-	<spring:message var="titleHeader" code="newspaper.title" />
-	<display:column title="${titleHeader}">
-		<a href="article/display.do?articleId=${row.id}"><jstl:out
-				value="${row.title}" /></a>
-	</display:column>
-
-	<spring:message var="writerHeader" code="newspaper.writer" />
-	<display:column title="${writerHeader}">
-		<a href="user/display.do?userId=${row.writer.id}"><jstl:out
-				value="${row.writer.name} ${row.writer.surname}" /></a>
-	</display:column>
-
-	<spring:message var="summaryHeader" code="newspaper.summary" />
-	<display:column property="summary" title="${summaryHeader}" />
-
-</display:table>
+	
+		<spring:message var="writerHeader" code="newspaper.writer" />
+		<display:column title="${writerHeader}">
+			<a href="user/display.do?userId=${row.writer.id}"><jstl:out
+					value="${row.writer.name} ${row.writer.surname}" /></a>
+		</display:column>
+	
+		<spring:message var="summaryHeader" code="newspaper.summary" />
+		<display:column property="summary" title="${summaryHeader}" />
+	
+	</display:table>
+</jstl:if>
 
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${newspaper.publicationDate gt date}">

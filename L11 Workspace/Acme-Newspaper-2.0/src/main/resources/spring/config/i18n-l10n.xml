@@ -34,6 +34,7 @@
 		<value>/views/article/messages</value>
 		<value>/views/configuration/messages</value>
 		<value>/views/chirp/messages</value>
+		<value>/views/volume/messages</value>
 		
 	</util:list>
 
