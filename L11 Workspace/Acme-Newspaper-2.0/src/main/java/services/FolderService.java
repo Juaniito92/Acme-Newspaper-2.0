@@ -156,26 +156,31 @@ public class FolderService {
 		final Collection<Folder> folders = new ArrayList<Folder>();
 
 		inbox = new Folder();
+		inbox.setChildren(new ArrayList<Folder>());
 		inbox.setPredefined(true);
 		inbox.setName("in box");
 		inbox.setMessages(new ArrayList<Message>());
 
 		outbox = new Folder();
+		inbox.setChildren(new ArrayList<Folder>());
 		outbox.setPredefined(true);
 		outbox.setName("out box");
 		outbox.setMessages(new ArrayList<Message>());
 
 		trashbox = new Folder();
+		inbox.setChildren(new ArrayList<Folder>());
 		trashbox.setPredefined(true);
 		trashbox.setName("trash box");
 		trashbox.setMessages(new ArrayList<Message>());
 
 		notificationbox = new Folder();
+		notificationbox.setChildren(new ArrayList<Folder>());
 		notificationbox.setPredefined(true);
 		notificationbox.setName("notification box");
 		notificationbox.setMessages(new ArrayList<Message>());
 
 		spambox = new Folder();
+		spambox.setChildren(new ArrayList<Folder>());
 		spambox.setPredefined(true);
 		spambox.setName("spam box");
 		spambox.setMessages(new ArrayList<Message>());

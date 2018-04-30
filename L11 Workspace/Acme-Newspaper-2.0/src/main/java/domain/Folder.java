@@ -67,6 +67,7 @@ public class Folder extends DomainEntity {
 	}
 
 	@Valid
+	@NotNull
 	@OneToMany(mappedBy = "parent")
 	public Collection<Folder> getChildren() {
 		return this.children;
