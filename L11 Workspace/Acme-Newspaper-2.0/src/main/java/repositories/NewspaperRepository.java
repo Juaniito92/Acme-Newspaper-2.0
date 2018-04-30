@@ -1,3 +1,4 @@
+
 package repositories;
 
 import java.util.Collection;
@@ -31,10 +32,14 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 
 	// ACME-NEWSPAPER 2.0
 
-	// TODO: Corregir query
+	@Query("select sum(case when n.advertisements.size>0 then 1.0 else 0.0 end)/count(n)from Newspaper n")
+	Double ratioNewspapersWithVsWithoutAdvertisements();
 
-	// @Query("select sum(case when n.advertisements.size>0 = 1 then 1.0 else 0.0 end)/count(n)from Newspaper n")
-	// Double ratioNewspapersWithVsWithoutAdvertisements();
+	@Query("select n from Newspaper n join n.advertisements a where a.agent.id = ?1")
+	Collection<Newspaper> findByAdvertisementAgentId(int agentId);
+
+	@Query("select n from Newspaper n where n NOT IN (select n2 from Advertisement a join a.newspaper n2 where a.agent.id = ?1)")
+	Collection<Newspaper> findByNotAdvertisementAgentId(int agentId);
 
 	@Query("select n from Newspaper n join n.volumes v where v.id = ?1")
 	Collection<Newspaper> findByVolumeId(int volumeId);
@@ -43,11 +48,9 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	Collection<Newspaper> findByVolumeIdByKeyword(int volumeId, String keyword);
 
 	@Query("select sn.newspaper from SubscriptionNewspaper sn where sn.customer.id = ?1")
-	Collection<Newspaper> findNewspapersSubscribedNewspaperByCustomerId(
-			int customerId);
+	Collection<Newspaper> findNewspapersSubscribedNewspaperByCustomerId(int customerId);
 
 	@Query("select distinct sv.volume.newspapers from SubscriptionVolume sv where sv.customer.id = ?1")
-	Collection<Newspaper> findNewspapersSubscribedVolumeByCustomerId(
-			int customerId);
+	Collection<Newspaper> findNewspapersSubscribedVolumeByCustomerId(int customerId);
 
 }
