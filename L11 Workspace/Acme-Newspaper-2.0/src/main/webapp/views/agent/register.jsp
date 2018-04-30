@@ -18,32 +18,32 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="user/register.do" modelAttribute="userForm">
+<form:form action="agent/register.do" modelAttribute="userForm">
 	
-	<acme:textbox code="user.name" path="name"/>
+	<acme:textbox code="agent.name" path="name"/>
 	<br/>
-	<acme:textbox code="user.surname" path="surname"/>
+	<acme:textbox code="agent.surname" path="surname"/>
 	<br/>
-	<acme:textbox code="user.email" path="email"/>
+	<acme:textbox code="agent.email" path="email"/>
 	<br/>
-	<acme:textbox code="user.phone" path="phone"/>
+	<acme:textbox code="agent.phone" path="phone"/>
 	<br/>
-	<acme:textbox code="user.address" path="address"/>
+	<acme:textbox code="agent.address" path="address"/>
 	<br/>
-	<acme:textbox code="user.userName" path="username"/>
+	<acme:textbox code="agent.userName" path="username"/>
 	<br/>
-	<acme:password code="user.password" path="password"/>
+	<acme:password code="agent.password" path="password"/>
 	<br/>
-	<acme:password code="user.repeatPassword" path="repeatPassword"/>
+	<acme:password code="agent.repeatPassword" path="repeatPassword"/>
 	<br/>
 	
-	<acme:checkbox code="user.acceptTerms" path="termsAndConditions"/>
+	<acme:checkbox code="agent.acceptTerms" path="termsAndConditions"/>
 	
-	<a href="terms/list.do"><spring:message code="user.acceptTermsLink"/></a>
+	<a href="terms/list.do"><spring:message code="agent.acceptTermsLink"/></a>
 	<br />
 	
-	<acme:submit name="save" code="user.save"/>
-	<acme:cancel code="user.cancel" url="welcome/index.do"/>
+	<acme:submit name="save" code="agent.save"/>
+	<acme:cancel code="agent.cancel" url="welcome/index.do"/>
 	
 </form:form>
 	
