@@ -235,6 +235,11 @@
 			<artifactId>hibernate-c3p0</artifactId>
 			<version>4.2.3.Final</version>
 		</dependency>
+		<dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>4.5.3.Final</version>
+        </dependency>
 
 		<!-- Javax -->
 
