@@ -162,13 +162,13 @@ public class FolderService {
 		inbox.setMessages(new ArrayList<Message>());
 
 		outbox = new Folder();
-		inbox.setChildren(new ArrayList<Folder>());
+		outbox.setChildren(new ArrayList<Folder>());
 		outbox.setPredefined(true);
 		outbox.setName("out box");
 		outbox.setMessages(new ArrayList<Message>());
 
 		trashbox = new Folder();
-		inbox.setChildren(new ArrayList<Folder>());
+		trashbox.setChildren(new ArrayList<Folder>());
 		trashbox.setPredefined(true);
 		trashbox.setName("trash box");
 		trashbox.setMessages(new ArrayList<Message>());
