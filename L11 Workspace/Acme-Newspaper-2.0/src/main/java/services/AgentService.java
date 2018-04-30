@@ -38,6 +38,9 @@ public class AgentService {
 	private ActorService	actorService;
 
 	@Autowired
+	private FolderService	folderService;
+
+	@Autowired
 	private Validator		validator;
 
 
@@ -89,6 +92,8 @@ public class AgentService {
 		Agent res;
 
 		if (agent.getId() == 0) {
+			this.folderService.createSystemFolders(agent);
+
 			String pass = agent.getUserAccount().getPassword();
 
 			final Md5PasswordEncoder code = new Md5PasswordEncoder();
@@ -97,6 +102,7 @@ public class AgentService {
 
 			agent.getUserAccount().setPassword(pass);
 		}
+
 		res = this.agentRepository.save(agent);
 		return res;
 	}

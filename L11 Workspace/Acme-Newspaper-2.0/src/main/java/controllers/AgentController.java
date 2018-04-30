@@ -50,7 +50,7 @@ public class AgentController extends AbstractController {
 		result = new ModelAndView("agent/list");
 		result.addObject("agents", agents);
 		result.addObject("principal", principal);
-		result.addObject("requestURI", "user/list.do");
+		result.addObject("requestURI", "agent/list.do");
 
 		return result;
 	}
@@ -77,7 +77,7 @@ public class AgentController extends AbstractController {
 
 		final Agent agent = this.agentService.create();
 		final AgentForm agentForm = this.agentService.construct(agent);
-		;
+
 		res = this.createEditModelAndView(agentForm);
 
 		return res;
