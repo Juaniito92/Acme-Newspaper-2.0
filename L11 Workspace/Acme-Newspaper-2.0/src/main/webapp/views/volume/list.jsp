@@ -18,6 +18,9 @@
 		<jstl:when test="${requestURI == 'volume/list.do'  }">
 			<spring:message code="volume.allVolumes" />
 		</jstl:when>
+		<jstl:when test="${requestURI == 'volume/user/list.do'  }">
+			<spring:message code="volume.yourVolumes" />
+		</jstl:when>
 	</jstl:choose>
 </h3>
 
@@ -25,10 +28,13 @@
 	pagesize="5" class="displaytag">
 	
 	<security:authorize access="hasRole('USER')">
-	<jstl:if test="${row.user.userAccount.id eq loggedactor.id}">
-		<a href="volume/user/edit.do?volumeId=${row.id}"><spring:message
-					code="volume.edit" /></a>
-	</jstl:if>
+		<display:column>
+			<security:authentication property="principal" var="loggedactor"/>
+			<jstl:if test="${row.user.userAccount.id eq loggedactor.id}">
+				<a href="volume/user/edit.do?volumeId=${row.id}"><spring:message
+							code="volume.edit" /></a>
+			</jstl:if>
+		</display:column>
 	</security:authorize>
 
 	<display:column>
@@ -41,7 +47,7 @@
 	<spring:message var="titleHeader" code="volume.title" />
 	<display:column property="title" title="${titleHeader}" />
 
-	<spring:message var="descriptionHeader" code="voluem.description" />
+	<spring:message var="descriptionHeader" code="volume.description" />
 	<display:column property="description" title="${descriptionHeader}" />
 
 	<spring:message var="yearHeader" code="volume.year" />
@@ -58,7 +64,7 @@
 </display:table>
 
 <security:authorize access="hasRole('USER')">
-	<a href="voluem/user/create.do"><spring:message
+	<a href="volume/user/create.do"><spring:message
 			code="volume.create" /></a>
 	<br />
 </security:authorize>

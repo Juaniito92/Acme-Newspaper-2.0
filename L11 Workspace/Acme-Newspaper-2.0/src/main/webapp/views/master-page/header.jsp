@@ -40,6 +40,7 @@
 				<li><a href="newspaper/user/list-nonPublished.do"><spring:message code="master.page.user.listNewspapersNonPublished" /></a></li>
 				<li><a href="article/user/list.do"><spring:message code="master.page.user.listArticles" /></a></li>
 				<li><a href="followUp/user/list.do"><spring:message code="master.page.user.listFollowUps" /></a></li>
+				<li><a href="volume/user/list.do"><spring:message code="master.page.user.yourVolumes" /></a></li>
 				<li><a href="user/user/list-followers.do"><spring:message code="master.page.user.listFollowers" /></a></li>
 				<li><a href="user/user/list-followed.do"><spring:message code="master.page.user.listFollowed" /></a></li>
 				<li><a href="chirp/user/create.do"><spring:message code="master.page.chirp.publish" /></a></li>
@@ -77,6 +78,7 @@
 		</security:authorize>
 		
 		<li><a class="fNiv" href="newspaper/list.do"><spring:message code="master.page.availableNewspapers" /></a></li>
+		<li><a class="fNiv" href="volume/list.do"><spring:message code="master.page.listVolumes" /></a></li>
 		<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.listUsers" /></a></li>
 		<li><a class="fNiv" href="terms/list.do"><spring:message code="master.page.termsAndConditions" /></a></li>
 	</ul>

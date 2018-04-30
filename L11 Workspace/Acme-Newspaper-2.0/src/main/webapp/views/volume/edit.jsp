@@ -14,7 +14,7 @@
 <form:form action="volume/user/edit.do" modelAttribute="volumeForm">
 
 	<form:hidden path="id"/>
-	<form:hidden path="user"/>
+	<form:hidden path="userId"/>
 	
 	<acme:textbox code="volume.title" path="title"/>
 	<br/>
@@ -27,10 +27,11 @@
 	
 	<jstl:if test="${volumeForm.id != 0}">
 		<a href="newspaper/user/listAddNewspapers.do?volumeId=${volumeForm.id}"><spring:message code="volume.addNewspapers"/></a>
+		<br/>
 	</jstl:if>
 	
 	<acme:submit name="save" code="volume.save"/>
 	&nbsp;
-	<acme:cancel url="volume/list.do" code="voluem.back"/>
+	<acme:cancel url="volume/user/list.do" code="volume.back"/>
 	
 </form:form>

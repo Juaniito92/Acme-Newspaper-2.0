@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -29,7 +30,7 @@ public class Volume extends DomainEntity {
 
 	private String title;
 	private String description;
-	private int year;
+	private String year;
 
 	// Relationships
 
@@ -53,11 +54,14 @@ public class Volume extends DomainEntity {
 		this.description = description;
 	}
 
-	public int getYear() {
+	@NotBlank
+	@Pattern(regexp = "^\\d{4}$")
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 
