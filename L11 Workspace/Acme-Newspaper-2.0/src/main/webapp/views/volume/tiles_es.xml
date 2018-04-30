@@ -17,12 +17,17 @@
 <tiles-definitions>
 
 	<definition name="volume/list" extends="master.page">	
-		<put-attribute name="title" value="Listar volumenes" />
+		<put-attribute name="title" value="Listar volúmenes" />
 		<put-attribute name="body" value="/views/volume/list.jsp" />
 	</definition>
 	
 	<definition name="volume/create" extends="master.page">	
 		<put-attribute name="title" value="Crear un volumen" />
+		<put-attribute name="body" value="/views/volume/edit.jsp" />
+	</definition>
+	
+	<definition name="volume/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar volumen" />
 		<put-attribute name="body" value="/views/volume/edit.jsp" />
 	</definition>
 	

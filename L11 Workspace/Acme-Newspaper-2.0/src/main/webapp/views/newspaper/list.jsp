@@ -62,7 +62,7 @@
 		<jstl:if test="${requestURI == 'newspaper/user/listAddNewspapers.do'}">
 			<display:column>
 				<jstl:choose>
-					<jstl:when test="${volume.contains(row)}">
+					<jstl:when test="${!volume.newspapers.contains(row)}">
 						<a
 							href="volume/user/addNewspaper.do?newspaperId=${row.id}&volumeId=${volume.id}"><spring:message
 								code="newspaper.addNewspaper" /></a>
@@ -73,8 +73,6 @@
 								code="newspaper.removeNewspaper" /></a>
 					</jstl:otherwise>
 				</jstl:choose>
-				<a href="newspaper/admin/delete.do?newspaperId=${row.id}"><spring:message
-						code="newspaper.delete" /></a>
 			</display:column>
 		</jstl:if>
 	</security:authorize>
@@ -127,7 +125,7 @@
 	<jstl:when
 		test="${requestURI == 'newspaper/user/listAddNewspapers.do' }">
 		<input type="button" name="back" value="${backValue}"
-			onclick="javascript: relativeRedir('../../volume/user/edit.do?volumeId=${volume.id}');" />
+			onclick="javascript: relativeRedir('volume/user/edit.do?volumeId=${volume.id}');" />
 	</jstl:when>
 	<jstl:otherwise>
 		<input type="button" name="back" value="${backValue}"

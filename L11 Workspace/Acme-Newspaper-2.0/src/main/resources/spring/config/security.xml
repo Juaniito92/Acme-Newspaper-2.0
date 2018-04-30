@@ -72,6 +72,10 @@
 		<!-- Configuration -->
 		<security:intercept-url pattern="/configuration/admin/**" access="hasRole('ADMIN')" />
 		
+		<!-- Volume -->
+		<security:intercept-url pattern="/volume/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/volume/**" access="permitAll" />
+		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 
