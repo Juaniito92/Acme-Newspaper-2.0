@@ -24,30 +24,30 @@
 
 <h3>
 	<jstl:choose>
-		<jstl:when test="${requestURI == 'user/list.do'  }">
-			<spring:message code="user.system"/>
+		<jstl:when test="${requestURI == 'agent/list.do'  }">
+			<spring:message code="agent.system"/>
 		</jstl:when>
 		<jstl:when test="${requestURI == 'user/user/list-followers.do'  }">
-			<spring:message code="user.followers"/>
+			<spring:message code="agent.followers"/>
 		</jstl:when>
 		<jstl:when test="${requestURI == 'user/user/list-followed.do'  }">
-			<spring:message code="user.followed"/>
+			<spring:message code="agent.followed"/>
 		</jstl:when>
 	</jstl:choose>
 </h3>
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="users" requestURI="${requestURI }" id="row">
+	name="agents" requestURI="${requestURI }" id="row">
 
-	<security:authorize access="hasRole('USER')">
+	<security:authorize access="hasRole('AGENT')">
 		<jstl:if test="${requestURI != 'user/user/list-followers.do'}">
 			<display:column>
 				<jstl:choose>
 					<jstl:when test="${principal.followed.contains(row)}">
-						<a href="user/user/unfollow.do?userId=${row.id}"><spring:message code="user.unfollow"/></a>
+						<a href="user/user/unfollow.do?userId=${row.id}"><spring:message code="agent.unfollow"/></a>
 					</jstl:when>
 					<jstl:otherwise>
-						<a href="user/user/follow.do?userId=${row.id}"><spring:message code="user.follow"/></a>
+						<a href="user/user/follow.do?userId=${row.id}"><spring:message code="agent.follow"/></a>
 					</jstl:otherwise>
 				</jstl:choose>
 			</display:column>
@@ -57,15 +57,15 @@
 	<!-- Attributes -->
 
 	<display:column title="${articlesHeader}">
-		<a href="user/display.do?userId=${row.id}"> <spring:message
-				code="user.display" />
+		<a href="agent/display.do?userId=${row.id}"> <spring:message
+				code="agent.display" />
 		</a>
 	</display:column>
 
-	<spring:message code="user.name" var="nameHeader" />
+	<spring:message code="agent.name" var="nameHeader" />
 	<display:column property="name" title="${nameHeader}" sortable="true" />
 
-	<spring:message code="user.email" var="emailHeader" />
+	<spring:message code="agent.email" var="emailHeader" />
 	<display:column property="email" title="${emailHeader}" sortable="true" />
 
 </display:table>
