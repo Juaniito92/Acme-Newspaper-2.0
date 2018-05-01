@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.ArrayList;
@@ -29,30 +30,31 @@ public class NewspaperService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private NewspaperRepository newspaperRepository;
+	private NewspaperRepository				newspaperRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private AdminService adminService;
+	private AdminService					adminService;
 
 	@Autowired
-	private UserService userService;
+	private UserService						userService;
 
 	@Autowired
-	private ArticleService articleService;
-	
-	@Autowired
-	private CustomerService	customerService;
+	private ArticleService					articleService;
 
 	@Autowired
-	private SubscriptionNewspaperService subscriptionService;
+	private CustomerService					customerService;
 
 	@Autowired
-	private Validator validator;
+	private SubscriptionNewspaperService	subscriptionService;
 
 	@Autowired
-	private ConfigurationService configurationService;
+	private Validator						validator;
+
+	@Autowired
+	private ConfigurationService			configurationService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -120,10 +122,9 @@ public class NewspaperService {
 
 		newspaper.getPublisher().getNewspapers().remove(newspaper);
 		for (Article article : newspaper.getArticles()) {
-			articleService.delete(article);
+			this.articleService.delete(article);
 		}
-		for (final SubscriptionNewspaper subscription : newspaper
-				.getSubscriptionsNewspaper())
+		for (final SubscriptionNewspaper subscription : newspaper.getSubscriptionsNewspaper())
 			this.subscriptionService.delete(subscription);
 
 		this.newspaperRepository.delete(newspaper);
@@ -158,8 +159,7 @@ public class NewspaperService {
 		return newspaperForm;
 	}
 
-	public Newspaper reconstruct(final NewspaperForm newspaperForm,
-			final BindingResult binding) {
+	public Newspaper reconstruct(final NewspaperForm newspaperForm, final BindingResult binding) {
 
 		Assert.notNull(newspaperForm);
 
@@ -184,10 +184,8 @@ public class NewspaperService {
 
 	public Collection<Newspaper> findAvalibleNewspapers() {
 
-		Collection<Newspaper> newspapers1 = newspaperRepository
-				.findPastNewspapers();
-		Collection<Newspaper> newspapers2 = newspaperRepository
-				.findPastNewspapersWithNonFinalArticle();
+		Collection<Newspaper> newspapers1 = this.newspaperRepository.findPastNewspapers();
+		Collection<Newspaper> newspapers2 = this.newspaperRepository.findPastNewspapersWithNonFinalArticle();
 
 		newspapers1.removeAll(newspapers2);
 
@@ -204,8 +202,7 @@ public class NewspaperService {
 		} else {
 			aux = keyword;
 			newspapers1 = this.newspaperRepository.findPerKeyword(aux);
-			newspapers2 = newspaperRepository
-					.findPerKeywordNonFinalArticle(aux);
+			newspapers2 = this.newspaperRepository.findPerKeywordNonFinalArticle(aux);
 			newspapers1.removeAll(newspapers2);
 		}
 
@@ -214,8 +211,7 @@ public class NewspaperService {
 
 	public Collection<Newspaper> findByPublisherId(int publisherId) {
 
-		Collection<Newspaper> newspapers = newspaperRepository
-				.findByPublisherId(publisherId);
+		Collection<Newspaper> newspapers = this.newspaperRepository.findByPublisherId(publisherId);
 
 		return newspapers;
 	}
@@ -223,22 +219,20 @@ public class NewspaperService {
 	public Collection<Newspaper> findByPrincipal() {
 
 		User principal = this.userService.findByPrincipal();
-		Collection<Newspaper> newspapers = newspaperRepository
-				.findByPublisherId(principal.getId());
+		Collection<Newspaper> newspapers = this.newspaperRepository.findByPublisherId(principal.getId());
 
 		return newspapers;
 	}
 
 	public Collection<Newspaper> findNonPublished() {
 
-		Collection<Newspaper> newspapers = newspaperRepository
-				.findNonPublished();
+		Collection<Newspaper> newspapers = this.newspaperRepository.findNonPublished();
 
 		return newspapers;
 	}
 
 	public Collection<Newspaper> newspaperContainTabooWord() {
-		Assert.notNull(adminService.findByPrincipal());
+		Assert.notNull(this.adminService.findByPrincipal());
 		Collection<Newspaper> res = new ArrayList<>();
 		Configuration configuration;
 		Collection<String> tabooWords = new ArrayList<>();
@@ -251,10 +245,7 @@ public class NewspaperService {
 		for (Newspaper newspaper : allNewspaper) {
 			for (String tabooWord : tabooWords) {
 				String lowTabooWord = tabooWord.toLowerCase();
-				if (newspaper.getTitle().toLowerCase()
-						.contains(lowTabooWord.trim())
-						|| newspaper.getDescription().toLowerCase()
-								.contains(lowTabooWord.trim())) {
+				if (newspaper.getTitle().toLowerCase().contains(lowTabooWord.trim()) || newspaper.getDescription().toLowerCase().contains(lowTabooWord.trim())) {
 					if (!res.contains(newspaper)) {
 						res.add(newspaper);
 					}
@@ -272,59 +263,51 @@ public class NewspaperService {
 
 		Assert.isTrue(volumeId != 0);
 
-		Collection<Newspaper> result = newspaperRepository
-				.findByVolumeId(volumeId);
+		Collection<Newspaper> result = this.newspaperRepository.findByVolumeId(volumeId);
 		return result;
 	}
 
-	public Collection<Newspaper> findByVolumeIdByKeyword(int volumeId,
-			String keyword) {
+	public Collection<Newspaper> findByVolumeIdByKeyword(int volumeId, String keyword) {
 
 		Assert.isTrue(volumeId != 0);
 		Assert.notNull(keyword);
 
-		Collection<Newspaper> result = newspaperRepository
-				.findByVolumeIdByKeyword(volumeId, keyword);
+		Collection<Newspaper> result = this.newspaperRepository.findByVolumeIdByKeyword(volumeId, keyword);
 		return result;
 	}
-	
+
 	// TODO: Corregir query
-	
-//	public Double ratioNewspapersWithVsWithoutAdvertisements(){
-//		
-//		Double result = newspaperRepository.ratioNewspapersWithVsWithoutAdvertisements();
-//		return result;
-//	}
 
-	public Collection<Newspaper> findNewspapersSubscribedNewspaperByCustomerId(
-			int customerId) {
+	//	public Double ratioNewspapersWithVsWithoutAdvertisements(){
+	//		
+	//		Double result = newspaperRepository.ratioNewspapersWithVsWithoutAdvertisements();
+	//		return result;
+	//	}
+
+	public Collection<Newspaper> findNewspapersSubscribedNewspaperByCustomerId(int customerId) {
 
 		Assert.isTrue(customerId != 0);
 
-		Collection<Newspaper> result = newspaperRepository
-				.findNewspapersSubscribedNewspaperByCustomerId(customerId);
+		Collection<Newspaper> result = this.newspaperRepository.findNewspapersSubscribedNewspaperByCustomerId(customerId);
 		return result;
 	}
 
-	public Collection<Newspaper> findNewspapersSubscribedVolumeByCustomerId(
-			int customerId) {
+	public Collection<Newspaper> findNewspapersSubscribedVolumeByCustomerId(int customerId) {
 
 		Assert.isTrue(customerId != 0);
 
-		Collection<Newspaper> result = newspaperRepository
-				.findNewspapersSubscribedVolumeByCustomerId(customerId);
+		Collection<Newspaper> result = this.newspaperRepository.findNewspapersSubscribedVolumeByCustomerId(customerId);
 		return result;
 
 	}
 
-	public Collection<Newspaper> findSubscribedNewspapersByCustomerId(
-			int customerId) {
+	public Collection<Newspaper> findSubscribedNewspapersByCustomerId(int customerId) {
 
 		Assert.isTrue(customerId != 0);
 
 		Collection<Newspaper> result = new ArrayList<Newspaper>();
-		Collection<Newspaper> newspapers1 = findNewspapersSubscribedNewspaperByCustomerId(customerId);
-		Collection<Newspaper> newspapers2 = findNewspapersSubscribedVolumeByCustomerId(customerId);
+		Collection<Newspaper> newspapers1 = this.findNewspapersSubscribedNewspaperByCustomerId(customerId);
+		Collection<Newspaper> newspapers2 = this.findNewspapersSubscribedVolumeByCustomerId(customerId);
 
 		LinkedHashSet<Newspaper> set = new LinkedHashSet<Newspaper>();
 		set.addAll(newspapers1);
@@ -336,12 +319,22 @@ public class NewspaperService {
 
 	public Collection<Newspaper> findSubscribedNewspapersByPrincipal() {
 
-		Assert.notNull(customerService.findByPrincipal());
+		Assert.notNull(this.customerService.findByPrincipal());
 
-		Customer customer = customerService.findByPrincipal();
-		Collection<Newspaper> result = findSubscribedNewspapersByCustomerId(customer.getId());
+		Customer customer = this.customerService.findByPrincipal();
+		Collection<Newspaper> result = this.findSubscribedNewspapersByCustomerId(customer.getId());
 
 		return result;
+	}
+
+	public Collection<Newspaper> findByAdvertisementAgentId(int agentId) {
+
+		return this.newspaperRepository.findByAdvertisementAgentId(agentId);
+	}
+
+	public Collection<Newspaper> findByNotAdvertisementAgentId(int agentId) {
+
+		return this.newspaperRepository.findByNotAdvertisementAgentId(agentId);
 	}
 
 }

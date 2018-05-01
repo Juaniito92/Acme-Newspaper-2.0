@@ -36,6 +36,7 @@
 		<value>/views/article/tiles.xml</value>
 		<value>/views/configuration/tiles.xml</value>
 		<value>/views/volume/tiles.xml</value>
+		<value>/views/advertisement/tiles.xml</value>
 		
 		<value>/views/agent/tiles.xml</value>
 	</util:list>

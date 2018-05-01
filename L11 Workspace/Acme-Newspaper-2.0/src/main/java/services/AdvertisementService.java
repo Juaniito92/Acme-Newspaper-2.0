@@ -116,4 +116,19 @@ public class AdvertisementService {
 		return cc;
 	}
 
+	public Advertisement findOneToEdit(final int sponsorshipId) {
+		Advertisement result;
+		result = this.advertisementRepository.findOne(sponsorshipId);
+		this.checkPrincipal(result);
+		return result;
+	}
+
+	public void checkPrincipal(Advertisement s) {
+		Agent agent;
+
+		agent = this.agentService.findByPrincipal();
+
+		Assert.isTrue(agent.getAdvertisements().contains(s));
+	}
+
 }

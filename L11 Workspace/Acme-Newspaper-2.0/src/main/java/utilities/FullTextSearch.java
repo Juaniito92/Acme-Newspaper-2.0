@@ -44,7 +44,7 @@ public class FullTextSearch {
 
 			//Creation of an EntityManagerFactory object. To do this we indicate our 
 			//persistence unit, 'Acme-Explorer'
-			final EntityManagerFactory factory = Persistence.createEntityManagerFactory("Acme-Explorer");
+			final EntityManagerFactory factory = Persistence.createEntityManagerFactory("Acme-Newspaper-2.0");
 
 			//Creation of a EntityManager object by using the previous factory
 			final EntityManager manager = factory.createEntityManager();
