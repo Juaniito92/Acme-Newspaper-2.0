@@ -5,15 +5,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Random;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 
-import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.query.dsl.QueryBuilder;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -21,6 +17,7 @@ import org.springframework.util.Assert;
 import repositories.AdvertisementRepository;
 import domain.Advertisement;
 import domain.Agent;
+import domain.CreditCard;
 import domain.Newspaper;
 
 @Service
@@ -65,6 +62,7 @@ public class AdvertisementService {
 
 	public Advertisement save(final Advertisement advertisement) {
 		Assert.notNull(advertisement);
+		Assert.isTrue(this.checkExpiration(advertisement.getCreditCard()), "The credit card must not have expired");
 		Advertisement res;
 		res = this.advertisementRepository.save(advertisement);
 
@@ -89,32 +87,54 @@ public class AdvertisementService {
 		return res;
 	}
 
-	public Collection<Advertisement> getAdvertisementsTabooWords() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Acme-Newspaper-2.0");
-		EntityManager mgr = factory.createEntityManager();
-		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(mgr);
-		mgr.getTransaction().begin();
-		String pattern = "";
-
-		for (String tabooWord : this.configService.getTabooWordsFromConfiguration())
-			pattern += tabooWord + "|";
-		pattern = pattern.substring(0, pattern.length() - 1);
-
-		QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Advertisement.class).get();
-		org.apache.lucene.search.Query luceneQuery = qb.keyword().onFields("title").ignoreFieldBridge().matching(pattern).createQuery();
-		javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Advertisement.class);
-		@SuppressWarnings({
-			"rawtypes"
-		})
-		List res = jpaQuery.getResultList();
-		@SuppressWarnings("unchecked")
-		Set<Advertisement> cc = new HashSet<>(res);
-		mgr.getTransaction().commit();
-
-		mgr.close();
-
-		return cc;
+	public Advertisement getRandomForNewspaper(int newspaperId) {
+		Random rn = new Random();
+		Advertisement ans = null;
+		Collection<Advertisement> ads = this.advertisementRepository.findRandomForNewspaper(newspaperId);
+		if (ads.size() > 0)
+			ans = (Advertisement) ads.toArray()[rn.nextInt(ads.size())];
+		return ans;
 	}
+
+	public Collection<Advertisement> getAdvertisementsTabooWords() {
+		String pattern = "^";
+		for (String tabooWord : this.configService.getTabooWordsFromConfiguration())
+			pattern += ".*" + tabooWord + ".*" + "|";
+		pattern = pattern.substring(0, pattern.length() - 1);
+		pattern += "$";
+
+		List<Advertisement> ans = new ArrayList<Advertisement>();
+		for (Advertisement a : this.advertisementRepository.findAll()) {
+			if (a.getTitle().matches(pattern))
+				ans.add(a);
+		}
+		return new HashSet<Advertisement>(ans);
+	}
+	//TODO Arreglar query de Lucene
+	//	public Collection<Advertisement> getAdvertisementsTabooWords() {
+	//		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Acme-Newspaper-2.0");
+	//		EntityManager mgr = factory.createEntityManager();
+	//		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(mgr);
+	//		mgr.getTransaction().begin();
+	//		String pattern = "";
+	//
+	//		for (String tabooWord : this.configService.getTabooWordsFromConfiguration())
+	//			pattern += tabooWord + "|";
+	//
+	//		QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Advertisement.class).get();
+	//		org.apache.lucene.search.Query luceneQuery = qb.keyword().onFields("title").ignoreFieldBridge().matching(pattern).createQuery();
+	//		javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Advertisement.class);
+	//		@SuppressWarnings("unchecked")
+	//		List<Advertisement> res = jpaQuery.getResultList();
+	//		Set<Advertisement> cc = new HashSet<>(res);
+	//		mgr.getTransaction().commit();
+	//
+	//		mgr.close();
+	//
+	//		System.out.println(cc);
+	//
+	//		return cc;
+	//	}
 
 	public Advertisement findOneToEdit(final int sponsorshipId) {
 		Advertisement result;
@@ -129,6 +149,16 @@ public class AdvertisementService {
 		agent = this.agentService.findByPrincipal();
 
 		Assert.isTrue(agent.getAdvertisements().contains(s));
+	}
+
+	public boolean checkExpiration(CreditCard c) {
+		Boolean res = true;
+
+		if ((c.getExpirationYear() == LocalDate.now().getYear() && (c.getExpirationMonth() == LocalDate.now().getMonthOfYear() || c.getExpirationMonth() < LocalDate.now().getMonthOfYear())) || c.getExpirationYear() < LocalDate.now().getYear()) {
+			res = false;
+		}
+
+		return res;
 	}
 
 }

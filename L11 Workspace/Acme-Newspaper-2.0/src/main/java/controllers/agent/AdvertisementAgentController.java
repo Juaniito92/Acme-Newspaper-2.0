@@ -13,16 +13,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.AdminService;
 import services.AdvertisementService;
 import services.AgentService;
 import services.NewspaperService;
+import domain.Admin;
 import domain.Advertisement;
 import domain.Agent;
 import domain.Newspaper;
 
 @Controller
 @RequestMapping("/advertisement/agent")
-public class AdvertisementController {
+public class AdvertisementAgentController {
 
 	@Autowired
 	private AdvertisementService	advertisementService;
@@ -33,11 +35,14 @@ public class AdvertisementController {
 	@Autowired
 	private NewspaperService		newspaperService;
 
+	@Autowired
+	private AdminService			adminService;
+
 
 	// Constructor
 	// -------------------------------------------------------------------
 
-	public AdvertisementController() {
+	public AdvertisementAgentController() {
 		super();
 	}
 
@@ -52,7 +57,22 @@ public class AdvertisementController {
 		agent = this.agentService.findByPrincipal();
 		advertisements = agent.getAdvertisements();
 
-		res = new ModelAndView("advertisements/list");
+		res = new ModelAndView("advertisement/list");
+		res.addObject("requestURI", "advertisement/list.do");
+		res.addObject("advertisements", advertisements);
+
+		return res;
+	}
+
+	@RequestMapping(value = "/listTaboo", method = RequestMethod.GET)
+	public ModelAndView listTaboo() {
+		ModelAndView res;
+		Collection<Advertisement> advertisements;
+		Admin admin;
+		admin = this.adminService.findByPrincipal();
+		advertisements = this.advertisementService.getAdvertisementsTabooWords();
+
+		res = new ModelAndView("advertisement/list");
 		res.addObject("requestURI", "advertisement/list.do");
 		res.addObject("advertisements", advertisements);
 
@@ -65,8 +85,11 @@ public class AdvertisementController {
 	public ModelAndView create(@RequestParam int newspaperId) {
 		ModelAndView res;
 		Advertisement advertisement;
+		Collection<Newspaper> newspapers;
 
 		advertisement = this.advertisementService.create(newspaperId);
+		newspapers = this.newspaperService.findAll();
+
 		res = this.createEditModelAndView(advertisement);
 
 		return res;

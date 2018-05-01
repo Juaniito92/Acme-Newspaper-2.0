@@ -28,20 +28,24 @@
 	<display:column property="bannerURL" title="${bannerURL}"
 		sortable="false" /> --%>
 
-	<spring:message code="advertisement.infoPageLink" var="infoPageLink" />
-	<display:column property="infoPageLink" title="${infoPageLink}"
+	<spring:message code="advertisement.infoPageLink" var="page" />
+	<display:column property="title" title="${page}"
+		sortable="false" />
+	
+	<spring:message code="advertisement.infoPageLink" var="page" />
+	<display:column property="page" title="${page}"
 		sortable="false" />
 
 	<spring:message code="advertisement.creditCard" var="creditCard" />
-	<display:column property="creditCard.brandName" title="${creditCard}"
+	<display:column property="creditCard.brand" title="${creditCard}"
 		sortable="false" />
 		
-		<spring:message code="advertisement.trip" var="trip" />
-	<display:column property="trip.title" title="${trip}"
+		<spring:message code="advertisement.newspaper" var="newspaper" />
+	<display:column property="newspaper.title" title="${newspaper}"
 		sortable="false" />
 		
 	<display:column>
-			<a href="advertisement/agent/display.do?advertisementId=<jstl:out value="${row.getId()}"/>"><spring:message code="trip.display" /></a><br/>
+			<a href="advertisement/agent/display.do?advertisementId=<jstl:out value="${row.getId()}"/>"><spring:message code="newspaper.display" /></a><br/>
 	</display:column>
 </display:table>
 

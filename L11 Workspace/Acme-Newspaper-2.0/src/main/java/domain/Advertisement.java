@@ -1,3 +1,4 @@
+
 package domain;
 
 import javax.persistence.Access;
@@ -7,12 +8,15 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.hibernate.validator.constraints.URL;
 
 @Entity
+@Indexed
 @Access(AccessType.PROPERTY)
 public class Advertisement extends DomainEntity {
 
@@ -22,26 +26,29 @@ public class Advertisement extends DomainEntity {
 		super();
 	}
 
+
 	// Attributes
 
-	private String title;
-	private String banner;
-	private String page;
-	private CreditCard creditCard;
+	private String		title;
+	private String		banner;
+	private String		page;
+	private CreditCard	creditCard;
+
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
+	@Field
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
 	@URL
 	public String getBanner() {
-		return banner;
+		return this.banner;
 	}
 
 	public void setBanner(String banner) {
@@ -50,7 +57,7 @@ public class Advertisement extends DomainEntity {
 
 	@URL
 	public String getPage() {
-		return page;
+		return this.page;
 	}
 
 	public void setPage(String page) {
@@ -60,22 +67,24 @@ public class Advertisement extends DomainEntity {
 	@Valid
 	@NotNull
 	public CreditCard getCreditCard() {
-		return creditCard;
+		return this.creditCard;
 	}
 
 	public void setCreditCard(CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
 
+
 	// Relationships
 
-	private Agent agent;
-	private Newspaper newspaper;
+	private Agent		agent;
+	private Newspaper	newspaper;
+
 
 	@Valid
 	@ManyToOne(optional = false)
 	public Agent getAgent() {
-		return agent;
+		return this.agent;
 	}
 
 	public void setAgent(Agent agent) {
@@ -85,7 +94,7 @@ public class Advertisement extends DomainEntity {
 	@Valid
 	@ManyToOne(optional = false)
 	public Newspaper getNewspaper() {
-		return newspaper;
+		return this.newspaper;
 	}
 
 	public void setNewspaper(Newspaper newspaper) {

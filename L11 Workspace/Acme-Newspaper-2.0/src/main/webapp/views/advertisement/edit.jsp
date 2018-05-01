@@ -15,20 +15,27 @@
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="agent" />
+	
+	<form:label path="title">
+		<spring:message code="advertisement.title" />:
+	</form:label>
+	<form:input path="title" />
+	<form:errors cssClass="error" path="title" />
+	<br/>
 
-	<form:label path="bannerURL">
+	<form:label path="banner">
 		<spring:message code="advertisement.bannerURL" />:
 	</form:label>
-	<form:input path="bannerURL" />
-	<form:errors cssClass="error" path="bannerURL" />
+	<form:input path="banner" />
+	<form:errors cssClass="error" path="banner" />
 	<br/>
 	
 	
-	<form:label path="infoPageLink">
+	<form:label path="page">
 		<spring:message code="advertisement.infoPageLink" />:
 	</form:label>
-	<form:input path="infoPageLink" />
-	<form:errors cssClass="error" path="infoPageLink" />
+	<form:input path="page" />
+	<form:errors cssClass="error" path="page" />
 	<br/>
 
 	<%-- <form:label path="creditCard">
@@ -49,21 +56,19 @@
 	</jstl:if> --%>
 	<fieldset>
 	<legend><spring:message code="advertisement.introduceCreditCard"/></legend><br/>
-	<form:hidden path="creditCard.id" />
-	<form:hidden path="creditCard.version" />
 	
-	<form:label path="creditCard.holderName">
+	<form:label path="creditCard.holder">
 		<spring:message code="creditCard.holderName" />:
 	</form:label>
-	<form:input path="creditCard.holderName" />
-	<form:errors cssClass="error" path="creditCard.holderName" />
+	<form:input path="creditCard.holder" />
+	<form:errors cssClass="error" path="creditCard.holder" />
 	<br/>
 	
-	<form:label path="creditCard.brandName">
+	<form:label path="creditCard.brand">
 		<spring:message code="creditCard.brandName" />:
 	</form:label>
-	<form:input path="creditCard.brandName" />
-	<form:errors cssClass="error" path="creditCard.brandName" />
+	<form:input path="creditCard.brand" />
+	<form:errors cssClass="error" path="creditCard.brand" />
 	<br/>
 
 	<form:label path="creditCard.number">
@@ -87,28 +92,28 @@
 	<form:errors cssClass="error" path="creditCard.expirationYear" />
 	<br/>
 
-	<form:label path="creditCard.CVV">
+	<form:label path="creditCard.cvv">
 		<spring:message code="creditCard.CVV" />:
 	</form:label>
-	<form:input path="creditCard.CVV" />
-	<form:errors cssClass="error" path="creditCard.CVV" />
+	<form:input path="creditCard.cvv" />
+	<form:errors cssClass="error" path="creditCard.cvv" />
 	<br/>
 	</fieldset>
 
 	<br/>
 	
-	<form:label path="trip">
-		<spring:message code="advertisement.trip"/>:
+	<form:label path="newspaper">
+		<spring:message code="advertisement.newspaper"/>:
 	</form:label>
-	<form:select path="trip">
+	<form:select path="newspaper">
 		<form:option value="0">----</form:option>
 		<form:options
-			items="${trips}"
+			items="${newspapers}"
 			itemLabel="title"
 			itemValue="id"
 		/>
 	</form:select>
-	<form:errors cssClass="error" path="trip"/>
+	<form:errors cssClass="error" path="newspaper"/>
 	
 	<br/>
 	

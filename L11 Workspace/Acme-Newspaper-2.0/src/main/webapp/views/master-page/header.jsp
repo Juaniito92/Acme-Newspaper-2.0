@@ -33,25 +33,34 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('USER')">
-		<li><a class="fNiv"><spring:message	code="master.page.user" /></a>
-			<ul>
-				<li><a href="newspaper/user/create.do"><spring:message code="master.page.user.newspaperCreate" /></a></li>
-				<li><a href="newspaper/user/list.do"><spring:message code="master.page.user.listNewspapers" /></a></li>
-				<li><a href="newspaper/user/list-nonPublished.do"><spring:message code="master.page.user.listNewspapersNonPublished" /></a></li>
-				<li><a href="article/user/list.do"><spring:message code="master.page.user.listArticles" /></a></li>
-				<li><a href="followUp/user/list.do"><spring:message code="master.page.user.listFollowUps" /></a></li>
-				<li><a href="volume/user/list.do"><spring:message code="master.page.user.yourVolumes" /></a></li>
-				<li><a href="user/user/list-followers.do"><spring:message code="master.page.user.listFollowers" /></a></li>
-				<li><a href="user/user/list-followed.do"><spring:message code="master.page.user.listFollowed" /></a></li>
-				<li><a href="chirp/user/create.do"><spring:message code="master.page.chirp.publish" /></a></li>
-				<li><a href="chirp/user/list-timeline.do"><spring:message code="master.page.chirp.timeline" /></a></li>
-				
-			</ul>
-			
+			<li><a class="fNiv"><spring:message	code="master.page.user" /></a>
+				<ul>
+					<li><a href="newspaper/user/create.do"><spring:message code="master.page.user.newspaperCreate" /></a></li>
+					<li><a href="newspaper/user/list.do"><spring:message code="master.page.user.listNewspapers" /></a></li>
+					<li><a href="newspaper/user/list-nonPublished.do"><spring:message code="master.page.user.listNewspapersNonPublished" /></a></li>
+					<li><a href="article/user/list.do"><spring:message code="master.page.user.listArticles" /></a></li>
+					<li><a href="followUp/user/list.do"><spring:message code="master.page.user.listFollowUps" /></a></li>
+					<li><a href="volume/user/list.do"><spring:message code="master.page.user.yourVolumes" /></a></li>
+					<li><a href="user/user/list-followers.do"><spring:message code="master.page.user.listFollowers" /></a></li>
+					<li><a href="user/user/list-followed.do"><spring:message code="master.page.user.listFollowed" /></a></li>
+					<li><a href="chirp/user/create.do"><spring:message code="master.page.chirp.publish" /></a></li>
+					<li><a href="chirp/user/list-timeline.do"><spring:message code="master.page.chirp.timeline" /></a></li>
+					
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">
 
+		</security:authorize>
+		
+		<security:authorize access="hasRole('AGENT')">
+			<li><a class="fNiv"><spring:message	code="master.page.agent" /></a>
+				<ul>
+					<li><a href="newspaper/agent/listAdvertised.do"><spring:message code="master.page.agent.listAdvertised" /></a></li>
+					<li><a href="newspaper/agent/listNotAdvertised.do"><spring:message code="master.page.agent.listNotAdvertised" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">

@@ -65,3 +65,7 @@
 	</jstl:if>
 </security:authorize>
 
+<jstl:if test="${advertisement!=null}">
+	<a href="${advertisement.page}"> <img src="${advertisement.banner}"/></a>
+</jstl:if>
+

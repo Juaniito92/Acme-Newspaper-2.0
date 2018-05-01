@@ -71,12 +71,13 @@
 		<security:intercept-url pattern="/user/**" access="permitAll" />
 		
 		<!-- Agent -->
-		<security:intercept-url pattern="/agent/**" access="permitAll" />
 		<security:intercept-url pattern="/agent/agent/**" access="hasRole('AGENT')" />
+		<security:intercept-url pattern="/agent/**" access="permitAll" />
 		
 		<!-- Advertisement -->
-		<security:intercept-url pattern="/advertisement/**" access="permitAll" />
 		<security:intercept-url pattern="/advertisement/agent/**" access="hasRole('AGENT')" />
+		<security:intercept-url pattern="/advertisement/admin/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/advertisement/**" access="permitAll" />
 		
 		<!-- Configuration -->
 		<security:intercept-url pattern="/configuration/admin/**" access="hasRole('ADMIN')" />

@@ -76,6 +76,13 @@
 			</display:column>
 		</jstl:if>
 	</security:authorize>
+	<security:authorize access="hasRole('AGENT')">
+			<display:column>
+				<a
+					href="advertisement/agent/create.do?newspaperId=${row.id}"><spring:message
+						code="newspaper.createAdvertisement" /></a>
+			</display:column>
+	</security:authorize>
 
 	<display:column>
 		<a href="newspaper/display.do?newspaperId=${row.id}"><spring:message
