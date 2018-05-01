@@ -38,7 +38,7 @@ public class AdvertisementAdminController {
 		advertisements = this.advertisementService.getAdvertisementsTabooWords();
 
 		res = new ModelAndView("advertisement/list");
-		res.addObject("requestURI", "advertisement/list.do");
+		res.addObject("requestURI", "advertisement/admin/listTaboo.do");
 		res.addObject("advertisements", advertisements);
 
 		return res;
@@ -53,10 +53,29 @@ public class AdvertisementAdminController {
 
 		s = this.advertisementService.findOne(advertisementId);
 
-		result = new ModelAndView("advertisement/display");
+		result = new ModelAndView("advertisement/admin/display");
 		result.addObject("advertisement", s);
 
 		return result;
+	}
+
+	// Delete -------------------------------------------------------------
+
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam int advertisementId) {
+		ModelAndView result;
+		Advertisement ad;
+		ad = this.advertisementService.findOne(advertisementId);
+
+		try {
+			this.advertisementService.delete(ad);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:listTaboo.do");
+		}
+
+		return result;
+
 	}
 
 }

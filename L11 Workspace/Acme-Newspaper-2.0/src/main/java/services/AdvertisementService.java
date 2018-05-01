@@ -36,6 +36,9 @@ public class AdvertisementService {
 	private AgentService			agentService;
 
 	@Autowired
+	private AdminService			adminService;
+
+	@Autowired
 	private ConfigurationService	configService;
 
 
@@ -67,6 +70,19 @@ public class AdvertisementService {
 		res = this.advertisementRepository.save(advertisement);
 
 		return res;
+	}
+
+	public void delete(Advertisement ad) {
+		Assert.notNull(ad);
+
+		Newspaper newspaper = this.newspaperService.findOne(ad.getNewspaper().getId());
+		Collection<Advertisement> ads = newspaper.getAdvertisements();
+		ads.remove(ad);
+		newspaper.setAdvertisements(ads);
+
+		//this.newspaperService.save(newspaper);
+		this.advertisementRepository.delete(ad);
+
 	}
 
 	public Collection<Advertisement> findAll() {

@@ -48,7 +48,7 @@ public class NewspaperAgentController extends AbstractController {
 
 		ModelAndView result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
-		result.addObject("requestURI", "newspaper/listAdvertised.do");
+		result.addObject("requestURI", "newspaper/agent/listAdvertised.do");
 
 		return result;
 	}
@@ -64,7 +64,7 @@ public class NewspaperAgentController extends AbstractController {
 
 		ModelAndView result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
-		result.addObject("requestURI", "newspaper/listNotAdvertised.do");
+		result.addObject("requestURI", "newspaper/agent/listNotAdvertised.do");
 
 		return result;
 	}

@@ -28,6 +28,13 @@
 	<display:column property="bannerURL" title="${bannerURL}"
 		sortable="false" /> --%>
 
+	<security:authorize access="hasRole('ADMIN')">
+		<display:column>
+			<a href="advertisement/admin/delete.do?advertisementId=${row.id }"> <spring:message
+					code="article.delete" /></a>
+		</display:column>
+	</security:authorize>
+
 	<spring:message code="advertisement.infoPageLink" var="page" />
 	<display:column property="title" title="${page}"
 		sortable="false" />
