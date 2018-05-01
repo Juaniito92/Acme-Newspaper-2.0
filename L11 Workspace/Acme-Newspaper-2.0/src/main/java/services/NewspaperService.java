@@ -337,4 +337,8 @@ public class NewspaperService {
 		return this.newspaperRepository.findByNotAdvertisementAgentId(agentId);
 	}
 
+	public Double ratioNewspapersAds() {
+		return this.newspaperRepository.ratioNewspapersWithVsWithoutAdvertisements();
+	}
+
 }

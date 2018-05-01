@@ -229,6 +229,40 @@
 		</td>
 	</tr>
 </table>
+
+<spring:message code="administrator.newspaperWithAdsRatioLabel" />
+<jstl:out value="${newspaperWithAdsRatioLabel}"></jstl:out>
+<table class="displaytag"  name="newspaperWithAdsRatio">
+	<tr>
+		<th>
+			<spring:message code="administrator.ratio" var="ratioHeader" />
+			<jstl:out value="${ratioHeader}"></jstl:out>
+		</th>
+	</tr>
+	<tr>
+	
+		<td>
+			<jstl:out value="${newspaperWithAdsRatio}"></jstl:out>
+		</td>
+	</tr>
+</table>
+
+<spring:message code="administrator.advertisementTabooWordsRatioLabel" />
+<jstl:out value="${advertisementTabooWordsRatioLabel}"></jstl:out>
+<table class="displaytag"  name="advertisementTabooWordsRatio">
+	<tr>
+		<th>
+			<spring:message code="administrator.ratio" var="ratioHeader" />
+			<jstl:out value="${ratioHeader}"></jstl:out>
+		</th>
+	</tr>
+	<tr>
+	
+		<td>
+			<jstl:out value="${advertisementTabooWordsRatio}"></jstl:out>
+		</td>
+	</tr>
+</table>
 	
 
 </security:authorize>

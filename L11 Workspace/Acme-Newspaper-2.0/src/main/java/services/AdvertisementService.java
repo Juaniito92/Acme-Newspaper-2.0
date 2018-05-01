@@ -110,6 +110,10 @@ public class AdvertisementService {
 		}
 		return new HashSet<Advertisement>(ans);
 	}
+
+	public Double ratioAdsTabooWords() {
+		return (double) this.getAdvertisementsTabooWords().size() / (double) this.advertisementRepository.findAll().size();
+	}
 	//TODO Arreglar query de Lucene
 	//	public Collection<Advertisement> getAdvertisementsTabooWords() {
 	//		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Acme-Newspaper-2.0");

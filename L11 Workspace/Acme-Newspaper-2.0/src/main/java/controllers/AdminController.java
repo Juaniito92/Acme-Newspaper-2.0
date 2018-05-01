@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AdminService;
+import services.AdvertisementService;
+import services.NewspaperService;
 import domain.Newspaper;
 
 @Controller
@@ -26,7 +28,11 @@ import domain.Newspaper;
 public class AdminController extends AbstractController {
 
 	@Autowired
-	private AdminService	adminService;
+	private AdminService			adminService;
+	@Autowired
+	private NewspaperService		newspaperService;
+	@Autowired
+	private AdvertisementService	advertisementService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -55,6 +61,8 @@ public class AdminController extends AbstractController {
 		Double avgNumberOfFollowUpsPerArticleAfter2Week;
 		Object avgStddevNumberOfChirpPerUser[];
 		Double ratioUsersMorePostedChirpsOfAveragePerUser;
+		Double newspaperWithAdsRatio;
+		Double advertisementTabooWordsRatio;
 
 		avgSqtrUser = this.adminService.avgSqtrUser();
 		avgSqtrArticlesByWriter = this.adminService.avgSqtrArticlesByWriter();
@@ -63,12 +71,14 @@ public class AdminController extends AbstractController {
 		newspapersFewerAverage = this.adminService.newspapersFewerAverage();
 		ratioUserCreatedNewspaper = this.adminService.ratioUserCreatedNewspaper();
 		ratioUserWrittenArticle = this.adminService.ratioUserWrittenArticle();
-		avgFollowupsPerArticle= this.adminService.avgFollowupsPerArticle();
-		avgNumberOfFollowUpsPerArticleAfter1Week= this.adminService.avgNumberOfFollowUpsPerArticleAfter1Week();
-		avgNumberOfFollowUpsPerArticleAfter2Week= this.adminService.avgNumberOfFollowUpsPerArticleAfter2Week();
-		avgStddevNumberOfChirpPerUser= this.adminService.avgStddevNumberOfChirpPerUser();
-		ratioUsersMorePostedChirpsOfAveragePerUser=this.adminService.ratioUsersMorePostedChirpsOfAveragePerUser();
-		
+		avgFollowupsPerArticle = this.adminService.avgFollowupsPerArticle();
+		avgNumberOfFollowUpsPerArticleAfter1Week = this.adminService.avgNumberOfFollowUpsPerArticleAfter1Week();
+		avgNumberOfFollowUpsPerArticleAfter2Week = this.adminService.avgNumberOfFollowUpsPerArticleAfter2Week();
+		avgStddevNumberOfChirpPerUser = this.adminService.avgStddevNumberOfChirpPerUser();
+		ratioUsersMorePostedChirpsOfAveragePerUser = this.adminService.ratioUsersMorePostedChirpsOfAveragePerUser();
+		newspaperWithAdsRatio = this.newspaperService.ratioNewspapersAds();
+		advertisementTabooWordsRatio = this.advertisementService.ratioAdsTabooWords();
+
 		result.addObject("avgSqtrUser", avgSqtrUser);
 		result.addObject("avgSqtrArticlesByWriter", avgSqtrArticlesByWriter);
 		result.addObject("avgSqtrArticlesByNewspaper", avgSqtrArticlesByNewspaper);
@@ -81,7 +91,9 @@ public class AdminController extends AbstractController {
 		result.addObject("avgNumberOfFollowUpsPerArticleAfter2Week", avgNumberOfFollowUpsPerArticleAfter2Week);
 		result.addObject("avgStddevNumberOfChirpPerUser", avgStddevNumberOfChirpPerUser);
 		result.addObject("ratioUsersMorePostedChirpsOfAveragePerUser", ratioUsersMorePostedChirpsOfAveragePerUser);
-		
+		result.addObject("newspaperWithAdsRatio", newspaperWithAdsRatio);
+		result.addObject("advertisementTabooWordsRatio", advertisementTabooWordsRatio);
+
 		return result;
 	}
 
