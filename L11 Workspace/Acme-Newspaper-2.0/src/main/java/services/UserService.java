@@ -18,8 +18,10 @@ import security.UserAccount;
 import domain.Actor;
 import domain.Article;
 import domain.Chirp;
+import domain.Folder;
 import domain.Newspaper;
 import domain.User;
+import domain.Volume;
 import forms.UserForm;
 
 @Service
@@ -35,6 +37,9 @@ public class UserService {
 	
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private FolderService folderService;
 
 	@Autowired
 	private Validator validator;
@@ -61,6 +66,8 @@ public class UserService {
 		Collection<Chirp> chirps = new ArrayList<Chirp>();
 		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
 		Collection<Article> articles = new ArrayList<Article>();
+		Collection<Folder> folders = new ArrayList<Folder>();
+		Collection<Volume> volumes = new ArrayList<Volume>();
 
 		authority.setAuthority(Authority.USER);
 		userAccount.addAuthority(authority);
@@ -71,6 +78,8 @@ public class UserService {
 		res.setChirps(chirps);
 		res.setNewspapers(newspapers);
 		res.setArticles(articles);
+		res.setFolders(folders);
+		res.setVolumes(volumes);
 
 		return res;
 	}
@@ -93,6 +102,8 @@ public class UserService {
 		User res;
 
 		if (user.getId() == 0) {
+			folderService.createSystemFolders(user);
+			
 			String pass = user.getUserAccount().getPassword();
 
 			final Md5PasswordEncoder code = new Md5PasswordEncoder();

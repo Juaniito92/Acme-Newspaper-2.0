@@ -21,18 +21,21 @@
 		<jstl:when test="${requestURI == 'volume/user/list.do'  }">
 			<spring:message code="volume.yourVolumes" />
 		</jstl:when>
+		<jstl:when test="${requestURI == 'volume/customer/list.do'  }">
+			<spring:message code="volume.subscribedVolumes" />
+		</jstl:when>
 	</jstl:choose>
 </h3>
 
 <display:table name="volumes" id="row" requestURI="${requestURI}"
 	pagesize="5" class="displaytag">
-	
+
 	<security:authorize access="hasRole('USER')">
 		<display:column>
-			<security:authentication property="principal" var="loggedactor"/>
+			<security:authentication property="principal" var="loggedactor" />
 			<jstl:if test="${row.user.userAccount.id eq loggedactor.id}">
 				<a href="volume/user/edit.do?volumeId=${row.id}"><spring:message
-							code="volume.edit" /></a>
+						code="volume.edit" /></a>
 			</jstl:if>
 		</display:column>
 	</security:authorize>
@@ -43,6 +46,17 @@
 					code="volume.newspapers" /></a>
 		</jstl:if>
 	</display:column>
+
+	<security:authorize access="hasRole('CUSTOMER')">
+		<jstl:if test="${requestURI != 'volume/customer/list.do'}">
+			<display:column>
+				<jstl:if test="${!subscribedVolumes.contains(row)}">
+					<a href="subscriptionVolume/customer/create.do?volumeId=${row.id}"><spring:message
+							code="volume.subscribe" /></a>
+				</jstl:if>
+			</display:column>
+		</jstl:if>
+	</security:authorize>
 
 	<spring:message var="titleHeader" code="volume.title" />
 	<display:column property="title" title="${titleHeader}" />

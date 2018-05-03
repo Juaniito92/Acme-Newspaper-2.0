@@ -39,6 +39,10 @@
 			test="${requestURI == 'newspaper/user/listaddNewspapers.do'  }">
 			<spring:message code="newspaper.listAddNewspapers" />
 		</jstl:when>
+		<jstl:when
+			test="${requestURI == 'newspaper/customer/list.do'  }">
+			<spring:message code="newspaper.subscribedNewspapers" />
+		</jstl:when>
 	</jstl:choose>
 </h3>
 
@@ -99,7 +103,7 @@
 		title="${publicationDateHeader}" format="${formatDate}"
 		sortable="true" />
 
-	<jstl:if test="${requestURI == 'newspaper/list.do'}">
+	<jstl:if test="${requestURI == 'newspaper/list.do' or requestURI == 'newspaper/customer/list.do'}">
 		<spring:message var="publisherHeader" code="newspaper.publisher" />
 		<display:column title="${publisherHeader}" sortable="true">
 			<a href="user/display.do?userId=${row.publisher.id}"><jstl:out
