@@ -162,21 +162,21 @@ public class AdminService {
 	}
 
 	// C-6
-	public Double ratioUserCreatedNewspaper() {
+	public String ratioUserCreatedNewspaper() {
 		
 		Assert.isTrue(checkAuthority());
 		
-		Double res;
+		String res;
 		res = this.adminRepository.ratioUserCreatedNewspaper();
 		return res;
 	}
 
 	// C-7
-	public Double ratioUserWrittenArticle() {
+	public String ratioUserWrittenArticle() {
 		
 		Assert.isTrue(checkAuthority());
 		
-		Double res;
+		String res;
 		res = this.adminRepository.ratioUserWrittenArticle();
 		return res;
 	}
@@ -225,14 +225,26 @@ public class AdminService {
 		return res;
 	}
 	
-	//B-5
-		public Double ratioUsersMorePostedChirpsOfAveragePerUser() {
+	// B-5
+		public String ratioUsersMorePostedChirpsOfAveragePerUser() {
 			
 			Assert.isTrue(checkAuthority());
 			
-			Double res;
+			String res;
 			res = this.adminRepository.ratioUsersMorePostedChirpsOfAveragePerUser();
 			return res;
 		}
+		
+	// ACME-NEWSPAPER 2.0
+		
+	// B-1
+		public Double avgNumberOfNewspapersPerVolume(){
+			
+			Double result = adminRepository.avgNumberOfNewspapersPerVolume();
+			return result;
+		}
+		
+	// B-2
+		
 
 }
