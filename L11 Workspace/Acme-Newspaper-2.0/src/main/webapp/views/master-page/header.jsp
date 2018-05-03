@@ -98,6 +98,8 @@
 				<ul>
 					<li><a href="user/register.do"><spring:message
 								code="master.page.registerUser" /></a></li>
+					<li><a href="agent/register.do"><spring:message
+								code="master.page.registerAgent" /></a></li>
 				</ul>
 		</security:authorize>
 
