@@ -54,13 +54,13 @@ public class AdminController extends AbstractController {
 		Object avgSqtrArticlesByNewspaper[];
 		Collection<Newspaper> newspapersMoreAverage;
 		Collection<Newspaper> newspapersFewerAverage;
-		Double ratioUserCreatedNewspaper;
-		Double ratioUserWrittenArticle;
+		String ratioUserCreatedNewspaper;
+		String ratioUserWrittenArticle;
 		Double avgFollowupsPerArticle;
 		Double avgNumberOfFollowUpsPerArticleAfter1Week;
 		Double avgNumberOfFollowUpsPerArticleAfter2Week;
 		Object avgStddevNumberOfChirpPerUser[];
-		Double ratioUsersMorePostedChirpsOfAveragePerUser;
+		String ratioUsersMorePostedChirpsOfAveragePerUser;
 		Double newspaperWithAdsRatio;
 		Double advertisementTabooWordsRatio;
 

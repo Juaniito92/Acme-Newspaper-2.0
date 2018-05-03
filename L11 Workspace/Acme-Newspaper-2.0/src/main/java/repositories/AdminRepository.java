@@ -37,12 +37,12 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	Collection<Newspaper> newspapersFewerAverage();
 
 	// C-6
-	@Query("select count(u1)/((select count(u2) from User u2)+0.0) from User u1 where cast((select count(n) from Newspaper n where n.publisher=u1) as int)>0")
-	Double ratioUserCreatedNewspaper();
+	@Query("select concat(100*(select count(u1) from User u1 where cast((select count(n) from Newspaper n where n.publisher=u1) as int)>0)/ count(u2), '%') from User u2")
+	String ratioUserCreatedNewspaper();
 
 	// C-7
-	@Query("select count(u1)/((select count(u2) from User u2)+0.0) from User u1 where (select count(a) from Article a where a.writer=u1)>0")
-	Double ratioUserWrittenArticle();
+	@Query("select concat(100*(select count(u1) from User u1 where (select count(a) from Article a where a.writer=u1)>0)/ count(u2), '%') from User u2")
+	String ratioUserWrittenArticle();
 
 	// B-1
 	// The average number of follow-ups per article.
@@ -69,7 +69,20 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	// B-5
 	// The ratio of users who have posted above 75% the average number of chirps
 	// per user.
-	@Query("select count(m)/(select count(n) from User n) from User m where m.chirps.size > (select avg(v.chirps.size)*0.75 from User v))")
-	Double ratioUsersMorePostedChirpsOfAveragePerUser();
+	@Query("select concat(100*(select count(m) from User m where m.chirps.size > (select avg(v.chirps.size)*0.75 from User v))/ count(n), '%') from User n")
+	String ratioUsersMorePostedChirpsOfAveragePerUser();
+	
+	// ACME_NEWSPAPER 2.0
+	
+	// B-1
+	// The average number of newspapers per volume
+	
+	@Query("select avg(v.newspapers.size) from Volume v")
+	Double avgNumberOfNewspapersPerVolume();
+	
+	// B-2
+	// The ratio of subscriptions to volumes versus subscriptions to newspapers
+	@Query("select concat(100*(select count(sv) from SubscriptionVolume sv)/ count(sn), '%') from SubscriptionNewspaper sn")
+	String ratioSubscriptionsVolumeVersusSubscriptionsNewspaper();
 
 }

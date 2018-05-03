@@ -1,6 +1,5 @@
-package controllers;
+package controllers.customer;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,46 +8,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CustomerService;
 import services.VolumeService;
+import controllers.AbstractController;
 import domain.Volume;
 
 @Controller
-@RequestMapping("/volume")
-public class VolumeController extends AbstractController {
+@RequestMapping("/volume/customer")
+public class VolumeCustomerController extends AbstractController {
 
 	// Services ------------------------------------------------------
 
 	@Autowired
 	private VolumeService volumeService;
-	
-	@Autowired
-	private CustomerService customerService;
-	
+
 	// Constructors --------------------------------------------------
 
-	public VolumeController() {
+	public VolumeCustomerController() {
 		super();
 	}
 
-	// Listing -------------------------------------------------------
+	// List -------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 
-		Collection<Volume> volumes = new ArrayList<Volume>();
-		Collection<Volume> subscribedVolumes = new ArrayList<Volume>();
+		Collection<Volume> volumes;
 
-		volumes = volumeService.findAll();
-		
-		if(customerService.findByPrincipal() != null){
-			subscribedVolumes = volumeService.findSubscribedVolumesByPrincipal();
-		}
+		volumes = volumeService.findSubscribedVolumesByPrincipal();
 
 		ModelAndView result = new ModelAndView("volume/list");
 		result.addObject("volumes", volumes);
-		result.addObject("subscribedVolumes", subscribedVolumes);
-		result.addObject("requestURI", "volume/list.do");
+		result.addObject("requestURI", "volume/customer/list.do");
 
 		return result;
 	}

@@ -56,7 +56,4 @@
 	</display:column>
 </display:table>
 
-<a href="advertisement/agent/create.do"><spring:message
-		code="advertisement.create" /></a>
-
 
