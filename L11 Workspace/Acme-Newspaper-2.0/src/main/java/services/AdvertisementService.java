@@ -65,7 +65,7 @@ public class AdvertisementService {
 
 	public Advertisement save(final Advertisement advertisement) {
 		Assert.notNull(advertisement);
-		Assert.isTrue(this.checkExpiration(advertisement.getCreditCard()), "The credit card must not have expired");
+		Assert.isTrue(this.checkExpiration(advertisement.getCreditCard()), "cardExpireError");
 		Advertisement res;
 		res = this.advertisementRepository.save(advertisement);
 

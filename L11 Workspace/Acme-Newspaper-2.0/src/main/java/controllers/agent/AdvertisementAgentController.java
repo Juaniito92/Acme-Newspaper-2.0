@@ -122,7 +122,10 @@ public class AdvertisementAgentController {
 				res = new ModelAndView("redirect:list.do");
 
 			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(advertisement, "application.commit.error");
+				if (oops.getMessage() == "cardExpireError")
+					res = this.createEditModelAndView(advertisement, "creditCard.expiration.error");
+				else
+					res = this.createEditModelAndView(advertisement, "application.commit.error");
 
 			}
 		return res;
