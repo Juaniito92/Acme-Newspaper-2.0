@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import repositories.FolderRepository;
 import domain.Actor;
 import domain.Folder;
 import domain.Message;
+import repositories.FolderRepository;
 
 @Service
 @Transactional
@@ -21,15 +21,14 @@ public class FolderService {
 
 	// Managed repository
 	@Autowired
-	private FolderRepository	folderRepository;
+	private FolderRepository folderRepository;
 
 	// Supporting services
 	@Autowired
-	private ActorService		actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private MessageService		messageService;
-
+	private MessageService messageService;
 
 	// Constructor
 	public FolderService() {
@@ -47,6 +46,7 @@ public class FolderService {
 		final Collection<Folder> actorFolders = actor.getFolders();
 		actorFolders.add(folder);
 		actor.setFolders(actorFolders);
+		folder.setActor(actor);
 		return folder;
 	}
 
@@ -156,31 +156,31 @@ public class FolderService {
 		final Collection<Folder> folders = new ArrayList<Folder>();
 
 		inbox = new Folder();
-		inbox.setChildren(new ArrayList<Folder>());
+		inbox.setActor(actor);
 		inbox.setPredefined(true);
 		inbox.setName("in box");
 		inbox.setMessages(new ArrayList<Message>());
 
 		outbox = new Folder();
-		outbox.setChildren(new ArrayList<Folder>());
+		outbox.setActor(actor);
 		outbox.setPredefined(true);
 		outbox.setName("out box");
 		outbox.setMessages(new ArrayList<Message>());
 
 		trashbox = new Folder();
-		trashbox.setChildren(new ArrayList<Folder>());
+		trashbox.setActor(actor);
 		trashbox.setPredefined(true);
 		trashbox.setName("trash box");
 		trashbox.setMessages(new ArrayList<Message>());
 
 		notificationbox = new Folder();
-		notificationbox.setChildren(new ArrayList<Folder>());
+		notificationbox.setActor(actor);
 		notificationbox.setPredefined(true);
 		notificationbox.setName("notification box");
 		notificationbox.setMessages(new ArrayList<Message>());
 
 		spambox = new Folder();
-		spambox.setChildren(new ArrayList<Folder>());
+		spambox.setActor(actor);
 		spambox.setPredefined(true);
 		spambox.setName("spam box");
 		spambox.setMessages(new ArrayList<Message>());

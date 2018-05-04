@@ -6,8 +6,6 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -15,6 +13,7 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
@@ -31,14 +30,12 @@ public class Message extends DomainEntity {
 		super();
 	}
 
-
 	// Attributes -------------------------------------------------------------
 
-	private Date		moment;
-	private String		subject;
-	private String		body;
-	private Priority	priority;
-
+	private Date moment;
+	private String subject;
+	private String body;
+	private String priority;
 
 	@NotNull
 	@Past
@@ -72,35 +69,19 @@ public class Message extends DomainEntity {
 		this.body = body;
 	}
 
-	@NotNull
-	@Valid
-	@Enumerated(EnumType.STRING)
-	public Priority getPriority() {
+	@Pattern(regexp = "(^HIGH|NEUTRAL|LOW$)")
+	public String getPriority() {
 		return this.priority;
 	}
 
-	public void setPriority(final Priority priority) {
+	public void setPriority(final String priority) {
 		this.priority = priority;
 	}
 
-
 	// Relationships ----------------------------------------------------------
 
-	private Actor	sender;
-	private Actor	recipient;
-	private Folder	folder;
-
-
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Folder getFolder() {
-		return this.folder;
-	}
-
-	public void setFolder(final Folder folder) {
-		this.folder = folder;
-	}
+	private Actor sender;
+	private Actor recipient;
 
 	@NotNull
 	@Valid

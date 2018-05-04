@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.VolumeRepository;
+import domain.CreditCard;
 import domain.Customer;
 import domain.Newspaper;
 import domain.SubscriptionVolume;
@@ -38,7 +39,7 @@ public class VolumeService {
 
 	@Autowired
 	private AdminService adminService;
-	
+
 	@Autowired
 	private CustomerService customerService;
 
@@ -121,8 +122,7 @@ public class VolumeService {
 		return volumeForm;
 	}
 
-	public Volume reconstruct(final VolumeForm volumeForm,
-			final BindingResult binding) {
+	public Volume reconstruct(final VolumeForm volumeForm, final BindingResult binding) {
 
 		Assert.notNull(volumeForm);
 
@@ -160,7 +160,7 @@ public class VolumeService {
 		Collection<Volume> result = findByUserId(principal.getId());
 		return result;
 	}
-	
+
 	public Collection<Volume> findSubscribedVolumesByCustomerId(int customerId) {
 
 		Assert.isTrue(customerId != 0);
@@ -168,13 +168,13 @@ public class VolumeService {
 		Collection<Volume> result = volumeRepository.findSubscribedVolumesByCustomerId(customerId);
 		return result;
 	}
-	
-	public Collection<Volume> findSubscribedVolumesByPrincipal(){
-		
+
+	public Collection<Volume> findSubscribedVolumesByPrincipal() {
+
 		Customer principal = customerService.findByPrincipal();
-		
+
 		Assert.notNull(principal);
-		
+
 		Collection<Volume> result = findSubscribedVolumesByCustomerId(principal.getId());
 		return result;
 	}

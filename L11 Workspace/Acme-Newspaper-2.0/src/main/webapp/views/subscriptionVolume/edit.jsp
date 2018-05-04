@@ -21,7 +21,7 @@
 	<form:hidden path="volumeId" />
 
 	<b><label><spring:message code="subscriptionVolume.volume" />:&nbsp;</label></b>
-	<input readonly="readonly" value="<jstl:out value="${volume.title}"/>"/>
+	<input readonly="readonly" value="<jstl:out value="${volume.title}"/>" />
 
 	<fieldset>
 		<legend>
@@ -32,8 +32,7 @@
 			path="holder" />
 		<br />
 
-		<acme:textbox code="subscriptionVolume.creditCard.brand"
-			path="brand" />
+		<acme:textbox code="subscriptionVolume.creditCard.brand" path="brand" />
 		<br />
 
 		<acme:textbox code="subscriptionVolume.creditCard.number"
@@ -41,15 +40,17 @@
 		<br />
 
 		<acme:textbox code="subscriptionVolume.creditCard.expirationMonth"
-			path="expirationMonth" placeholder="MM"/>
+			path="expirationMonth" placeholder="MM" />
 		<br />
+
+
 
 		<acme:textbox code="subscriptionVolume.creditCard.expirationYear"
-			path="expirationYear" placeholder="YYYY"/>
+			path="expirationYear" placeholder="YYYY" />
 		<br />
 
-		<acme:textbox code="subscriptionVolume.creditCard.cvv"
-			path="cvv" placeholder="###"/>
+		<acme:textbox code="subscriptionVolume.creditCard.cvv" path="cvv"
+			placeholder="###" />
 		<br />
 
 	</fieldset>

@@ -91,6 +91,11 @@
 		<!-- SubscriptionVolume -->
 		<security:intercept-url pattern="/subscriptionVolume/customer/**" access="hasRole('CUSTOMER')" />
 		
+		<!-- Folders y messages -->
+		
+		<security:intercept-url pattern="/folder/**" access="hasAnyRole('CUSTOMER', 'AGENT','USER', 'ADMIN')" />
+		<security:intercept-url pattern="/message/**" access="hasAnyRole('CUSTOMER', 'AGENT','USER', 'ADMIN')" />
+		
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

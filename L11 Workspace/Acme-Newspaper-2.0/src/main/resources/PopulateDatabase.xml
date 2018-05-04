@@ -14,7 +14,8 @@
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password"
+			value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -26,7 +27,8 @@
 
 	<bean id="userAccount3" class="security.UserAccount">
 		<property name="username" value="customer1" />
-		<property name="password" value="ffbc4675f864e0e9aab8bdf7a0437010" />
+		<property name="password"
+			value="ffbc4675f864e0e9aab8bdf7a0437010" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -38,7 +40,8 @@
 
 	<bean id="userAccount4" class="security.UserAccount">
 		<property name="username" value="customer2" />
-		<property name="password" value="5ce4d191fd14ac85a1469fb8c29b7a7b" />
+		<property name="password"
+			value="5ce4d191fd14ac85a1469fb8c29b7a7b" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -50,7 +53,8 @@
 
 	<bean id="userAccount5" class="security.UserAccount">
 		<property name="username" value="user1" />
-		<property name="password" value="24c9e15e52afc47c225b757e7bee1f9d" />
+		<property name="password"
+			value="24c9e15e52afc47c225b757e7bee1f9d" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -62,7 +66,8 @@
 
 	<bean id="userAccount6" class="security.UserAccount">
 		<property name="username" value="user2" />
-		<property name="password" value="7e58d63b60197ceb55a1c487989a3720" />
+		<property name="password"
+			value="7e58d63b60197ceb55a1c487989a3720" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -74,7 +79,8 @@
 
 	<bean id="userAccount7" class="security.UserAccount">
 		<property name="username" value="user3" />
-		<property name="password" value="92877af70a45fd6a2ed7fe81e1236b78" />
+		<property name="password"
+			value="92877af70a45fd6a2ed7fe81e1236b78" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -86,7 +92,8 @@
 
 	<bean id="userAccount8" class="security.UserAccount">
 		<property name="username" value="user4" />
-		<property name="password" value="3f02ebe3d7929b091e3d8ccfde2f3bc6" />
+		<property name="password"
+			value="3f02ebe3d7929b091e3d8ccfde2f3bc6" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -98,7 +105,8 @@
 
 	<bean id="userAccount9" class="security.UserAccount">
 		<property name="username" value="agent1" />
-		<property name="password" value="83a87fd756ab57199c0bb6d5e11168cb" />
+		<property name="password"
+			value="83a87fd756ab57199c0bb6d5e11168cb" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -110,7 +118,8 @@
 
 	<bean id="userAccount10" class="security.UserAccount">
 		<property name="username" value="agent2" />
-		<property name="password" value="b1a4a6b01cc297d4677c4ca6656e14d7" />
+		<property name="password"
+			value="b1a4a6b01cc297d4677c4ca6656e14d7" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -376,7 +385,7 @@
 		</property>
 		<property name="subscriptionsVolume">
 			<list>
-				<ref bean="subscriptionVolume1"/>
+				<ref bean="subscriptionVolume1" />
 			</list>
 		</property>
 	</bean>
@@ -406,7 +415,7 @@
 		</property>
 		<property name="subscriptionsVolume">
 			<list>
-				<ref bean="subscriptionVolume2"/>
+				<ref bean="subscriptionVolume2" />
 			</list>
 		</property>
 	</bean>
@@ -469,7 +478,8 @@
 		<property name="title" value="Title advertisement 1" />
 		<property name="banner"
 			value="http://www.pngall.com/wp-content/uploads/2016/07/Advertising-Free-Download-PNG.png" />
-		<property name="page" value="http://www.pngall.com/advertising-png" />
+		<property name="page"
+			value="http://www.pngall.com/advertising-png" />
 		<property name="creditCard" ref="creditCard4" />
 		<property name="agent" ref="agent1" />
 		<property name="newspaper" ref="newspaper1" />
@@ -480,7 +490,8 @@
 		<property name="title" value="Title advertisement 2" />
 		<property name="banner"
 			value="http://www.pngall.com/wp-content/uploads/2016/07/Advertising-Free-Download-PNG.png" />
-		<property name="page" value="http://www.pngall.com/advertising-png" />
+		<property name="page"
+			value="http://www.pngall.com/advertising-png" />
 		<property name="creditCard" ref="creditCard5" />
 		<property name="agent" ref="agent1" />
 		<property name="newspaper" ref="newspaper2" />
@@ -491,7 +502,8 @@
 		<property name="title" value="Title advertisement 3" />
 		<property name="banner"
 			value="http://www.pngall.com/wp-content/uploads/2016/07/Advertising-Free-Download-PNG.png" />
-		<property name="page" value="http://www.pngall.com/advertising-png" />
+		<property name="page"
+			value="http://www.pngall.com/advertising-png" />
 		<property name="creditCard" ref="creditCard6" />
 		<property name="agent" ref="agent2" />
 		<property name="newspaper" ref="newspaper1" />
@@ -502,7 +514,8 @@
 		<property name="title" value="Title advertisement 4" />
 		<property name="banner"
 			value="http://www.pngall.com/wp-content/uploads/2016/07/Advertising-Free-Download-PNG.png" />
-		<property name="page" value="http://www.pngall.com/advertising-png" />
+		<property name="page"
+			value="http://www.pngall.com/advertising-png" />
 		<property name="creditCard" ref="creditCard7" />
 		<property name="agent" ref="agent2" />
 		<property name="newspaper" ref="newspaper3" />
@@ -513,7 +526,8 @@
 		<property name="title" value="Title advertisement 5" />
 		<property name="banner"
 			value="http://www.pngall.com/wp-content/uploads/2016/07/Advertising-Free-Download-PNG.png" />
-		<property name="page" value="http://www.pngall.com/advertising-png" />
+		<property name="page"
+			value="http://www.pngall.com/advertising-png" />
 		<property name="creditCard" ref="creditCard8" />
 		<property name="agent" ref="agent2" />
 		<property name="newspaper" ref="newspaper3" />
@@ -527,14 +541,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="admin" />
 	</bean>
 
 	<bean id="folder2" class="domain.Folder">
@@ -543,21 +555,20 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
+
 		<property name="messages">
 			<list>
-				<ref bean="message3"/>
-				<ref bean="message4"/>
-				<ref bean="message5"/>
-				<ref bean="message6"/>
-				<ref bean="message7"/>
-				<ref bean="message8"/>
-				<ref bean="message9"/>
-				<ref bean="message10"/>
+				<ref bean="message3" />
+				<ref bean="message4" />
+				<ref bean="message5" />
+				<ref bean="message6" />
+				<ref bean="message7" />
+				<ref bean="message8" />
+				<ref bean="message9" />
+				<ref bean="message10" />
 			</list>
 		</property>
+		<property name="actor" ref="admin" />
 	</bean>
 
 	<bean id="folder3" class="domain.Folder">
@@ -566,14 +577,13 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
+
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="admin" />
 	</bean>
 
 	<bean id="folder4" class="domain.Folder">
@@ -582,14 +592,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="admin" />
 	</bean>
 
 	<bean id="folder5" class="domain.Folder">
@@ -598,14 +606,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="admin" />
 	</bean>
 
 	<!-- User1 folders -->
@@ -615,14 +621,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user1" />
 	</bean>
 
 	<bean id="folder7" class="domain.Folder">
@@ -631,14 +635,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message1"/>
+				<ref bean="message1" />
 			</list>
 		</property>
+		<property name="actor" ref="user1" />
 	</bean>
 
 	<bean id="folder8" class="domain.Folder">
@@ -647,14 +649,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message11"/>
+				<ref bean="message11" />
 			</list>
 		</property>
+		<property name="actor" ref="user1" />
 	</bean>
 
 	<bean id="folder9" class="domain.Folder">
@@ -663,14 +663,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user1" />
 	</bean>
 
 	<bean id="folder10" class="domain.Folder">
@@ -679,14 +677,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user1" />
 	</bean>
 
 	<!-- User2 folders -->
@@ -696,14 +692,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message2"/>
+				<ref bean="message2" />
 			</list>
 		</property>
+		<property name="actor" ref="user2" />
 	</bean>
 
 	<bean id="folder12" class="domain.Folder">
@@ -712,14 +706,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user2" />
 	</bean>
 
 	<bean id="folder13" class="domain.Folder">
@@ -728,14 +720,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message12"/>
+				<ref bean="message12" />
 			</list>
 		</property>
+		<property name="actor" ref="user2" />
 	</bean>
 
 	<bean id="folder14" class="domain.Folder">
@@ -744,14 +734,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user2" />
 	</bean>
 
 	<bean id="folder15" class="domain.Folder">
@@ -760,14 +748,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user2" />
 	</bean>
 
 	<!-- User3 folders -->
@@ -777,14 +763,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user3" />
 	</bean>
 
 	<bean id="folder17" class="domain.Folder">
@@ -793,14 +777,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user3" />
 	</bean>
 
 	<bean id="folder18" class="domain.Folder">
@@ -809,14 +791,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message13"/>
+				<ref bean="message13" />
 			</list>
 		</property>
+		<property name="actor" ref="user3" />
 	</bean>
 
 	<bean id="folder19" class="domain.Folder">
@@ -825,14 +805,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user3" />
 	</bean>
 
 	<bean id="folder20" class="domain.Folder">
@@ -841,14 +819,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user3" />
 	</bean>
 
 	<!-- User4 folders -->
@@ -858,14 +834,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user4" />
 	</bean>
 
 	<bean id="folder22" class="domain.Folder">
@@ -874,14 +848,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user4" />
 	</bean>
 
 	<bean id="folder23" class="domain.Folder">
@@ -890,14 +862,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message14"/>
+				<ref bean="message14" />
 			</list>
 		</property>
+		<property name="actor" ref="user4" />
 	</bean>
 
 	<bean id="folder24" class="domain.Folder">
@@ -906,14 +876,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user4" />
 	</bean>
 
 	<bean id="folder25" class="domain.Folder">
@@ -922,14 +890,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="user4" />
 	</bean>
 
 	<!-- Customer1 folders -->
@@ -939,14 +905,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="customer1" />
 	</bean>
 
 	<bean id="folder27" class="domain.Folder">
@@ -955,14 +919,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="customer1" />
 	</bean>
 
 	<bean id="folder28" class="domain.Folder">
@@ -971,14 +933,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message15"/>
+				<ref bean="message15" />
 			</list>
 		</property>
+		<property name="actor" ref="customer1" />
 	</bean>
 
 	<bean id="folder29" class="domain.Folder">
@@ -987,14 +947,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="customer1" />
 	</bean>
 
 	<bean id="folder30" class="domain.Folder">
@@ -1003,14 +961,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="customer1" />
 	</bean>
 
 	<!-- Customer2 folders -->
@@ -1020,14 +976,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="customer2" />
 	</bean>
 
 	<bean id="folder32" class="domain.Folder">
@@ -1036,14 +990,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="customer2" />
 	</bean>
 
 	<bean id="folder33" class="domain.Folder">
@@ -1052,14 +1004,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message16"/>
+				<ref bean="message16" />
 			</list>
 		</property>
+		<property name="actor" ref="customer2" />
 	</bean>
 
 	<bean id="folder34" class="domain.Folder">
@@ -1068,14 +1018,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="customer2" />
 	</bean>
 
 	<bean id="folder35" class="domain.Folder">
@@ -1084,14 +1032,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="customer2" />
 	</bean>
 
 	<!-- Agent1 folders -->
@@ -1101,14 +1047,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="agent1" />
 	</bean>
 
 	<bean id="folder37" class="domain.Folder">
@@ -1117,14 +1061,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="agent1" />
 	</bean>
 
 	<bean id="folder38" class="domain.Folder">
@@ -1133,14 +1075,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message17"/>
+				<ref bean="message17" />
 			</list>
 		</property>
+		<property name="actor" ref="agent1" />
 	</bean>
 
 	<bean id="folder39" class="domain.Folder">
@@ -1149,14 +1089,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="agent1" />
 	</bean>
 
 	<bean id="folder40" class="domain.Folder">
@@ -1165,14 +1103,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="agent1" />
 	</bean>
 
 	<!-- Agent2 folders -->
@@ -1182,14 +1118,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="agent2" />
 	</bean>
 
 	<bean id="folder42" class="domain.Folder">
@@ -1198,14 +1132,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="agent2" />
 	</bean>
 
 	<bean id="folder43" class="domain.Folder">
@@ -1214,14 +1146,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message18"/>
+				<ref bean="message18" />
 			</list>
 		</property>
+		<property name="actor" ref="agent2" />
 	</bean>
 
 	<bean id="folder44" class="domain.Folder">
@@ -1230,14 +1160,12 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="agent2" />
 	</bean>
 
 	<bean id="folder45" class="domain.Folder">
@@ -1246,250 +1174,251 @@
 		<property name="parent">
 			<null />
 		</property>
-		<property name="children">
-			<list />
-		</property>
 		<property name="messages">
 			<list>
 				<null />
 			</list>
 		</property>
+		<property name="actor" ref="agent2" />
 	</bean>
 
 	<!-- Message -->
 	<!-- Message 1 -->
 	<bean id="message1" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Message from User1 to User2"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="LOW"/>
-		<property name="sender" ref="user1"/>
-		<property name="recipient" ref="user2"/>
-		<property name="folder" ref="folder7"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Message from User1 to User2" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="LOW" />
+		<property name="sender" ref="user1" />
+		<property name="recipient" ref="user2" />
 	</bean>
-	
+
 	<!-- Message 2 -->
 	<bean id="message2" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Message from User1 to User2"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="LOW"/>
-		<property name="sender" ref="user1"/>
-		<property name="recipient" ref="user2"/>
-		<property name="folder" ref="folder11"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Message from User1 to User2" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="LOW" />
+		<property name="sender" ref="user1" />
+		<property name="recipient" ref="user2" />
 	</bean>
-	
+
 	<!-- Message 3 -->
 	<bean id="message3" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="user1"/>
-		<property name="folder" ref="folder2"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="user1" />
 	</bean>
-	
+
 	<!-- Message 4 -->
 	<bean id="message4" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="user2"/>
-		<property name="folder" ref="folder2"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="user2" />
 	</bean>
-	
+
 	<!-- Message 5 -->
 	<bean id="message5" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="user3"/>
-		<property name="folder" ref="folder2"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="user3" />
 	</bean>
-	
+
 	<!-- Message 6 -->
 	<bean id="message6" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="user4"/>
-		<property name="folder" ref="folder2"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="user4" />
 	</bean>
-	
+
 	<!-- Message 7 -->
 	<bean id="message7" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="customer1"/>
-		<property name="folder" ref="folder2"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="customer1" />
 	</bean>
-	
+
 	<!-- Message 8 -->
 	<bean id="message8" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="customer2"/>
-		<property name="folder" ref="folder2"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="customer2" />
 	</bean>
-	
+
 	<!-- Message 9 -->
 	<bean id="message9" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="agent1"/>
-		<property name="folder" ref="folder2"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="agent1" />
 	</bean>
-	
+
 	<!-- Message 10 -->
 	<bean id="message10" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="agent2"/>
-		<property name="folder" ref="folder2"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="agent2" />
 	</bean>
-	
+
 	<!-- Message 11 -->
 	<bean id="message11" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="user1"/>
-		<property name="folder" ref="folder8"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="user1" />
 	</bean>
-	
+
 	<!-- Message 12 -->
 	<bean id="message12" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="user2"/>
-		<property name="folder" ref="folder13"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="user2" />
 	</bean>
-	
+
 	<!-- Message 13 -->
 	<bean id="message13" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="user3"/>
-		<property name="folder" ref="folder18"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="user3" />
 	</bean>
-	
+
 	<!-- Message 14 -->
 	<bean id="message14" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="user4"/>
-		<property name="folder" ref="folder23"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="user4" />
 	</bean>
-	
+
 	<!-- Message 15 -->
 	<bean id="message15" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="customer1"/>
-		<property name="folder" ref="folder28"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="customer1" />
 	</bean>
-	
+
 	<!-- Message 16 -->
 	<bean id="message16" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="customer2"/>
-		<property name="folder" ref="folder33"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="customer2" />
 	</bean>
-	
+
 	<!-- Message 17 -->
 	<bean id="message17" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="agent1"/>
-		<property name="folder" ref="folder38"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="agent1" />
 	</bean>
-	
+
 	<!-- Message 18 -->
 	<bean id="message18" class="domain.Message">
-		<property name="moment" value="2018/04/01 12:00"/>
-		<property name="subject" value="Notification message"/>
-		<property name="body" value="This is a body example of message."/>
-		<property name="priority" value="HIGH"/>
-		<property name="sender" ref="admin"/>
-		<property name="recipient" ref="agent2"/>
-		<property name="folder" ref="folder43"/>
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="agent2" />
 	</bean>
-	
+
 	<!-- SubscriptionNewspaper -->
 	<!-- SubscriptionNewspaper 1 -->
-	<bean id="subscriptionNewspaper1" class="domain.SubscriptionNewspaper">
+	<bean id="subscriptionNewspaper1"
+		class="domain.SubscriptionNewspaper">
 		<property name="creditCard" ref="creditCard1" />
 		<property name="customer" ref="customer1" />
 		<property name="newspaper" ref="newspaper1" />
 	</bean>
 
 	<!-- SubscriptionNewspaper 2 -->
-	<bean id="subscriptionNewspaper2" class="domain.SubscriptionNewspaper">
+	<bean id="subscriptionNewspaper2"
+		class="domain.SubscriptionNewspaper">
 		<property name="creditCard" ref="creditCard2" />
 		<property name="customer" ref="customer2" />
 		<property name="newspaper" ref="newspaper2" />
 	</bean>
 
 	<!-- SubscriptionNewspaper 3 -->
-	<bean id="subscriptionNewspaper3" class="domain.SubscriptionNewspaper">
+	<bean id="subscriptionNewspaper3"
+		class="domain.SubscriptionNewspaper">
 		<property name="creditCard" ref="creditCard3" />
 		<property name="customer" ref="customer2" />
 		<property name="newspaper" ref="newspaper3" />
 	</bean>
-	
+
 	<!-- SubscriptionVolume -->
 	<!-- SubscriptionVolume 1 -->
 	<bean id="subscriptionVolume1" class="domain.SubscriptionVolume">
-		<property name="creditCard" ref="creditCard9"/>
-		<property name="customer" ref="customer1"/>
-		<property name="volume" ref="volume1"/>
+		<property name="creditCard" ref="creditCard9" />
+		<property name="customer" ref="customer1" />
+		<property name="volume" ref="volume1" />
 	</bean>
-	
+
 	<!-- SubscriptionVolume 2 -->
 	<bean id="subscriptionVolume2" class="domain.SubscriptionVolume">
-		<property name="creditCard" ref="creditCard10"/>
-		<property name="customer" ref="customer2"/>
-		<property name="volume" ref="volume2"/>
+		<property name="creditCard" ref="creditCard10" />
+		<property name="customer" ref="customer2" />
+		<property name="volume" ref="volume2" />
 	</bean>
 
 	<!-- CreditCard -->
@@ -1572,7 +1501,7 @@
 		<property name="expirationYear" value="2019" />
 		<property name="cvv" value="216" />
 	</bean>
-	
+
 	<!-- CreditCard 9 -->
 	<bean id="creditCard9" class="domain.CreditCard">
 		<property name="holder" value="Name creditCard9" />
@@ -1582,7 +1511,7 @@
 		<property name="expirationYear" value="2019" />
 		<property name="cvv" value="216" />
 	</bean>
-	
+
 	<!-- CreditCard 10 -->
 	<bean id="creditCard10" class="domain.CreditCard">
 		<property name="holder" value="Name creditCard10" />
@@ -1609,7 +1538,7 @@
 		</property>
 		<property name="subscriptionsVolume">
 			<list>
-				<ref bean="subscriptionVolume1"/>
+				<ref bean="subscriptionVolume1" />
 			</list>
 		</property>
 	</bean>
@@ -1629,7 +1558,7 @@
 		</property>
 		<property name="subscriptionsVolume">
 			<list>
-				<ref bean="subscriptionVolume2"/>
+				<ref bean="subscriptionVolume2" />
 			</list>
 		</property>
 	</bean>
@@ -1915,7 +1844,8 @@
 	<bean id="article4" class="domain.Article">
 		<property name="title" value="Berasategui" />
 		<property name="publicationMoment" value="2017/12/05" />
-		<property name="summary" value="Martín Berasategui: mejillones al vapor" />
+		<property name="summary"
+			value="Martín Berasategui: mejillones al vapor" />
 		<property name="body"
 			value="According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground. The bee, of course, flies anyway..." />
 		<property name="pictures"
@@ -2030,7 +1960,8 @@
 	<bean id="chirp1" class="domain.Chirp">
 		<property name="publicationMoment" value="2016/12/05" />
 		<property name="title" value="Chirp 1" />
-		<property name="description" value="Me gusta el Chirp 1 cialis" />
+		<property name="description"
+			value="Me gusta el Chirp 1 cialis" />
 		<property name="user" ref="user2" />
 
 	</bean>

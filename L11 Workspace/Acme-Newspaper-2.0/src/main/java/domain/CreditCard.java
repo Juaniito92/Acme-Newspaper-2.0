@@ -19,16 +19,14 @@ public class CreditCard {
 		super();
 	}
 
-
 	// Attributes -------------------------------------------------------------
 
-	private String	holder;
-	private String	brand;
-	private String	number;
-	private int	expirationMonth;
-	private int	expirationYear;
-	private int	cvv;
-
+	private String holder;
+	private String brand;
+	private String number;
+	private int expirationMonth;
+	private int expirationYear;
+	private int cvv;
 
 	@NotBlank
 	public String getHolder() {

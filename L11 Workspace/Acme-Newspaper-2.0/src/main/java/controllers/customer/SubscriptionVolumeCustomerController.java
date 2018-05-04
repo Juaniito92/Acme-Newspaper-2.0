@@ -40,42 +40,36 @@ public class SubscriptionVolumeCustomerController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam int volumeId) {
 
-		final SubscriptionVolume subscriptionVolume = this.subscriptionVolumeService
-				.create(volumeId);
+		final SubscriptionVolume subscriptionVolume = this.subscriptionVolumeService.create(volumeId);
 		final SubscriptionVolumeForm subscriptionVolumeForm = this.subscriptionVolumeService
 				.construct(subscriptionVolume);
 
-		final ModelAndView result = this
-				.createEditModelAndView(subscriptionVolumeForm);
+		final ModelAndView result = this.createEditModelAndView(subscriptionVolumeForm);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(
-			@Valid SubscriptionVolumeForm subscriptionVolumeForm,
-			BindingResult binding) {
+	public ModelAndView save(@Valid SubscriptionVolumeForm subscriptionVolumeForm, BindingResult binding) {
 
 		ModelAndView result;
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(subscriptionVolumeForm);
 		else
 			try {
-				final SubscriptionVolume subscriptionVolume = this.subscriptionVolumeService.reconstruct(
-						subscriptionVolumeForm, binding);
+				final SubscriptionVolume subscriptionVolume = this.subscriptionVolumeService
+						.reconstruct(subscriptionVolumeForm, binding);
 				this.subscriptionVolumeService.save(subscriptionVolume);
 				result = new ModelAndView("redirect:../../volume/customer/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(subscriptionVolumeForm,
-						"subscriptionVolume.commit.error");
+				result = this.createEditModelAndView(subscriptionVolumeForm, "subscriptionVolume.commit.error");
 			}
 		return result;
 	}
 
 	// Ancillary methods ------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(
-			final SubscriptionVolumeForm subscriptionVolumeForm) {
+	protected ModelAndView createEditModelAndView(final SubscriptionVolumeForm subscriptionVolumeForm) {
 
 		ModelAndView result;
 
@@ -83,14 +77,12 @@ public class SubscriptionVolumeCustomerController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(
-			final SubscriptionVolumeForm subscriptionVolumeForm,
+	protected ModelAndView createEditModelAndView(final SubscriptionVolumeForm subscriptionVolumeForm,
 			final String messageCode) {
 
 		ModelAndView result;
 
-		Volume volume = volumeService.findOne(subscriptionVolumeForm
-				.getVolumeId());
+		Volume volume = volumeService.findOne(subscriptionVolumeForm.getVolumeId());
 
 		result = new ModelAndView("subscriptionVolume/create");
 		result.addObject("subscriptionVolumeForm", subscriptionVolumeForm);

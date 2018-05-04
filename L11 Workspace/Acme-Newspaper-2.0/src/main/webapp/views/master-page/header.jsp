@@ -76,8 +76,7 @@
 								code="master.page.customer.subscribedVolumes" /></a></li>
 					<li><a href="newspaper/customer/list.do"><spring:message
 								code="master.page.customer.subscribedNewspapers" /></a></li>
-				</ul>
-			</li>
+				</ul></li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('AGENT')">
@@ -114,6 +113,19 @@
 								code="master.page.logout" /> </a></li>
 
 				</ul></li>
+
+			<li><a class="fNiv"> <spring:message
+						code="master.page.messages" />
+			</a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="message/create.do"><spring:message
+								code="master.page.newmessage" /> </a></li>
+					<li><a href="folder/list.do"><spring:message
+								code="master.page.myfolders" /></a></li>
+
+				</ul></li>
+
 
 		</security:authorize>
 

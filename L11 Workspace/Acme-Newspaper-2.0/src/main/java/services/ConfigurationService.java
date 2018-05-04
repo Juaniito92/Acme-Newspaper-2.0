@@ -20,11 +20,10 @@ public class ConfigurationService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ConfigurationRepository	configurationRepository;
+	private ConfigurationRepository configurationRepository;
 
 	@Autowired
-	private AdminService			adminService;
-
+	private AdminService adminService;
 
 	// Constructors -----------------------------------------------------------
 

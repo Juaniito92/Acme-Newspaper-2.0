@@ -5,9 +5,12 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -19,16 +22,16 @@ import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 @Access(AccessType.PROPERTY)
 public class Folder extends DomainEntity {
 
-	// Constructor ----------------------------------------------------------------------------
+	// Constructor
+	// ----------------------------------------------------------------------------
 	public Folder() {
 		super();
 	}
 
-
-	// Attributes ------------------------------------------------------------------------------
-	private String	name;
-	private boolean	predefined;
-
+	// Attributes
+	// ------------------------------------------------------------------------------
+	private String name;
+	private boolean predefined;
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
@@ -48,16 +51,14 @@ public class Folder extends DomainEntity {
 		this.predefined = predefined;
 	}
 
+	// RelashionShips
+	// ----------------------------------------------------------------
 
-	// RelashionShips ----------------------------------------------------------------
+	private Folder parent;
+	private Collection<Message> messages;
+	private Actor actor;
 
-	private Folder				parent;
-	private Collection<Folder>	children;
-	private Collection<Message>	messages;
-
-
-	@Valid
-	@ManyToOne(optional = true)
+	@OneToOne(optional = true)
 	public Folder getParent() {
 		return this.parent;
 	}
@@ -68,23 +69,23 @@ public class Folder extends DomainEntity {
 
 	@Valid
 	@NotNull
-	@OneToMany(mappedBy = "parent")
-	public Collection<Folder> getChildren() {
-		return this.children;
-	}
-
-	public void setChildren(final Collection<Folder> children) {
-		this.children = children;
-	}
-
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "folder")
+	@ManyToMany(cascade = CascadeType.ALL)
 	public Collection<Message> getMessages() {
-		return this.messages;
+		return messages;
 	}
 
-	public void setMessages(final Collection<Message> messages) {
+	public void setMessages(Collection<Message> messages) {
 		this.messages = messages;
+	}
+
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Actor getActor() {
+		return actor;
+	}
+
+	public void setActor(Actor actor) {
+		this.actor = actor;
 	}
 }

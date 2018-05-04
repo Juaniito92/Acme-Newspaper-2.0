@@ -11,12 +11,16 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import domain.Actor;
+import domain.Admin;
+import domain.Agent;
+import domain.Customer;
+import domain.Newspaper;
+import domain.User;
 import repositories.AdminRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Admin;
-import domain.Newspaper;
 
 @Service
 @Transactional
@@ -25,6 +29,10 @@ public class AdminService {
 	// Managed repository
 	@Autowired
 	private AdminRepository adminRepository;
+	@Autowired
+	private ActorService actorService;
+	@Autowired
+	private ConfigurationService configurationService;
 
 	// Constructors
 	public AdminService() {
@@ -87,8 +95,7 @@ public class AdminService {
 		Admin res;
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		res = this.adminRepository
-				.findAdminByUserAccountId(userAccount.getId());
+		res = this.adminRepository.findAdminByUserAccountId(userAccount.getId());
 		Assert.notNull(res);
 		return res;
 	}
@@ -111,11 +118,39 @@ public class AdminService {
 		this.adminRepository.flush();
 	}
 
+	public boolean checkIsSpam(String text) {
+		Collection<String> spamWords;
+		Boolean isSpam = false;
+		Actor a = actorService.findByPrincipal();
+		String type = actorService.getType(a.getUserAccount());
+
+		if (type.equals("CUSTOMER")) {
+			a = (Customer) a;
+		} else if (type.equals("USER")) {
+			a = (User) a;
+		} else if (type.equals("AGENT")) {
+			a = (Agent) a;
+		}
+
+		if (text == null) {
+			return isSpam;
+		} else {
+			text = text.toLowerCase();
+			spamWords = configurationService.getTabooWordsFromConfiguration();
+			for (String spamword : spamWords) {
+				if (text.contains(spamword)) {
+					isSpam = true;
+				}
+			}
+		}
+		return isSpam;
+	}
+
 	// C-1
 	public Object[] avgSqtrUser() {
-		
+
 		Assert.isTrue(checkAuthority());
-		
+
 		Object[] res;
 		res = this.adminRepository.avgSqtrUser();
 		return res;
@@ -123,7 +158,7 @@ public class AdminService {
 
 	// C-2
 	public Object[] avgSqtrArticlesByWriter() {
-		
+
 		Assert.isTrue(checkAuthority());
 
 		Object[] res;
@@ -133,9 +168,9 @@ public class AdminService {
 
 	// C-3
 	public Object[] avgSqtrArticlesByNewspaper() {
-		
+
 		Assert.isTrue(checkAuthority());
-		
+
 		Object[] res;
 		res = this.adminRepository.avgSqtrArticlesByNewspaper();
 		return res;
@@ -143,29 +178,27 @@ public class AdminService {
 
 	// C-4
 	public Collection<Newspaper> newspapersMoreAverage() {
-		
+
 		Assert.isTrue(checkAuthority());
-		
-		Collection<Newspaper> res = this.adminRepository
-				.newspapersMoreAverage();
+
+		Collection<Newspaper> res = this.adminRepository.newspapersMoreAverage();
 		return res;
 	}
 
 	// C-5
 	public Collection<Newspaper> newspapersFewerAverage() {
-		
+
 		Assert.isTrue(checkAuthority());
 
-		Collection<Newspaper> res = this.adminRepository
-				.newspapersFewerAverage();
+		Collection<Newspaper> res = this.adminRepository.newspapersFewerAverage();
 		return res;
 	}
 
 	// C-6
 	public String ratioUserCreatedNewspaper() {
-		
+
 		Assert.isTrue(checkAuthority());
-		
+
 		String res;
 		res = this.adminRepository.ratioUserCreatedNewspaper();
 		return res;
@@ -173,9 +206,9 @@ public class AdminService {
 
 	// C-7
 	public String ratioUserWrittenArticle() {
-		
+
 		Assert.isTrue(checkAuthority());
-		
+
 		String res;
 		res = this.adminRepository.ratioUserWrittenArticle();
 		return res;
@@ -183,9 +216,9 @@ public class AdminService {
 
 	// B-1
 	public Double avgFollowupsPerArticle() {
-		
+
 		Assert.isTrue(checkAuthority());
-		
+
 		Double res;
 		res = this.adminRepository.avgFollowupsPerArticle();
 		return res;
@@ -193,9 +226,9 @@ public class AdminService {
 
 	// B-2
 	public Double avgNumberOfFollowUpsPerArticleAfter1Week() {
-		
+
 		Assert.isTrue(checkAuthority());
-		
+
 		Double res;
 		long oneWeek = TimeUnit.DAYS.toMillis(7);
 		Date f = new Date(System.currentTimeMillis() - oneWeek);
@@ -205,9 +238,9 @@ public class AdminService {
 
 	// B-3
 	public Double avgNumberOfFollowUpsPerArticleAfter2Week() {
-		
+
 		Assert.isTrue(checkAuthority());
-		
+
 		Double res;
 		long twoWeeks = TimeUnit.DAYS.toMillis(7);
 		Date f = new Date(System.currentTimeMillis() - twoWeeks);
@@ -217,34 +250,33 @@ public class AdminService {
 
 	// B-4
 	public Object[] avgStddevNumberOfChirpPerUser() {
-		
+
 		Assert.isTrue(checkAuthority());
-		
+
 		Object[] res;
 		res = this.adminRepository.avgStddevNumberOfChirpPerUser();
 		return res;
 	}
-	
+
 	// B-5
-		public String ratioUsersMorePostedChirpsOfAveragePerUser() {
-			
-			Assert.isTrue(checkAuthority());
-			
-			String res;
-			res = this.adminRepository.ratioUsersMorePostedChirpsOfAveragePerUser();
-			return res;
-		}
-		
+	public String ratioUsersMorePostedChirpsOfAveragePerUser() {
+
+		Assert.isTrue(checkAuthority());
+
+		String res;
+		res = this.adminRepository.ratioUsersMorePostedChirpsOfAveragePerUser();
+		return res;
+	}
+
 	// ACME-NEWSPAPER 2.0
-		
+
 	// B-1
-		public Double avgNumberOfNewspapersPerVolume(){
-			
-			Double result = adminRepository.avgNumberOfNewspapersPerVolume();
-			return result;
-		}
-		
+	public Double avgNumberOfNewspapersPerVolume() {
+
+		Double result = adminRepository.avgNumberOfNewspapersPerVolume();
+		return result;
+	}
+
 	// B-2
-		
 
 }
