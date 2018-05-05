@@ -63,6 +63,8 @@ public class AdminController extends AbstractController {
 		String ratioUsersMorePostedChirpsOfAveragePerUser;
 		Double newspaperWithAdsRatio;
 		Double advertisementTabooWordsRatio;
+		Double avgNumberOfNewspapersPerVolume;
+		String ratioSubscriptionsVolumeVersusSubscriptionsNewspaper;
 
 		avgSqtrUser = this.adminService.avgSqtrUser();
 		avgSqtrArticlesByWriter = this.adminService.avgSqtrArticlesByWriter();
@@ -78,6 +80,8 @@ public class AdminController extends AbstractController {
 		ratioUsersMorePostedChirpsOfAveragePerUser = this.adminService.ratioUsersMorePostedChirpsOfAveragePerUser();
 		newspaperWithAdsRatio = this.newspaperService.ratioNewspapersAds();
 		advertisementTabooWordsRatio = this.advertisementService.ratioAdsTabooWords();
+		avgNumberOfNewspapersPerVolume = adminService.avgNumberOfNewspapersPerVolume();
+		ratioSubscriptionsVolumeVersusSubscriptionsNewspaper = adminService.ratioSubscriptionsVolumeVersusSubscriptionsNewspaper();
 
 		result.addObject("avgSqtrUser", avgSqtrUser);
 		result.addObject("avgSqtrArticlesByWriter", avgSqtrArticlesByWriter);
@@ -93,6 +97,8 @@ public class AdminController extends AbstractController {
 		result.addObject("ratioUsersMorePostedChirpsOfAveragePerUser", ratioUsersMorePostedChirpsOfAveragePerUser);
 		result.addObject("newspaperWithAdsRatio", newspaperWithAdsRatio);
 		result.addObject("advertisementTabooWordsRatio", advertisementTabooWordsRatio);
+		result.addObject("avgNumberOfNewspapersPerVolume", avgNumberOfNewspapersPerVolume);
+		result.addObject("ratioSubscriptionsVolumeVersusSubscriptionsNewspaper", ratioSubscriptionsVolumeVersusSubscriptionsNewspaper);
 
 		return result;
 	}

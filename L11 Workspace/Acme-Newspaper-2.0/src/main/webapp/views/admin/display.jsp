@@ -93,7 +93,7 @@
 		</tr>
 
 	</table>
-	
+
 	<spring:message code="administrator.newspapersFewerAverageLabel" />
 	<jstl:out value="${newspapersFewerAverageLabel	}"></jstl:out>
 	<table class="displaytag" name="newspapersFewerAverage">
@@ -109,92 +109,81 @@
 
 	</table>
 
-<spring:message code="administrator.ratioUserCreatedNewspaperLabel" />
-<jstl:out value="${ratioUserCreatedNewspaperLabel}"></jstl:out>
-<table class="displaytag"  name="ratioUserCreatedNewspaper">
-	<tr>
-		<th>
-			<spring:message code="administrator.ratio" var="ratioHeader" />
-			<jstl:out value="${ratioHeader}"></jstl:out>
-		</th>
-	</tr>
-	<tr>
-	
-		<td>
-			<jstl:out value="${ratioUserCreatedNewspaper}"></jstl:out>
-		</td>
-	</tr>
-</table>
+	<spring:message code="administrator.ratioUserCreatedNewspaperLabel" />
+	<jstl:out value="${ratioUserCreatedNewspaperLabel}"></jstl:out>
+	<table class="displaytag" name="ratioUserCreatedNewspaper">
+		<tr>
+			<th><spring:message code="administrator.ratio" var="ratioHeader" />
+				<jstl:out value="${ratioHeader}"></jstl:out></th>
+		</tr>
+		<tr>
 
-<spring:message code="administrator.ratioUserWrittenArticleLabel" />
-<jstl:out value="${ratioUserWrittenArticleLabel}"></jstl:out>
-<table class="displaytag"  name="ratioUserWrittenArticle">
-	<tr>
-		<th>
-			<spring:message code="administrator.ratio" var="ratioHeader" />
-			<jstl:out value="${ratioHeader}"></jstl:out>
-		</th>
-	</tr>
-	<tr>
-	
-		<td>
-			<jstl:out value="${ratioUserWrittenArticle}"></jstl:out>
-		</td>
-	</tr>
-</table>
+			<td><jstl:out value="${ratioUserCreatedNewspaper}"></jstl:out></td>
+		</tr>
+	</table>
 
-<spring:message code="administrator.avgFollowupsPerArticleLabel" />
-<jstl:out value="${avgFollowupsPerArticleLabel}"></jstl:out>
-<table class="displaytag"  name="avgFollowupsPerArticle">
-	<tr>
-		<th>
-			<spring:message code="administrator.average" var="averageHeader" />
-			<jstl:out value="${averageHeader}"></jstl:out>
-		</th>
-	</tr>
-	<tr>
-	
-		<td>
-			<jstl:out value="${avgFollowupsPerArticle}"></jstl:out>
-		</td>
-	</tr>
-</table>
+	<spring:message code="administrator.ratioUserWrittenArticleLabel" />
+	<jstl:out value="${ratioUserWrittenArticleLabel}"></jstl:out>
+	<table class="displaytag" name="ratioUserWrittenArticle">
+		<tr>
+			<th><spring:message code="administrator.ratio" var="ratioHeader" />
+				<jstl:out value="${ratioHeader}"></jstl:out></th>
+		</tr>
+		<tr>
 
-<spring:message code="administrator.avgNumberOfFollowUpsPerArticleAfter1WeekLabel" />
-<jstl:out value="${avgNumberOfFollowUpsPerArticleAfter1WeekLabel}"></jstl:out>
-<table class="displaytag"  name="avgNumberOfFollowUpsPerArticleAfter1Week">
-	<tr>
-		<th>
-			<spring:message code="administrator.average" var="averageHeader" />
-			<jstl:out value="${averageHeader}"></jstl:out>
-		</th>
-	</tr>
-	<tr>
-	
-		<td>
-			<jstl:out value="${avgNumberOfFollowUpsPerArticleAfter1Week}"></jstl:out>
-		</td>
-	</tr>
-</table>
+			<td><jstl:out value="${ratioUserWrittenArticle}"></jstl:out></td>
+		</tr>
+	</table>
 
-<spring:message code="administrator.avgNumberOfFollowUpsPerArticleAfter2WeekLabel" />
-<jstl:out value="${avgNumberOfFollowUpsPerArticleAfter2WeekLabel}"></jstl:out>
-<table class="displaytag"  name="avgNumberOfFollowUpsPerArticleAfter2Week">
-	<tr>
-		<th>
-			<spring:message code="administrator.average" var="averageHeader" />
-			<jstl:out value="${averageHeader}"></jstl:out>
-		</th>
-	</tr>
-	<tr>
-	
-		<td>
-			<jstl:out value="${avgNumberOfFollowUpsPerArticleAfter2Week}"></jstl:out>
-		</td>
-	</tr>
-</table>
+	<spring:message code="administrator.avgFollowupsPerArticleLabel" />
+	<jstl:out value="${avgFollowupsPerArticleLabel}"></jstl:out>
+	<table class="displaytag" name="avgFollowupsPerArticle">
+		<tr>
+			<th><spring:message code="administrator.average"
+					var="averageHeader" /> <jstl:out value="${averageHeader}"></jstl:out>
+			</th>
+		</tr>
+		<tr>
 
-<spring:message code="administrator.avgStddevNumberOfChirpPerUserLabel" />
+			<td><jstl:out value="${avgFollowupsPerArticle}"></jstl:out></td>
+		</tr>
+	</table>
+
+	<spring:message
+		code="administrator.avgNumberOfFollowUpsPerArticleAfter1WeekLabel" />
+	<jstl:out value="${avgNumberOfFollowUpsPerArticleAfter1WeekLabel}"></jstl:out>
+	<table class="displaytag"
+		name="avgNumberOfFollowUpsPerArticleAfter1Week">
+		<tr>
+			<th><spring:message code="administrator.average"
+					var="averageHeader" /> <jstl:out value="${averageHeader}"></jstl:out>
+			</th>
+		</tr>
+		<tr>
+
+			<td><jstl:out
+					value="${avgNumberOfFollowUpsPerArticleAfter1Week}"></jstl:out></td>
+		</tr>
+	</table>
+
+	<spring:message
+		code="administrator.avgNumberOfFollowUpsPerArticleAfter2WeekLabel" />
+	<jstl:out value="${avgNumberOfFollowUpsPerArticleAfter2WeekLabel}"></jstl:out>
+	<table class="displaytag"
+		name="avgNumberOfFollowUpsPerArticleAfter2Week">
+		<tr>
+			<th><spring:message code="administrator.average"
+					var="averageHeader" /> <jstl:out value="${averageHeader}"></jstl:out>
+			</th>
+		</tr>
+		<tr>
+
+			<td><jstl:out
+					value="${avgNumberOfFollowUpsPerArticleAfter2Week}"></jstl:out></td>
+		</tr>
+	</table>
+
+	<spring:message code="administrator.avgStddevNumberOfChirpPerUserLabel" />
 	<jstl:out value="${avgStddevNumberOfChirpPerUserLabel}"></jstl:out>
 	<table class="displaytag" name="avgStddevNumberOfChirpPerUser">
 		<tr>
@@ -212,57 +201,73 @@
 			</jstl:forEach>
 		</tr>
 	</table>
-	
-	<spring:message code="administrator.ratioUsersMorePostedChirpsOfAveragePerUserLabel" />
-<jstl:out value="${ratioUsersMorePostedChirpsOfAveragePerUserLabel}"></jstl:out>
-<table class="displaytag"  name="ratioUsersMorePostedChirpsOfAveragePerUser">
-	<tr>
-		<th>
-			<spring:message code="administrator.ratio" var="ratioHeader" />
-			<jstl:out value="${ratioHeader}"></jstl:out>
-		</th>
-	</tr>
-	<tr>
-	
-		<td>
-			<jstl:out value="${ratioUsersMorePostedChirpsOfAveragePerUser}"></jstl:out>
-		</td>
-	</tr>
-</table>
 
-<spring:message code="administrator.newspaperWithAdsRatioLabel" />
-<jstl:out value="${newspaperWithAdsRatioLabel}"></jstl:out>
-<table class="displaytag"  name="newspaperWithAdsRatio">
-	<tr>
-		<th>
-			<spring:message code="administrator.ratio" var="ratioHeader" />
-			<jstl:out value="${ratioHeader}"></jstl:out>
-		</th>
-	</tr>
-	<tr>
-	
-		<td>
-			<jstl:out value="${newspaperWithAdsRatio}"></jstl:out>
-		</td>
-	</tr>
-</table>
+	<spring:message
+		code="administrator.ratioUsersMorePostedChirpsOfAveragePerUserLabel" />
+	<jstl:out value="${ratioUsersMorePostedChirpsOfAveragePerUserLabel}"></jstl:out>
+	<table class="displaytag"
+		name="ratioUsersMorePostedChirpsOfAveragePerUser">
+		<tr>
+			<th><spring:message code="administrator.ratio" var="ratioHeader" />
+				<jstl:out value="${ratioHeader}"></jstl:out></th>
+		</tr>
+		<tr>
 
-<spring:message code="administrator.advertisementTabooWordsRatioLabel" />
-<jstl:out value="${advertisementTabooWordsRatioLabel}"></jstl:out>
-<table class="displaytag"  name="advertisementTabooWordsRatio">
-	<tr>
-		<th>
-			<spring:message code="administrator.ratio" var="ratioHeader" />
-			<jstl:out value="${ratioHeader}"></jstl:out>
-		</th>
-	</tr>
-	<tr>
-	
-		<td>
-			<jstl:out value="${advertisementTabooWordsRatio}"></jstl:out>
-		</td>
-	</tr>
-</table>
-	
+			<td><jstl:out
+					value="${ratioUsersMorePostedChirpsOfAveragePerUser}"></jstl:out></td>
+		</tr>
+	</table>
+
+	<spring:message code="administrator.newspaperWithAdsRatioLabel" />
+	<jstl:out value="${newspaperWithAdsRatioLabel}"></jstl:out>
+	<table class="displaytag" name="newspaperWithAdsRatio">
+		<tr>
+			<th><spring:message code="administrator.ratio" var="ratioHeader" />
+				<jstl:out value="${ratioHeader}"></jstl:out></th>
+		</tr>
+		<tr>
+
+			<td><jstl:out value="${newspaperWithAdsRatio}"></jstl:out></td>
+		</tr>
+	</table>
+
+	<spring:message code="administrator.advertisementTabooWordsRatioLabel" />
+	<jstl:out value="${advertisementTabooWordsRatioLabel}"></jstl:out>
+	<table class="displaytag" name="advertisementTabooWordsRatio">
+		<tr>
+			<th><spring:message code="administrator.ratio" var="ratioHeader" />
+				<jstl:out value="${ratioHeader}"></jstl:out></th>
+		</tr>
+		<tr>
+
+			<td><jstl:out value="${advertisementTabooWordsRatio}"></jstl:out>
+			</td>
+		</tr>
+	</table>
+
+	<spring:message code="administrator.avgNumberOfNewspapersPerVolume" />
+	<table class="displaytag" name="avgNumberOfNewspapersPerVolume">
+		<tr>
+			<th><spring:message code="administrator.average"
+					var="averageHeader" /> <jstl:out value="${averageHeader}"></jstl:out>
+			</th>
+		</tr>
+		<tr>
+			<td><jstl:out value="${avgNumberOfNewspapersPerVolume}"></jstl:out></td>
+		</tr>
+	</table>
+
+	<spring:message code="administrator.ratioSubscriptionsVolumeVersusSubscriptionsNewspaper" />
+	<table class="displaytag" name="ratioSubscriptionsVolumeVersusSubscriptionsNewspaper">
+		<tr>
+			<th><spring:message code="administrator.ratio" var="ratioHeader" />
+				<jstl:out value="${ratioHeader}"></jstl:out></th>
+		</tr>
+		<tr>
+
+			<td><jstl:out value="${ratioSubscriptionsVolumeVersusSubscriptionsNewspaper}"></jstl:out></td>
+		</tr>
+	</table>
+
 
 </security:authorize>

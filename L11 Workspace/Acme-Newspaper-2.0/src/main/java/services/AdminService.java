@@ -278,5 +278,11 @@ public class AdminService {
 	}
 
 	// B-2
+	
+	public String ratioSubscriptionsVolumeVersusSubscriptionsNewspaper(){
+		
+		String result = adminRepository.ratioSubscriptionsVolumeVersusSubscriptionsNewspaper();
+		return result;
+	}
 
 }
