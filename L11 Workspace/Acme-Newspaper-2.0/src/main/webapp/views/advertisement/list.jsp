@@ -35,7 +35,7 @@
 		</display:column>
 	</security:authorize>
 
-	<spring:message code="advertisement.infoPageLink" var="page" />
+	<spring:message code="advertisement.title" var="page" />
 	<display:column property="title" title="${page}"
 		sortable="false" />
 	
