@@ -428,7 +428,7 @@
 		</property>
 		<property name="subscriptionsVolume">
 			<list>
-				<ref bean="subscriptionVolume2" />
+				<null/>
 			</list>
 		</property>
 	</bean>
@@ -1741,12 +1741,12 @@
 	</bean>
 
 	<!-- SubscriptionNewspaper 2 -->
-	<bean id="subscriptionNewspaper2"
-		class="domain.SubscriptionNewspaper">
-		<property name="creditCard" ref="creditCard2" />
-		<property name="customer" ref="customer2" />
-		<property name="newspaper" ref="newspaper2" />
-	</bean>
+<!-- 	<bean id="subscriptionNewspaper2" -->
+<!-- 		class="domain.SubscriptionNewspaper"> -->
+<!-- 		<property name="creditCard" ref="creditCard2" /> -->
+<!-- 		<property name="customer" ref="customer2" /> -->
+<!-- 		<property name="newspaper" ref="newspaper2" /> -->
+<!-- 	</bean> -->
 
 	<!-- SubscriptionNewspaper 3 -->
 	<bean id="subscriptionNewspaper3"
@@ -1962,7 +1962,7 @@
 		</property>
 		<property name="subscriptionsNewspaper">
 			<list>
-				<ref bean="subscriptionNewspaper2" />
+				<null/>
 			</list>
 		</property>
 		<property name="advertisements">
