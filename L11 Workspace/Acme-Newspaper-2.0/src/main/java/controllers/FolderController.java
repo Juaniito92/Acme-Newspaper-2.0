@@ -18,6 +18,7 @@ import services.FolderService;
 import domain.Actor;
 import domain.Folder;
 import domain.Message;
+import domain.Notification;
 
 @Controller
 @RequestMapping("/folder")
@@ -236,10 +237,12 @@ public class FolderController extends AbstractController {
 		folder = folderService.findOne(folderId);
 		messages = folder.getMessages();
 		folders = folderService.getChildFolders(folderId);
+		Collection<Notification> notifications = folder.getNotifications();
 		result = new ModelAndView("folder/display");
 		result.addObject("folders", folders);
 		result.addObject("messages", messages);
 		result.addObject("folder", folder);
+		result.addObject("notifications", notifications);
 
 		return result;
 

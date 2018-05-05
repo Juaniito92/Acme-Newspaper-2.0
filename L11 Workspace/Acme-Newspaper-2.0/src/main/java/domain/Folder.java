@@ -57,6 +57,7 @@ public class Folder extends DomainEntity {
 	private Folder parent;
 	private Collection<Message> messages;
 	private Actor actor;
+	private Collection<Notification> notifications;
 
 	@OneToOne(optional = true)
 	public Folder getParent() {
@@ -80,12 +81,22 @@ public class Folder extends DomainEntity {
 
 	@NotNull
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	public Actor getActor() {
 		return actor;
 	}
 
 	public void setActor(Actor actor) {
 		this.actor = actor;
+	}
+
+	@Valid
+	@OneToMany
+	public Collection<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(Collection<Notification> notifications) {
+		this.notifications = notifications;
 	}
 }

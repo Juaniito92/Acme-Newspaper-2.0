@@ -11,10 +11,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.UserRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Actor;
 import domain.Article;
 import domain.Chirp;
@@ -23,6 +19,10 @@ import domain.Newspaper;
 import domain.User;
 import domain.Volume;
 import forms.UserForm;
+import repositories.UserRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -34,10 +34,10 @@ public class UserService {
 	private UserRepository userRepository;
 
 	// Supporting services
-	
+
 	@Autowired
 	private ActorService actorService;
-	
+
 	@Autowired
 	private FolderService folderService;
 
@@ -53,10 +53,10 @@ public class UserService {
 	// Simple CRUD methods
 
 	public User create() {
-		
+
 		Actor principal = actorService.findByPrincipal();
 		Assert.isTrue(principal == null);
-		
+
 		final User res = new User();
 
 		final UserAccount userAccount = new UserAccount();
@@ -98,12 +98,12 @@ public class UserService {
 		return res;
 	}
 
-	public User save(final User user) {
+	public User save(User user) {
 		User res;
-
+		boolean create = false;
 		if (user.getId() == 0) {
-			folderService.createSystemFolders(user);
-			
+			create = true;
+
 			String pass = user.getUserAccount().getPassword();
 
 			final Md5PasswordEncoder code = new Md5PasswordEncoder();
@@ -112,7 +112,12 @@ public class UserService {
 
 			user.getUserAccount().setPassword(pass);
 		}
+
 		res = this.userRepository.save(user);
+		if (create) {
+			folderService.createSystemFolders(res);
+		}
+
 		return res;
 	}
 
@@ -120,7 +125,7 @@ public class UserService {
 
 	public void follow(int userId) {
 		Assert.notNull(this.findOne(userId));
-		
+
 		User user = findOne(userId);
 		User principal = findByPrincipal();
 
@@ -134,7 +139,7 @@ public class UserService {
 	public void unfollow(int userId) {
 
 		Assert.notNull(this.findOne(userId));
-		
+
 		User user = findOne(userId);
 		User principal = findByPrincipal();
 
@@ -147,31 +152,27 @@ public class UserService {
 
 	public Collection<User> findFollowedUsersByUserAccountId(int userAccountId) {
 
-		Collection<User> result = userRepository
-				.findFollowedUsersByUserAccountId(userAccountId);
+		Collection<User> result = userRepository.findFollowedUsersByUserAccountId(userAccountId);
 		return result;
 	}
 
 	public Collection<User> findFollowedUsersByPrincipal() {
 
 		User principal = findByPrincipal();
-		Collection<User> result = userRepository
-				.findFollowedUsersByUserAccountId(principal.getUserAccount().getId());
+		Collection<User> result = userRepository.findFollowedUsersByUserAccountId(principal.getUserAccount().getId());
 		return result;
 	}
-	
+
 	public Collection<User> findFollowersByUserAccountId(int userAccountId) {
 
-		Collection<User> result = userRepository
-				.findFollowersByUserAccountId(userAccountId);
+		Collection<User> result = userRepository.findFollowersByUserAccountId(userAccountId);
 		return result;
 	}
 
 	public Collection<User> findFollowersByPrincipal() {
 
 		User principal = findByPrincipal();
-		Collection<User> result = userRepository
-				.findFollowersByUserAccountId(principal.getUserAccount().getId());
+		Collection<User> result = userRepository.findFollowersByUserAccountId(principal.getUserAccount().getId());
 		return result;
 	}
 
@@ -182,8 +183,7 @@ public class UserService {
 		if (userAccount == null)
 			res = null;
 		else
-			res = this.userRepository.findUserByUserAccountId(userAccount
-					.getId());
+			res = this.userRepository.findUserByUserAccountId(userAccount.getId());
 		return res;
 	}
 
