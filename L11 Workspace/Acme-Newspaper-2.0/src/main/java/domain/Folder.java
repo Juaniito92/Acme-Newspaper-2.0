@@ -5,36 +5,30 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Folder extends DomainEntity {
 
-	// Constructor
-	// ----------------------------------------------------------------------------
+	// Constructor ----------------------------------------------------------------------------
 	public Folder() {
 		super();
 	}
 
-	// Attributes
-	// ------------------------------------------------------------------------------
-	private String name;
-	private boolean predefined;
+
+	// Attributes ------------------------------------------------------------------------------
+	private String	name;
+	private boolean	predefined;
+
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getName() {
 		return this.name;
 	}
@@ -51,15 +45,16 @@ public class Folder extends DomainEntity {
 		this.predefined = predefined;
 	}
 
-	// RelashionShips
-	// ----------------------------------------------------------------
 
-	private Folder parent;
-	private Collection<Message> messages;
-	private Actor actor;
-	private Collection<Notification> notifications;
+	// RelashionShips ----------------------------------------------------------------
 
-	@OneToOne(optional = true)
+	private Folder				parent;
+	private Collection<Folder>	children;
+	private Collection<Message>	messages;
+
+
+	@Valid
+	@ManyToOne(optional = true)
 	public Folder getParent() {
 		return this.parent;
 	}
@@ -70,33 +65,23 @@ public class Folder extends DomainEntity {
 
 	@Valid
 	@NotNull
-	@ManyToMany(cascade = CascadeType.ALL)
-	public Collection<Message> getMessages() {
-		return messages;
+	@OneToMany(mappedBy = "parent")
+	public Collection<Folder> getChildren() {
+		return this.children;
 	}
 
-	public void setMessages(Collection<Message> messages) {
-		this.messages = messages;
+	public void setChildren(final Collection<Folder> children) {
+		this.children = children;
 	}
 
+	@Valid
 	@NotNull
-	@Valid
-	@ManyToOne(optional = false, cascade = CascadeType.ALL)
-	public Actor getActor() {
-		return actor;
+	@OneToMany(mappedBy = "folder")
+	public Collection<Message> getMessages() {
+		return this.messages;
 	}
 
-	public void setActor(Actor actor) {
-		this.actor = actor;
-	}
-
-	@Valid
-	@OneToMany
-	public Collection<Notification> getNotifications() {
-		return notifications;
-	}
-
-	public void setNotifications(Collection<Notification> notifications) {
-		this.notifications = notifications;
+	public void setMessages(final Collection<Message> messages) {
+		this.messages = messages;
 	}
 }

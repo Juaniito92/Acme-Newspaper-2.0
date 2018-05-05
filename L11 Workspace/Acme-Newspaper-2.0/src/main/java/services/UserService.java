@@ -100,23 +100,16 @@ public class UserService {
 
 	public User save(User user) {
 		User res;
-		boolean create = false;
 		if (user.getId() == 0) {
-			create = true;
-
-			String pass = user.getUserAccount().getPassword();
-
-			final Md5PasswordEncoder code = new Md5PasswordEncoder();
-
-			pass = code.encodePassword(pass, null);
-
-			user.getUserAccount().setPassword(pass);
+			final Collection<Folder> folders = this.folderService
+					.save(this.folderService.defaultFolders());
+			user.setFolders(folders);
+			user.getUserAccount().setPassword(
+					new Md5PasswordEncoder().encodePassword(user
+							.getUserAccount().getPassword(), null));
 		}
 
 		res = this.userRepository.save(user);
-		if (create) {
-			folderService.createSystemFolders(res);
-		}
 
 		return res;
 	}
@@ -152,27 +145,33 @@ public class UserService {
 
 	public Collection<User> findFollowedUsersByUserAccountId(int userAccountId) {
 
-		Collection<User> result = userRepository.findFollowedUsersByUserAccountId(userAccountId);
+		Collection<User> result = userRepository
+				.findFollowedUsersByUserAccountId(userAccountId);
 		return result;
 	}
 
 	public Collection<User> findFollowedUsersByPrincipal() {
 
 		User principal = findByPrincipal();
-		Collection<User> result = userRepository.findFollowedUsersByUserAccountId(principal.getUserAccount().getId());
+		Collection<User> result = userRepository
+				.findFollowedUsersByUserAccountId(principal.getUserAccount()
+						.getId());
 		return result;
 	}
 
 	public Collection<User> findFollowersByUserAccountId(int userAccountId) {
 
-		Collection<User> result = userRepository.findFollowersByUserAccountId(userAccountId);
+		Collection<User> result = userRepository
+				.findFollowersByUserAccountId(userAccountId);
 		return result;
 	}
 
 	public Collection<User> findFollowersByPrincipal() {
 
 		User principal = findByPrincipal();
-		Collection<User> result = userRepository.findFollowersByUserAccountId(principal.getUserAccount().getId());
+		Collection<User> result = userRepository
+				.findFollowersByUserAccountId(principal.getUserAccount()
+						.getId());
 		return result;
 	}
 
@@ -183,7 +182,8 @@ public class UserService {
 		if (userAccount == null)
 			res = null;
 		else
-			res = this.userRepository.findUserByUserAccountId(userAccount.getId());
+			res = this.userRepository.findUserByUserAccountId(userAccount
+					.getId());
 		return res;
 	}
 

@@ -1,3 +1,4 @@
+
 package controllers;
 
 import java.util.Collection;
@@ -6,272 +7,132 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ActorService;
 import services.FolderService;
-import domain.Actor;
 import domain.Folder;
-import domain.Message;
-import domain.Notification;
 
 @Controller
 @RequestMapping("/folder")
 public class FolderController extends AbstractController {
 
+	// Services ------------------------------------------------------
+
 	@Autowired
-	private FolderService folderService;
-	@Autowired
-	private ActorService actorService;
+	private FolderService	folderService;
+
+
+	// Constructors --------------------------------------------------
 
 	public FolderController() {
 		super();
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam int folderId) {
-		ModelAndView result;
-		Folder parentFolder = folderService.findOne(folderId);
-		Folder folder;
-		folder = folderService.create();
-		folder.setParent(parentFolder);
-		result = this.createEditModelAndView(folder, false);
-		return result;
-	}
-	
-	@RequestMapping(value = "/move", method = RequestMethod.GET)
-	public ModelAndView createMove(@RequestParam int folderId) {
-		ModelAndView result;
-		Folder folder;
-		
-		folder = folderService.findOne(folderId);
-		
-		Actor principal = actorService.findByPrincipal();
-		Collection<Folder> folders = principal.getFolders();
-		result = new ModelAndView("folder/move");
-		result.addObject("folder", folder);
-		result.addObject("message", null);
+	// Listing -------------------------------------------------------
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list(@RequestParam(required = false) final Integer folderId) {
+
+		final ModelAndView result;
+		Collection<Folder> folders;
+
+		folders = this.folderService.findByFolderId(folderId);
+
+		result = new ModelAndView("folder/list");
 		result.addObject("folders", folders);
-		
-		return result;
 
+		return result;
 	}
 
-	@RequestMapping(value = "/createFirst", method = RequestMethod.GET)
+	// Creation ------------------------------------------------------
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
+
 		ModelAndView result;
 		Folder folder;
-		folder = folderService.create();
-		result = this.createEditModelAndView(folder, true);
+
+		folder = this.folderService.create(false, null);
+
+		result = this.createEditModelAndView(folder);
+
+		return result;
+	}
+
+	// Edition -------------------------------------------------------
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int folderId) {
+
+		final ModelAndView result;
+		Folder folder;
+
+		folder = this.folderService.findOneToEdit(folderId);
+
+		result = this.createEditModelAndView(folder);
+
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Folder folder, BindingResult binding) {
+	public ModelAndView save(@Valid final Folder folder, final BindingResult binding) {
 
 		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = this.createEditModelAndView(folder, false);
 
-		} else {
-
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(folder);
+		else
 			try {
-
-				folderService.save(folder);
-
-				result = new ModelAndView("redirect:display.do?folderId="
-						+ folder.getParent().getId());
-
-			} catch (Throwable oops) {
-
-				result = createEditModelAndView(folder, "ms.commit.error",
-						false);
-
-			}
-
-		}
-		return result;
-
-	}
-	
-	@RequestMapping(value = "/saveMove", method = RequestMethod.GET)
-	public ModelAndView saveMove(@RequestParam(required=true) int targetfolderId,
-			@RequestParam(required=true) int folderId){
-		ModelAndView result;
-		Folder folder = folderService.findOne(folderId);
-		Assert.notNull(folder);
-		Folder targetFolder = folderService.findOne(targetfolderId);
-		Assert.notNull(targetFolder);
-		
-		try {
-			
-			folderService.saveToMove(folder,targetFolder);
-			result = new ModelAndView("redirect:/folder/display.do?folderId="+targetFolder.getId());
-
-		} catch (Throwable oops) {
-			Actor principal = actorService.findByPrincipal();
-			Collection<Folder> folders = principal.getFolders();
-			result = new ModelAndView("message/move");
-			result.addObject("folder", folder);
-			result.addObject("message", "ms.commit.error");
-			result.addObject("folders", folders);
-
-			
-
-		}
-		
-		return result;
-	}
-	
-	
-
-	@RequestMapping(value = "/editFirst", method = RequestMethod.POST, params = "saveFirst")
-	public ModelAndView saveFirst(@Valid Folder folder, BindingResult binding) {
-
-		ModelAndView result;
-		if (binding.hasErrors()) {
-			result = this.createEditModelAndView(folder, true);
-
-		} else {
-			try {
-
-				folderService.save(folder);
-
-				result = new ModelAndView("redirect:list.do");
-
-			} catch (Throwable oops) {
-
-				result = createEditModelAndView(folder, "ms.commit.error", true);
-
-			}
-
-		}
-		return result;
-
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam int folderId) {
-		ModelAndView result;
-		Folder folder;
-		folder = folderService.findOne(folderId);
-		Folder parentFolder = folder.getParent();
-
-		if (folder.getParent()==null) {
-			
-			try {
-				this.folderService.delete(folder);
+				this.folderService.save(folder);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
-				result = new ModelAndView(
-						"redirect:/folder/display.do?folderId="
-								+ folder.getId());
-
+				result = this.createEditModelAndView(folder, "folder.commit.error");
 			}
-			
-		} else {
-
-			try {
-				this.folderService.delete(folder);
-
-				result = new ModelAndView(
-						"redirect:/folder/display.do?folderId="
-								+ parentFolder.getId());
-			} catch (final Throwable oops) {
-				result = new ModelAndView(
-						"redirect:/folder/display.do?folderId="
-								+ folder.getId());
-
-			}
-		}
 
 		return result;
-
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(final Folder folder, final BindingResult binding) {
 
-	@RequestMapping(value = "/editFirst", method = RequestMethod.POST, params = "delete")
-	public ModelAndView deleteFirst(Folder folder, BindingResult binding) {
 		ModelAndView result;
 
 		try {
 			this.folderService.delete(folder);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(folder,
-					"application.commit.error", true);
+			result = this.createEditModelAndView(folder, "folder.commit.error");
 		}
 
 		return result;
-
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	// Ancillary methods ---------------------------------------------
+
+	protected ModelAndView createEditModelAndView(final Folder folder) {
 
 		ModelAndView result;
-		Collection<Folder> folders;
 
-		Actor actor = actorService.findByPrincipal();
-		folders = folderService.getFirstLevelFoldersFromActorId(actor.getId());
-
-		result = new ModelAndView("folder/list");
-		result.addObject("folders", folders);
+		result = this.createEditModelAndView(folder, null);
 
 		return result;
-
 	}
 
-	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam int folderId) {
+	protected ModelAndView createEditModelAndView(final Folder folder, final String messageCode) {
 
 		ModelAndView result;
-		Folder folder;
-		Collection<Message> messages;
 		Collection<Folder> folders;
-		folder = folderService.findOne(folderId);
-		messages = folder.getMessages();
-		folders = folderService.getChildFolders(folderId);
-		Collection<Notification> notifications = folder.getNotifications();
-		result = new ModelAndView("folder/display");
-		result.addObject("folders", folders);
-		result.addObject("messages", messages);
+
+		folders = this.folderService.findByPrincipal();
+		folders.remove(folder);
+
+		result = new ModelAndView("folder/edit");
 		result.addObject("folder", folder);
-		result.addObject("notifications", notifications);
-
-		return result;
-
-	}
-
-	protected ModelAndView createEditModelAndView(final Folder folder,
-			boolean isFirst) {
-		ModelAndView result;
-
-		result = this.createEditModelAndView(folder, null, isFirst);
-
-		return result;
-	}
-
-	protected ModelAndView createEditModelAndView(final Folder folder,
-			final String messageCode, boolean isFirst) {
-
-		ModelAndView result;
-		if (isFirst) {
-			result = new ModelAndView("folder/createFirst");
-			result.addObject("folder", folder);
-			result.addObject("message", messageCode);
-		} else {
-			result = new ModelAndView("folder/create");
-			Folder parentFolder = folder.getParent();
-			result.addObject("folder", folder);
-			result.addObject("message", messageCode);
-			result.addObject("parentFolder", parentFolder);
-		}
+		result.addObject("folders", folders);
 
 		return result;
 	}

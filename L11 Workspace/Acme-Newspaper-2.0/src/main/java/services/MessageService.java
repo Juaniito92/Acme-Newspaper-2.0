@@ -1,157 +1,277 @@
+
 package services;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.MessageRepository;
 import domain.Actor;
 import domain.Folder;
 import domain.Message;
-import repositories.MessageRepository;
 
 @Service
 @Transactional
 public class MessageService {
 
-	// Managed repository
-	@Autowired
-	private MessageRepository messageRepository;
+	// Managed repository -----------------------------------------------------
 
-	// Supporting services
 	@Autowired
-	private ActorService actorService;
-	@Autowired
-	private FolderService folderService;
-	@Autowired
-	private AdminService administratorService;
+	private MessageRepository		messageRepository;
 
-	// Constructor
+	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private FolderService			folderService;
+
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
+
+	// Constructors -----------------------------------------------------------
+
 	public MessageService() {
 		super();
 	}
 
-	// Simple CRUD methods
+	// Simple CRUD methods ----------------------------------------------------
+
 	public Message create() {
-		Message res;
-		Date moment;
-		res = new Message();
-		Actor actor = actorService.findByPrincipal();
-		moment = new Date(System.currentTimeMillis() - 1);
-		res.setSender(actor);
-		res.setMoment(moment);
-		return res;
+
+		Message message;
+		Actor actor;
+		Folder folder;
+
+		message = new Message();
+		message.setMoment(new Date(System.currentTimeMillis() - 1000));
+
+		actor = this.actorService.findByPrincipal();
+		message.setSender(actor);
+
+		folder = this.folderService.findByFolderName(actor.getUserAccount().getId(), "out box");
+		message.setFolder(folder);
+
+		return message;
 	}
 
-	// TODO lo que se guarda en el outbox al enviar un mensaje es una copia, no
-	// el mensaje
-	public Message save(Message message) {
-		Assert.notNull(message);
-		Assert.notNull(message.getRecipient());
-		Folder recipientFolder;
+	public void delete(final Message message) {
+
+		this.checkByPrincipal(message);
 
 		Message saved;
-		saved = messageRepository.save(message);
+		final Actor actor;
+		Folder trashbox;
 
-		Message copiedMessage = message;
-		Message copiedAndSavedMessage = messageRepository.save(copiedMessage);
+		actor = this.actorService.findByPrincipal();
+		trashbox = this.folderService.findByFolderName(actor.getUserAccount().getId(), "trash box");
 
-		if (administratorService.checkIsSpam(saved.getBody()) || administratorService.checkIsSpam(saved.getSubject())) {
-			// instancio el Folder del destinatario como el spambox
-			recipientFolder = folderService.getSpamBoxFolderFromActorId(saved.getRecipient().getId());
-		} else {// si no contiene spam
-			// instancio el Folder del destinatario como inbox
-			recipientFolder = folderService.getInBoxFolderFromActorId(saved.getRecipient().getId());
-		}
+		if (message.getFolder() != trashbox) {
+			message.setFolder(trashbox);
+			saved = this.messageRepository.save(message);
+			trashbox.getMessages().add(saved);
+		} else
+			this.messageRepository.delete(message);
+	}
 
-		Collection<Message> recipientFolderMessages = recipientFolder.getMessages();
-		recipientFolderMessages.add(saved);
-		recipientFolder.setMessages(recipientFolderMessages);
-		Actor sender = actorService.findByPrincipal();
-		Folder senderOutbox = folderService.getOutBoxFolderFromActorId(sender.getId());
-		Collection<Message> senderOutboxMessages = senderOutbox.getMessages();
+	public Message findOne(final int id) {
 
-		senderOutboxMessages.add(copiedAndSavedMessage);
-		senderOutbox.setMessages(senderOutboxMessages);
+		Message result;
+
+		result = this.messageRepository.findOne(id);
+
+		return result;
+	}
+
+	public Message findOneToEdit(final int id) {
+
+		Message result;
+
+		result = this.findOne(id);
+		this.checkByPrincipal(result);
+
+		return result;
+	}
+
+	public Collection<Message> findAll() {
+		return this.messageRepository.findAll();
+	}
+
+	public Message save(final Message message) {
+
+		Assert.notNull(message);
+
+		Message saved, copy;
+		Message savedCopy = null;
+		Folder outboxSender, inboxRecipient, spamboxRecipient;
+
+		if (message.getId() == 0) {
+			final Date newMoment = new Date(System.currentTimeMillis() - 1000);
+			copy = this.copy(message);
+			if (this.isSpamMessage(message)) {
+				spamboxRecipient = this.folderService.findByFolderName(copy.getRecipient().getUserAccount().getId(), "spam box");
+				copy.setFolder(spamboxRecipient);
+				savedCopy = this.messageRepository.save(copy);
+				savedCopy.setMoment(newMoment);
+				spamboxRecipient.getMessages().add(savedCopy);
+			} else {
+				inboxRecipient = this.folderService.findByFolderName(copy.getRecipient().getUserAccount().getId(), "in box");
+				copy.setFolder(inboxRecipient);
+				savedCopy = this.messageRepository.save(copy);
+				savedCopy.setMoment(newMoment);
+				inboxRecipient.getMessages().add(savedCopy);
+			}
+
+			outboxSender = message.getFolder();
+			saved = this.messageRepository.save(message);
+			saved.setMoment(newMoment);
+			outboxSender.getMessages().add(saved);
+		} else
+			saved = this.messageRepository.save(message);
 
 		return saved;
 	}
 
-	public void saveToMove(Message message, Folder folder) {
+	public Message notify(final Message message) {
 
+		Assert.isTrue(!this.isSpamMessage(message));
 		Assert.notNull(message);
-		Assert.notNull(folder);
 
-		Folder currentFolder = folderService.getFolderFromMessageId(message.getId());
-		Collection<Message> currentFolderMessages = currentFolder.getMessages();
-		currentFolderMessages.remove(message);
-		currentFolder.setMessages(currentFolderMessages);
-		folderService.simpleSave(currentFolder);
+		Message saved = null;
+		Message copy, savedCopy;
+		Folder outboxSender = null;
+		Folder notificationboxRecipient;
 
-		// this.messageRepository.delete(message.getId());
+		message.setMoment(new Date(System.currentTimeMillis() - 1000));
+		outboxSender = this.folderService.findByFolderName(message.getSender().getUserAccount().getId(), "out box");
+		message.setFolder(outboxSender);
+		final Collection<Actor> recipients = this.actorService.findAll();
+		recipients.remove(this.actorService.findByPrincipal());
+		for (final Actor recipient : recipients) {
+			message.setRecipient(recipient);
+			copy = this.copy(message);
 
-		// Message savedCopy = this.messageRepository.save(copy);
-
-		// Message saved = this.messageRepository.save(message);
-		Collection<Message> folderMessages = folder.getMessages();
-		folderMessages.add(message);
-		folder.setMessages(folderMessages);
-		folderService.simpleSave(folder);
-
-		// this.messageRepository.save(message);
-
-	}
-
-	public void delete(Message message) {
-		Assert.notNull(message);
-		Actor actor = actorService.findByPrincipal();
-
-		// cojo el trashbox del actor logueado
-		Folder trashbox = folderService.getTrashBoxFolderFromActorId(actor.getId());
-		Collection<Message> trashboxMessages = trashbox.getMessages();
-
-		Folder messageFolder = folderService.getFolderFromMessageId(message.getId());
-		Collection<Message> folderMessages = messageFolder.getMessages();
-		// Compruebo que el trashbox del actor logueado no sea nulo
-		Assert.notNull(trashbox);
-		// si el mensaje que me pasan está en el trashbox del actor logueado:
-		if (trashboxMessages.contains(message)) {
-			trashboxMessages.remove(message);
-			trashbox.setMessages(trashboxMessages);
-			messageRepository.delete(message);
-
-		} else {// si el mensaje que se quiere borrar no está en el trashbox:
-
-			// Borro el mensaje del folder en el que estaba
-
-			Assert.notNull(messageFolder);
-			folderMessages.remove(message);
-			messageFolder.setMessages(folderMessages);
-
-			trashboxMessages.add(message);
-			trashbox.setMessages(trashboxMessages);
-
+			notificationboxRecipient = this.folderService.findByFolderName(recipient.getUserAccount().getId(), "notification box");
+			copy.setFolder(notificationboxRecipient);
+			saved = this.messageRepository.save(message);
+			outboxSender.getMessages().add(saved);
+			savedCopy = this.messageRepository.save(copy);
+			notificationboxRecipient.getMessages().add(savedCopy);
 		}
+
+		return saved;
+	}
+	// Other business methods -------------------------------------------------
+
+	public Message copy(final Message message) {
+
+		Assert.notNull(message);
+
+		Message result;
+
+		result = this.create();
+		result.setSubject(message.getSubject());
+		result.setBody(message.getBody());
+		result.setMoment(message.getMoment());
+		result.setPriority(message.getPriority());
+		result.setRecipient(message.getRecipient());
+		result.setSender(message.getSender());
+
+		return result;
 	}
 
-	public void delete(Iterable<Message> messages) {
-		Assert.notNull(messages);
-		messageRepository.delete(messages);
+	public Collection<Message> findByFolderId(final int folderId) {
+
+		Collection<Message> result;
+
+		final Folder folder = this.folderService.findOne(folderId);
+		this.folderService.checkPrincipal(folder);
+		result = folder.getMessages();
+
+		return result;
 	}
 
-	public Message findOne(int messageId) {
-		return messageRepository.findOne(messageId);
+	public void deleteByFolder(final Folder folder) {
 
+		final Collection<Message> messages = folder.getMessages();
+		this.messageRepository.delete(messages);
 	}
 
-	public Collection<Message> findAll() {
-		return messageRepository.findAll();
+	public void moveMessageToFolder(final Message message, final Folder folder) {
+		Assert.notNull(folder);
+		Assert.notNull(message);
+		this.folderService.checkPrincipal(folder);
+		Assert.isTrue(!folder.getMessages().contains(message));
 
+		final Actor actor = this.actorService.findByPrincipal();
+
+		Assert.isTrue(actor.getFolders().contains(message.getFolder()));
+
+		final List<Message> messages = new ArrayList<Message>(folder.getMessages());
+		final Folder folderSource = message.getFolder();
+		final List<Message> messages2 = new ArrayList<Message>(folderSource.getMessages());
+
+		messages.add(message);
+		folder.setMessages(messages);
+		messages2.remove(message);
+		folderSource.setMessages(messages2);
+
+		this.folderService.save(folder);
+		message.setFolder(folder);
+		this.save(message);
 	}
 
-	// Other business methods
+	public void checkByPrincipal(final Message message) {
+
+		Assert.notNull(message);
+
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.isTrue(message.getRecipient().equals(actor) || message.getSender().equals(actor));
+	}
+
+	private boolean isSpamMessage(final Message message) {
+		boolean result = false;
+		Pattern p;
+		Matcher isAnyMatcherBody;
+		Matcher isAnyMatcherSubject;
+
+		p = this.spamWords();
+		isAnyMatcherBody = p.matcher(message.getBody());
+		isAnyMatcherSubject = p.matcher(message.getSubject());
+
+		if (isAnyMatcherBody.find() || isAnyMatcherSubject.find())
+			result = true;
+
+		return result;
+	}
+
+	public Pattern spamWords() {
+		Pattern result;
+		List<String> spamWords;
+
+		final String spamlist = this.configurationService.findAll().iterator().next().getTabooWords();
+		spamWords = Arrays.asList(spamlist.split(","));
+
+		String str = ".*\\b(";
+		for (int i = 0; i <= spamWords.size(); i++)
+			if (i < spamWords.size())
+				str += spamWords.get(i) + "|";
+			else
+				str += spamWords.iterator().next() + ")\\b.*";
+
+		result = Pattern.compile(str, Pattern.CASE_INSENSITIVE);
+
+		return result;
+	}
 
 }

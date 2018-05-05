@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -13,11 +15,8 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -30,12 +29,14 @@ public class Message extends DomainEntity {
 		super();
 	}
 
+
 	// Attributes -------------------------------------------------------------
 
-	private Date moment;
-	private String subject;
-	private String body;
-	private String priority;
+	private Date		moment;
+	private String		subject;
+	private String		body;
+	private Priority	priority;
+
 
 	@NotNull
 	@Past
@@ -50,7 +51,6 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSubject() {
 		return this.subject;
 	}
@@ -60,7 +60,6 @@ public class Message extends DomainEntity {
 	}
 
 	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getBody() {
 		return this.body;
 	}
@@ -69,19 +68,35 @@ public class Message extends DomainEntity {
 		this.body = body;
 	}
 
-	@Pattern(regexp = "(^HIGH|NEUTRAL|LOW$)")
-	public String getPriority() {
+	@NotNull
+	@Valid
+	@Enumerated(EnumType.STRING)
+	public Priority getPriority() {
 		return this.priority;
 	}
 
-	public void setPriority(final String priority) {
+	public void setPriority(final Priority priority) {
 		this.priority = priority;
 	}
 
+
 	// Relationships ----------------------------------------------------------
 
-	private Actor sender;
-	private Actor recipient;
+	private Actor	sender;
+	private Actor	recipient;
+	private Folder	folder;
+
+
+	@NotNull
+	@Valid
+	@ManyToOne(optional = false)
+	public Folder getFolder() {
+		return this.folder;
+	}
+
+	public void setFolder(final Folder folder) {
+		this.folder = folder;
+	}
 
 	@NotNull
 	@Valid

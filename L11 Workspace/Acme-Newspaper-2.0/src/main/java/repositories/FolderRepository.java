@@ -35,5 +35,11 @@ public interface FolderRepository extends JpaRepository<Folder, Integer> {
 
 	@Query("select f from Folder f where f.parent.id=?1")
 	Collection<Folder> getChildFolders(int folderId);
+	
+	@Query("select distinct f from Folder f, Actor a join a.folders f where a.userAccount.id = ?1 and f.name = ?2")
+	Folder findByFolderName(int userAccountId, String folderName);
+
+	@Query("select distinct f from Folder f, Actor a join a.folders f where a.userAccount.id = ?1 and f.parent is null")
+	Collection<Folder> findFoldersWithoutParent(int userAccountId);
 
 }

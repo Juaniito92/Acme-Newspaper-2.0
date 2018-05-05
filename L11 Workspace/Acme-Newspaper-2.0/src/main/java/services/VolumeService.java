@@ -13,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.VolumeRepository;
-import domain.CreditCard;
 import domain.Customer;
 import domain.Newspaper;
 import domain.SubscriptionVolume;

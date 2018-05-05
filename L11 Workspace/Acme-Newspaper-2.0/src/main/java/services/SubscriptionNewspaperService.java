@@ -7,12 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.validation.Validator;
 
 import repositories.SubscriptionNewspaperRepository;
 import domain.CreditCard;
 import domain.SubscriptionNewspaper;
-import domain.SubscriptionVolume;
 
 @Service
 @Transactional
@@ -30,9 +28,6 @@ public class SubscriptionNewspaperService {
 
 	@Autowired
 	private NewspaperService newspaperService;
-
-	@Autowired
-	private Validator validator;
 
 	// Constructors -----------------------------------------------------------
 

@@ -124,7 +124,7 @@
 					<li><a href="message/create.do"><spring:message
 								code="master.page.newmessage" /> </a></li>
 					<security:authorize access="hasRole('ADMIN')">
-						<li><a href="notification/admin/create.do"><spring:message
+						<li><a href="message/admin/create-notification.do"><spring:message
 									code="master.page.newnotification" /></a></li>
 					</security:authorize>
 					<li><a href="folder/list.do"><spring:message

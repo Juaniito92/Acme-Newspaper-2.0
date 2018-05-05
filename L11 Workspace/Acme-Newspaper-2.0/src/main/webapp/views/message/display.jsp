@@ -1,44 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%--
+ * edit.jsp
+ *
+ * Copyright (C) 2017 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ --%>
+
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<ul style="list-style-type: disc">
+<h3><b><spring:message code="message.subject"/>:&nbsp;</b><jstl:out value="${messageDisplay.subject}"/></h3>
 
-	<li><b><spring:message code="ms.priority"></spring:message>:</b> <jstl:out
-			value="${m.priority}" /></li>
+<b><spring:message code="message.body"/>:&nbsp;</b><jstl:out value="${messageDisplay.body}"/>
+<br/>
 
-	<li><b><spring:message code="ms.sender"></spring:message>:</b> <jstl:out
-			value="${m.sender.userAccount.username}" /></li>
+<spring:message code="message.pattern.date" var="patternDate"/>
+<b><spring:message code="message.moment"/>:&nbsp;</b><fmt:formatDate value="${messageDisplay.moment}" pattern="${patternDate}"/>
+<br/>
 
-	<li><b><spring:message code="ms.recipient"></spring:message>:</b>
-		<jstl:out value="${m.recipient.userAccount.username}" /></li>
+<b><spring:message code="message.priority"/>:&nbsp;</b><jstl:out value="${messageDisplay.priority}"/>
+<br/>
 
-	<li><b><spring:message code="ms.subject"></spring:message>:</b> <jstl:out
-			value="${m.subject}" /></li>
+<b><spring:message code="message.sender"/>:&nbsp;</b><jstl:out value="${sender.name}"/>
+<br/>
 
-	<li><b><spring:message code="ms.body"></spring:message>:</b> <jstl:out
-			value="${m.body}" /></li>
-</ul>
+<b><spring:message code="message.recipient"/>:&nbsp;</b><jstl:out value="${recipient.name}"/>
+<br/>
 
+<b><spring:message code="message.folder"/>:&nbsp;</b><jstl:out value="${messageDisplay.folder.name}"/>
+<br/>
 
+<a href="message/edit.do?messageId=${messageDisplay.id}"><spring:message code="message.editMessage"/></a>
+<br/>
 
-<input type="button" name="back"
-	value="<spring:message code="ms.back" />"
-	onclick="javascript: relativeRedir('folder/display.do?folderId=${folder.id}')" />
-
-<input type="button" name="move"
-	value="<spring:message code="ms.move" />"
-	onclick="javascript: relativeRedir('message/move.do?messageId=<jstl:out value="${m.getId()}"/>');" />
-
-
-<input type="button" name="delete"
-	value="<spring:message code="ms.delete" />"
-	onclick="javascript: relativeRedir('message/delete.do?messageId=<jstl:out value="${m.getId()}"/>');" />
-
+<input type="button" name="cancel" value="<spring:message code="message.cancel" />" onclick="javascript: relativeRedir('message/list.do?folderId=${messageDisplay.folder.id}');" />

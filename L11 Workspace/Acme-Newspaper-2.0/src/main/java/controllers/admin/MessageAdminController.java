@@ -1,5 +1,5 @@
 
-package controllers;
+package controllers.admin;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,20 +12,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.FolderService;
 import services.MessageService;
+import controllers.AbstractController;
 import domain.Actor;
 import domain.Folder;
 import domain.Message;
 import domain.Priority;
 
 @Controller
-@RequestMapping("/message")
-public class MessageController extends AbstractController {
+@RequestMapping("/message/admin")
+public class MessageAdminController extends AbstractController {
 
 	// Services ------------------------------------------------------
 
@@ -41,27 +41,8 @@ public class MessageController extends AbstractController {
 
 	// Constructors --------------------------------------------------
 
-	public MessageController() {
+	public MessageAdminController() {
 		super();
-	}
-
-	// Listing -------------------------------------------------------
-
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int folderId) {
-
-		ModelAndView result;
-		Collection<Message> messages;
-		Folder folder;
-
-		messages = this.messageService.findByFolderId(folderId);
-		folder = this.folderService.findOne(folderId);
-
-		result = new ModelAndView("message/list");
-		result.addObject("messages", messages);
-		result.addObject("folder", folder);
-
-		return result;
 	}
 
 	// Creation ------------------------------------------------------
@@ -81,24 +62,8 @@ public class MessageController extends AbstractController {
 
 	// Edition -------------------------------------------------------
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int messageId) {
-
-		ModelAndView result;
-		Message message;
-		Actor actor;
-
-		message = this.messageService.findOneToEdit(messageId);
-		actor = this.actorService.findByPrincipal();
-
-		result = new ModelAndView("message/edit2");
-		result.addObject("messageEdit", message);
-		result.addObject("folders", actor.getFolders());
-
-		return result;
-	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid @ModelAttribute("messageEdit") final Message message, final BindingResult binding) {
+	public ModelAndView save(@Valid final Message message, final BindingResult binding) {
 
 		ModelAndView result;
 
@@ -106,7 +71,7 @@ public class MessageController extends AbstractController {
 			result = this.createEditModelAndView(message);
 		else
 			try {
-				final Message saved = this.messageService.save(message);
+				final Message saved = this.messageService.notify(message);
 				result = new ModelAndView("redirect:list.do?folderId=" + saved.getFolder().getId());
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(message, "message.commit.error");
@@ -115,39 +80,36 @@ public class MessageController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Message message, final BindingResult binding) {
+	// Notification --------------------------------------------------
 
-		ModelAndView result;
-		int folderid;
-		folderid = message.getFolder().getId();
-		try {
-			this.messageService.delete(message);
-			result = new ModelAndView("redirect:list.do?folderId=" + folderid);
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(message, "message.commit.error");
-		}
+	@RequestMapping(value = "/create-notification", method = RequestMethod.GET)
+	public ModelAndView createNotification() {
+		ModelAndView result = null;
+		Message message = null;
+
+		message = this.messageService.create();
+		message.setRecipient(this.actorService.findByPrincipal());
+		result = this.createNotificationModelAndView(message);
 
 		return result;
 	}
 
-	// Display -------------------------------------------------------
+	// Notificate a  message -----------------------------------------
 
-	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int messageId) {
+	@RequestMapping(value = "/notification", method = RequestMethod.POST, params = "notify")
+	public ModelAndView notification(@Valid @ModelAttribute("messageNotification") final Message message, final BindingResult binding) {
 
 		ModelAndView result;
-		Message message;
-		Actor sender, recipient;
 
-		message = this.messageService.findOneToEdit(messageId);
-		sender = this.actorService.findSenderByMessageId(messageId);
-		recipient = this.actorService.findRecipientByMessageId(messageId);
-
-		result = new ModelAndView("message/display");
-		result.addObject("messageDisplay", message);
-		result.addObject("sender", sender);
-		result.addObject("recipient", recipient);
+		if (binding.hasErrors())
+			result = this.createNotificationModelAndView(message);
+		else
+			try {
+				final Message saved = this.messageService.notify(message);
+				result = new ModelAndView("redirect:../list.do?folderId=" + saved.getFolder().getId());
+			} catch (final Throwable oops) {
+				result = this.createNotificationModelAndView(message, "message.commit.error");
+			}
 
 		return result;
 	}
@@ -186,7 +148,37 @@ public class MessageController extends AbstractController {
 		result.addObject("priorities", priorities);
 		result.addObject("folders", folders);
 		result.addObject("message", messageCode);
-		result.addObject("actionURI", "message/edit.do");
+		result.addObject("actionURI", "message/admin/edit.do");
+
+		return result;
+	}
+
+	protected ModelAndView createNotificationModelAndView(final Message message) {
+		ModelAndView result;
+
+		result = this.createNotificationModelAndView(message, null);
+
+		return result;
+	}
+
+	protected ModelAndView createNotificationModelAndView(final Message message, final String messageCode) {
+
+		ModelAndView result = null;
+		Collection<Actor> actors = null;
+		Collection<Priority> priorities = null;
+
+		actors = this.actorService.findAll();
+		actors.remove(this.actorService.findByPrincipal());
+
+		priorities = new ArrayList<Priority>();
+		priorities.add(Priority.LOW);
+		priorities.add(Priority.NEUTRAL);
+		priorities.add(Priority.HIGH);
+
+		result = new ModelAndView("message/notify");
+		result.addObject("messageNotification", message);
+		result.addObject("priorities", priorities);
+		result.addObject("actionURI", "message/admin/notification.do");
 
 		return result;
 	}

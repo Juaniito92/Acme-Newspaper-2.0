@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -88,24 +87,16 @@ public class AgentService {
 
 	public Agent save(final Agent agent) {
 		Agent res;
-		boolean create = false;
 		if (agent.getId() == 0) {
-			create = true;
-
-			String pass = agent.getUserAccount().getPassword();
-
-			final Md5PasswordEncoder code = new Md5PasswordEncoder();
-
-			pass = code.encodePassword(pass, null);
-
-			agent.getUserAccount().setPassword(pass);
+			final Collection<Folder> folders = this.folderService
+					.save(this.folderService.defaultFolders());
+			agent.setFolders(folders);
+			agent.getUserAccount().setPassword(
+					new Md5PasswordEncoder().encodePassword(agent
+							.getUserAccount().getPassword(), null));
 		}
-
 		res = this.agentRepository.save(agent);
-		if (create) {
-			this.folderService.createSystemFolders(res);
 
-		}
 		return res;
 	}
 
@@ -122,11 +113,13 @@ public class AgentService {
 		if (userAccount == null)
 			res = null;
 		else
-			res = this.agentRepository.findAgentByUserAccountId(userAccount.getId());
+			res = this.agentRepository.findAgentByUserAccountId(userAccount
+					.getId());
 		return res;
 	}
 
-	public Agent reconstruct(final AgentForm agentForm, final BindingResult binding) {
+	public Agent reconstruct(final AgentForm agentForm,
+			final BindingResult binding) {
 
 		Assert.notNull(agentForm);
 		Assert.isTrue(agentForm.getTermsAndConditions() == true);

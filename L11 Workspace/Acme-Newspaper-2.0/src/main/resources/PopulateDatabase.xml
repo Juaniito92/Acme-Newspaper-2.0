@@ -583,7 +583,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="admin" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder2" class="domain.Folder">
@@ -592,7 +596,6 @@
 		<property name="parent">
 			<null />
 		</property>
-
 		<property name="messages">
 			<list>
 				<ref bean="message3" />
@@ -603,9 +606,14 @@
 				<ref bean="message8" />
 				<ref bean="message9" />
 				<ref bean="message10" />
+				<ref bean="message19" />
 			</list>
 		</property>
-		<property name="actor" ref="admin" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder3" class="domain.Folder">
@@ -620,7 +628,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="admin" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder4" class="domain.Folder">
@@ -634,7 +646,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="admin" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder5" class="domain.Folder">
@@ -648,7 +664,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="admin" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<!-- User1 folders -->
@@ -663,7 +683,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder7" class="domain.Folder">
@@ -677,7 +701,11 @@
 				<ref bean="message1" />
 			</list>
 		</property>
-		<property name="actor" ref="user1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder8" class="domain.Folder">
@@ -691,7 +719,11 @@
 				<ref bean="message11" />
 			</list>
 		</property>
-		<property name="actor" ref="user1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder9" class="domain.Folder">
@@ -705,7 +737,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder10" class="domain.Folder">
@@ -719,7 +755,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<!-- User2 folders -->
@@ -734,7 +774,11 @@
 				<ref bean="message2" />
 			</list>
 		</property>
-		<property name="actor" ref="user2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder12" class="domain.Folder">
@@ -748,7 +792,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder13" class="domain.Folder">
@@ -762,7 +810,11 @@
 				<ref bean="message12" />
 			</list>
 		</property>
-		<property name="actor" ref="user2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder14" class="domain.Folder">
@@ -776,7 +828,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder15" class="domain.Folder">
@@ -790,7 +846,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<!-- User3 folders -->
@@ -805,7 +865,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user3" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder17" class="domain.Folder">
@@ -819,7 +883,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user3" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder18" class="domain.Folder">
@@ -833,7 +901,11 @@
 				<ref bean="message13" />
 			</list>
 		</property>
-		<property name="actor" ref="user3" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder19" class="domain.Folder">
@@ -847,7 +919,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user3" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder20" class="domain.Folder">
@@ -861,7 +937,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user3" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<!-- User4 folders -->
@@ -876,7 +956,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user4" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder22" class="domain.Folder">
@@ -890,7 +974,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user4" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder23" class="domain.Folder">
@@ -904,7 +992,11 @@
 				<ref bean="message14" />
 			</list>
 		</property>
-		<property name="actor" ref="user4" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder24" class="domain.Folder">
@@ -918,7 +1010,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user4" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder25" class="domain.Folder">
@@ -932,7 +1028,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="user4" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<!-- Customer1 folders -->
@@ -947,7 +1047,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="customer1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder27" class="domain.Folder">
@@ -961,7 +1065,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="customer1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder28" class="domain.Folder">
@@ -975,7 +1083,11 @@
 				<ref bean="message15" />
 			</list>
 		</property>
-		<property name="actor" ref="customer1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder29" class="domain.Folder">
@@ -989,7 +1101,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="customer1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder30" class="domain.Folder">
@@ -1003,7 +1119,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="customer1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<!-- Customer2 folders -->
@@ -1018,7 +1138,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="customer2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder32" class="domain.Folder">
@@ -1032,7 +1156,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="customer2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder33" class="domain.Folder">
@@ -1046,7 +1174,11 @@
 				<ref bean="message16" />
 			</list>
 		</property>
-		<property name="actor" ref="customer2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder34" class="domain.Folder">
@@ -1060,7 +1192,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="customer2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder35" class="domain.Folder">
@@ -1074,7 +1210,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="customer2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<!-- Agent1 folders -->
@@ -1089,7 +1229,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder37" class="domain.Folder">
@@ -1103,7 +1247,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder38" class="domain.Folder">
@@ -1117,7 +1265,11 @@
 				<ref bean="message17" />
 			</list>
 		</property>
-		<property name="actor" ref="agent1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder39" class="domain.Folder">
@@ -1131,7 +1283,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder40" class="domain.Folder">
@@ -1145,7 +1301,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent1" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<!-- Agent2 folders -->
@@ -1160,7 +1320,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder42" class="domain.Folder">
@@ -1174,7 +1338,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder43" class="domain.Folder">
@@ -1188,7 +1356,11 @@
 				<ref bean="message18" />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder44" class="domain.Folder">
@@ -1202,7 +1374,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder45" class="domain.Folder">
@@ -1216,7 +1392,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 	
 		<!-- Agent3 folders -->
@@ -1231,7 +1411,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder47" class="domain.Folder">
@@ -1245,7 +1429,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder48" class="domain.Folder">
@@ -1256,10 +1444,14 @@
 		</property>
 		<property name="messages">
 			<list>
-				<ref bean="message18" />
+				<ref bean="message20" />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null/>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder49" class="domain.Folder">
@@ -1273,7 +1465,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="folder50" class="domain.Folder">
@@ -1287,7 +1483,11 @@
 				<null />
 			</list>
 		</property>
-		<property name="actor" ref="agent2" />
+		<property name="children">
+			<list>
+				<null />
+			</list>
+		</property>
 	</bean>
 
 	<!-- Message -->
@@ -1300,6 +1500,7 @@
 		<property name="priority" value="LOW" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
+		<property name="folder" ref="folder7"/>
 	</bean>
 
 	<!-- Message 2 -->
@@ -1311,6 +1512,7 @@
 		<property name="priority" value="LOW" />
 		<property name="sender" ref="user1" />
 		<property name="recipient" ref="user2" />
+		<property name="folder" ref="folder11"/>
 	</bean>
 
 	<!-- Message 3 -->
@@ -1322,6 +1524,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="user1" />
+		<property name="folder" ref="folder2"/>
 	</bean>
 
 	<!-- Message 4 -->
@@ -1333,6 +1536,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="user2" />
+		<property name="folder" ref="folder2"/>
 	</bean>
 
 	<!-- Message 5 -->
@@ -1344,6 +1548,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="user3" />
+		<property name="folder" ref="folder2"/>
 	</bean>
 
 	<!-- Message 6 -->
@@ -1355,6 +1560,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="user4" />
+		<property name="folder" ref="folder2"/>
 	</bean>
 
 	<!-- Message 7 -->
@@ -1366,6 +1572,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="customer1" />
+		<property name="folder" ref="folder2"/>
 	</bean>
 
 	<!-- Message 8 -->
@@ -1377,6 +1584,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="customer2" />
+		<property name="folder" ref="folder2"/>
 	</bean>
 
 	<!-- Message 9 -->
@@ -1388,6 +1596,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="agent1" />
+		<property name="folder" ref="folder2"/>
 	</bean>
 
 	<!-- Message 10 -->
@@ -1399,6 +1608,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="agent2" />
+		<property name="folder" ref="folder2"/>
 	</bean>
 
 	<!-- Message 11 -->
@@ -1410,6 +1620,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="user1" />
+		<property name="folder" ref="folder8"/>
 	</bean>
 
 	<!-- Message 12 -->
@@ -1421,6 +1632,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="user2" />
+		<property name="folder" ref="folder13"/>
 	</bean>
 
 	<!-- Message 13 -->
@@ -1432,6 +1644,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="user3" />
+		<property name="folder" ref="folder18"/>
 	</bean>
 
 	<!-- Message 14 -->
@@ -1443,6 +1656,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="user4" />
+		<property name="folder" ref="folder23"/>
 	</bean>
 
 	<!-- Message 15 -->
@@ -1454,6 +1668,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="customer1" />
+		<property name="folder" ref="folder28"/>
 	</bean>
 
 	<!-- Message 16 -->
@@ -1465,6 +1680,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="customer2" />
+		<property name="folder" ref="folder33"/>
 	</bean>
 
 	<!-- Message 17 -->
@@ -1476,6 +1692,7 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="agent1" />
+		<property name="folder" ref="folder38"/>
 	</bean>
 
 	<!-- Message 18 -->
@@ -1487,6 +1704,31 @@
 		<property name="priority" value="HIGH" />
 		<property name="sender" ref="admin" />
 		<property name="recipient" ref="agent2" />
+		<property name="folder" ref="folder43"/>
+	</bean>
+	
+	<!-- Message 19 -->
+	<bean id="message19" class="domain.Message">
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="agent3" />
+		<property name="folder" ref="folder2"/>
+	</bean>
+	
+	<!-- Message 20 -->
+	<bean id="message20" class="domain.Message">
+		<property name="moment" value="2018/04/01 12:00" />
+		<property name="subject" value="Notification message" />
+		<property name="body"
+			value="This is a body example of message." />
+		<property name="priority" value="HIGH" />
+		<property name="sender" ref="admin" />
+		<property name="recipient" ref="agent3" />
+		<property name="folder" ref="folder48"/>
 	</bean>
 
 	<!-- SubscriptionNewspaper -->
