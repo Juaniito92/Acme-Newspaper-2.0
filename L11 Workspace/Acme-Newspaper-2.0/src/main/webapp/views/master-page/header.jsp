@@ -36,6 +36,8 @@
 								code="master.page.article.list" /></a></li>
 					<li><a href="chirp/admin/list.do"><spring:message
 								code="master.page.chirp.list" /></a></li>
+					<li><a href="advertisement/admin/listTaboo.do"><spring:message
+								code="master.page.advertisement.suspicious" /></a></li>
 				</ul>
 			<li><a href="configuration/admin/list.do"><spring:message
 						code="master.page.configuration" /></a>

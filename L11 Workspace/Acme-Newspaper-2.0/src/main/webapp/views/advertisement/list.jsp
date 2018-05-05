@@ -13,7 +13,7 @@
 <!-- Listing grid -->
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="advertisements" requestURI="advertisement/agent/list.do"
+	name="advertisements" requestURI="${requestURI}"
 	id="row">
 
 	<!-- Action links -->

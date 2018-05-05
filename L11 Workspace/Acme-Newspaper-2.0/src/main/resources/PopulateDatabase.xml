@@ -128,6 +128,19 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount11" class="security.UserAccount">
+		<property name="username" value="agent3" />
+		<property name="password"
+			value="6f097a447415dd5030d579a9051165f0" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="AGENT" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Other domain beans come here -->
 
@@ -471,11 +484,35 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- Agent 3 -->
+	<bean id="agent3" class="domain.Agent">
+		<property name="name" value="Pepón" />
+		<property name="surname" value="Samper Villagrán" />
+		<property name="email" value="ponsavi@acme.org" />
+		<property name="phone" value="+345456565" />
+		<property name="address" value="Calle Fontenla, 2" />
+		<property name="userAccount" ref="userAccount11" />
+		<property name="advertisements">
+			<list>
+				<null />
+			</list>
+		</property>
+		<property name="folders">
+			<list>
+				<ref bean="folder46" />
+				<ref bean="folder47" />
+				<ref bean="folder48" />
+				<ref bean="folder49" />
+				<ref bean="folder50" />
+			</list>
+		</property>
+	</bean>
 
 	<!-- Advertisements -->
 	<!-- Advertisement 1 -->
 	<bean id="advertisement1" class="domain.Advertisement">
-		<property name="title" value="Title advertisement 1" />
+		<property name="title" value="viagra advertisement 1" />
 		<property name="banner"
 			value="http://www.pngall.com/wp-content/uploads/2016/07/Advertising-Free-Download-PNG.png" />
 		<property name="page"
@@ -1169,6 +1206,77 @@
 	</bean>
 
 	<bean id="folder45" class="domain.Folder">
+		<property name="name" value="spam box" />
+		<property name="predefined" value="true" />
+		<property name="parent">
+			<null />
+		</property>
+		<property name="messages">
+			<list>
+				<null />
+			</list>
+		</property>
+		<property name="actor" ref="agent2" />
+	</bean>
+	
+		<!-- Agent3 folders -->
+	<bean id="folder46" class="domain.Folder">
+		<property name="name" value="in box" />
+		<property name="predefined" value="true" />
+		<property name="parent">
+			<null />
+		</property>
+		<property name="messages">
+			<list>
+				<null />
+			</list>
+		</property>
+		<property name="actor" ref="agent2" />
+	</bean>
+
+	<bean id="folder47" class="domain.Folder">
+		<property name="name" value="out box" />
+		<property name="predefined" value="true" />
+		<property name="parent">
+			<null />
+		</property>
+		<property name="messages">
+			<list>
+				<null />
+			</list>
+		</property>
+		<property name="actor" ref="agent2" />
+	</bean>
+
+	<bean id="folder48" class="domain.Folder">
+		<property name="name" value="notification box" />
+		<property name="predefined" value="true" />
+		<property name="parent">
+			<null />
+		</property>
+		<property name="messages">
+			<list>
+				<ref bean="message18" />
+			</list>
+		</property>
+		<property name="actor" ref="agent2" />
+	</bean>
+
+	<bean id="folder49" class="domain.Folder">
+		<property name="name" value="trash box" />
+		<property name="predefined" value="true" />
+		<property name="parent">
+			<null />
+		</property>
+		<property name="messages">
+			<list>
+				<null />
+			</list>
+		</property>
+		<property name="actor" ref="agent2" />
+	</bean>
+
+	<bean id="folder50" class="domain.Folder">
 		<property name="name" value="spam box" />
 		<property name="predefined" value="true" />
 		<property name="parent">
