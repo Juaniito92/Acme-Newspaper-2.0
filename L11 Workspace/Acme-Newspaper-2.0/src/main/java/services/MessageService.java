@@ -112,6 +112,9 @@ public class MessageService {
 		// cojo el trashbox del actor logueado
 		Folder trashbox = folderService.getTrashBoxFolderFromActorId(actor.getId());
 		Collection<Message> trashboxMessages = trashbox.getMessages();
+
+		Folder messageFolder = folderService.getFolderFromMessageId(message.getId());
+		Collection<Message> folderMessages = messageFolder.getMessages();
 		// Compruebo que el trashbox del actor logueado no sea nulo
 		Assert.notNull(trashbox);
 		// si el mensaje que me pasan está en el trashbox del actor logueado:
@@ -122,15 +125,14 @@ public class MessageService {
 
 		} else {// si el mensaje que se quiere borrar no está en el trashbox:
 
+			// Borro el mensaje del folder en el que estaba
+
+			Assert.notNull(messageFolder);
+			folderMessages.remove(message);
+			messageFolder.setMessages(folderMessages);
+
 			trashboxMessages.add(message);
 			trashbox.setMessages(trashboxMessages);
-
-			// Borro el mensaje del folder en el que estaba
-			Folder messageFolder = folderService.getFolderFromMessageId(message.getId());
-			Assert.notNull(messageFolder);
-			Collection<Message> messages = messageFolder.getMessages();
-			messages.remove(message);
-			messageFolder.setMessages(messages);
 
 		}
 	}

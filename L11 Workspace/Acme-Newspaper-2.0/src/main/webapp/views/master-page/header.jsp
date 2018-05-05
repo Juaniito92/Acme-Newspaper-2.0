@@ -121,6 +121,10 @@
 					<li class="arrow"></li>
 					<li><a href="message/create.do"><spring:message
 								code="master.page.newmessage" /> </a></li>
+					<security:authorize access="hasRole('ADMIN')">
+						<li><a href="notification/admin/create.do"><spring:message
+									code="master.page.newnotification" /></a></li>
+					</security:authorize>
 					<li><a href="folder/list.do"><spring:message
 								code="master.page.myfolders" /></a></li>
 

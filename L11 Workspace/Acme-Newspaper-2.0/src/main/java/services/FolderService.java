@@ -53,10 +53,12 @@ public class FolderService {
 	public Folder save(final Folder folder) {
 		Assert.notNull(folder);
 		// Assert.isTrue(!folder.getSystemFolder());
-		if (folder.getId() != 0)
+		if (folder.getId() != 0) {
 			this.checkPrincipal(folder);
+		}
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
+
 		final Folder folderSaved = this.folderRepository.save(folder);
 		final Collection<Folder> actorFolders = actor.getFolders();
 		actorFolders.add(folderSaved);
@@ -153,51 +155,47 @@ public class FolderService {
 		Folder trashbox;
 		Folder notificationbox;
 		Folder spambox;
-		final Collection<Folder> folders = new ArrayList<Folder>();
 
 		inbox = new Folder();
+		Assert.notNull(inbox);
 		inbox.setActor(actor);
 		inbox.setPredefined(true);
 		inbox.setName("in box");
 		inbox.setMessages(new ArrayList<Message>());
 
 		outbox = new Folder();
+		Assert.notNull(outbox);
 		outbox.setActor(actor);
 		outbox.setPredefined(true);
 		outbox.setName("out box");
 		outbox.setMessages(new ArrayList<Message>());
 
 		trashbox = new Folder();
+		Assert.notNull(trashbox);
 		trashbox.setActor(actor);
 		trashbox.setPredefined(true);
 		trashbox.setName("trash box");
 		trashbox.setMessages(new ArrayList<Message>());
 
 		notificationbox = new Folder();
+		Assert.notNull(notificationbox);
 		notificationbox.setActor(actor);
 		notificationbox.setPredefined(true);
 		notificationbox.setName("notification box");
 		notificationbox.setMessages(new ArrayList<Message>());
 
 		spambox = new Folder();
+		Assert.notNull(spambox);
 		spambox.setActor(actor);
 		spambox.setPredefined(true);
 		spambox.setName("spam box");
 		spambox.setMessages(new ArrayList<Message>());
 
-		final Folder savedinbox = this.folderRepository.save(inbox);
-		final Folder savedoutbox = this.folderRepository.save(outbox);
-		final Folder savedtrashbox = this.folderRepository.save(trashbox);
-		final Folder savednotificationbox = this.folderRepository.save(notificationbox);
-		final Folder savedspambox = this.folderRepository.save(spambox);
-
-		folders.add(savedinbox);
-		folders.add(savedoutbox);
-		folders.add(savedtrashbox);
-		folders.add(savednotificationbox);
-		folders.add(savedspambox);
-
-		actor.setFolders(folders);
+		simpleSave(spambox);
+		simpleSave(notificationbox);
+		simpleSave(trashbox);
+		simpleSave(outbox);
+		simpleSave(inbox);
 
 	}
 

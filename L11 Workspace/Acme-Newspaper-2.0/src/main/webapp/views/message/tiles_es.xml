@@ -17,7 +17,7 @@
 
 <tiles-definitions>
 
-	<definition name="notification/create" extends="master.page">
+	<definition name="message/create" extends="master.page">
 		<put-attribute name="title" value="Nuevo mensaje" />
 		<put-attribute name="body" value="/views/message/create.jsp" />
 	</definition>
@@ -27,9 +27,15 @@
 		<put-attribute name="body" value="/views/message/createnotification.jsp" />
 	</definition>
 	
+	<definition name="message/display" extends="master.page">
+		<put-attribute name="title" value="Mostrar mensaje" />
+		<put-attribute name="body" value="/views/message/display.jsp" />
+	</definition>
+	
 	<definition name="message/move" extends="master.page">
 		<put-attribute name="title" value="Mover mensaje" />
 		<put-attribute name="body" value="/views/message/move.jsp" />
 	</definition>
+	
 	
 </tiles-definitions>

@@ -13,15 +13,15 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.AgentRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Actor;
 import domain.Advertisement;
 import domain.Agent;
 import domain.Folder;
 import forms.AgentForm;
+import repositories.AgentRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 
 @Service
 @Transactional
@@ -30,19 +30,18 @@ public class AgentService {
 	// Managed repository
 
 	@Autowired
-	private AgentRepository	agentRepository;
+	private AgentRepository agentRepository;
 
 	// Supporting services
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private FolderService	folderService;
+	private FolderService folderService;
 
 	@Autowired
-	private Validator		validator;
-
+	private Validator validator;
 
 	// Constructors
 
@@ -61,15 +60,14 @@ public class AgentService {
 
 		final UserAccount agentAccount = new UserAccount();
 		final Authority authority = new Authority();
-		final Collection<Folder> folders = new ArrayList<Folder>();
 		final Collection<Advertisement> advertisements = new ArrayList<Advertisement>();
-
+		Collection<Folder> folders = new ArrayList<Folder>();
 		authority.setAuthority(Authority.AGENT);
 		agentAccount.addAuthority(authority);
 		res.setUserAccount(agentAccount);
 
-		res.setFolders(folders);
 		res.setAdvertisements(advertisements);
+		res.setFolders(folders);
 
 		return res;
 	}
@@ -90,9 +88,9 @@ public class AgentService {
 
 	public Agent save(final Agent agent) {
 		Agent res;
-
+		boolean create = false;
 		if (agent.getId() == 0) {
-			this.folderService.createSystemFolders(agent);
+			create = true;
 
 			String pass = agent.getUserAccount().getPassword();
 
@@ -104,6 +102,10 @@ public class AgentService {
 		}
 
 		res = this.agentRepository.save(agent);
+		if (create) {
+			this.folderService.createSystemFolders(res);
+
+		}
 		return res;
 	}
 
