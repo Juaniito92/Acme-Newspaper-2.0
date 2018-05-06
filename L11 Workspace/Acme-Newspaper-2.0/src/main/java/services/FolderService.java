@@ -86,11 +86,6 @@ public class FolderService {
 
 		Assert.notNull(folder);
 
-		if (folder.getId() == 0)
-			this.checkNotRepeat(folder);
-		else
-			this.checkPrincipal(folder);
-
 		Actor actor;
 		Folder saved, parent;
 
