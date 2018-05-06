@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.MessageRepository;
 import domain.Actor;
 import domain.Folder;
 import domain.Message;
+import forms.MessageForm;
 
 @Service
 @Transactional
@@ -38,6 +41,9 @@ public class MessageService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+	
+	@Autowired
+	private Validator validator;
 
 	// Constructors -----------------------------------------------------------
 
@@ -172,6 +178,59 @@ public class MessageService {
 		return saved;
 	}
 	// Other business methods -------------------------------------------------
+	
+	public MessageForm construct(final Message message) {
+
+		Assert.notNull(message);
+
+		MessageForm messageForm;
+
+		messageForm = new MessageForm();
+
+		messageForm.setId(message.getId());
+		messageForm.setSenderId(message.getSender().getId());
+		if(message.getRecipient() == null){
+			messageForm.setRecipientId(null);
+		}else{
+			messageForm.setRecipientId(message.getRecipient().getId());
+		}
+		messageForm.setFolderId(message.getFolder().getId());
+		messageForm.setMoment(message.getMoment());
+		messageForm.setSubject(message.getSubject());
+		messageForm.setBody(message.getBody());
+		messageForm.setPriority(message.getPriority());
+		
+		return messageForm;
+	}
+
+	public Message reconstruct(final MessageForm messageForm, final BindingResult binding) {
+
+		Assert.notNull(messageForm);
+
+		Message message;
+
+		if (messageForm.getId() != 0)
+			message = this.findOne(messageForm.getId());
+		else
+			message = this.create();
+
+		message.setMoment(messageForm.getMoment());
+		message.setSubject(messageForm.getSubject());
+		message.setBody(messageForm.getBody());
+		message.setPriority(messageForm.getPriority());
+		message.setSender(actorService.findOne(messageForm.getSenderId()));
+		if(messageForm.getRecipientId() == null){
+			message.setRecipient(actorService.findOne(messageForm.getSenderId()));
+		}else{
+			message.setRecipient(actorService.findOne(messageForm.getRecipientId()));
+		}
+		message.setFolder(folderService.findOne(messageForm.getFolderId()));
+
+		if (binding != null)
+			this.validator.validate(message, binding);
+
+		return message;
+	}
 
 	public Message copy(final Message message) {
 

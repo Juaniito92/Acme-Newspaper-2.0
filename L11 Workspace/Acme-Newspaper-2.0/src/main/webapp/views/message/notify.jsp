@@ -11,44 +11,29 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${actionURI}" modelAttribute="messageNotification">
+<form:form action="${actionURI}" modelAttribute="messageForm">
 
 	<form:hidden path="id" />
-	<form:hidden path="version" />
+	<form:hidden path="senderId" />
+	<form:hidden path="recipientId" />
 	<form:hidden path="moment" />
-	<form:hidden path="sender" />
-	<form:hidden path="folder" />
-	<form:hidden path="recipient"/>
 
+	<acme:textbox code="message.subject" path="subject" />
 
-	<b><form:label path="subject">
-		<spring:message code="message.subject" />:&nbsp;</form:label></b>
-		<form:input path="subject" />
-	<form:errors path="subject" cssClass="error" />
-	<br />
-
-	<b><form:label path="body">
-		<spring:message code="message.body" />:&nbsp;</form:label></b>
-		<form:textarea path="body" />
-	<form:errors path="body" cssClass="error" />
-	<br />
+	<acme:textarea code="message.body" path="body" />
 
 	<b><form:label path="priority">
-		<spring:message code="message.priority" />:&nbsp;</form:label></b>
-		<form:select path="priority">
-			<form:options items="${priorities}" />
-		</form:select>
-	<form:errors path="priority" cssClass="error" />
+			<spring:message code="message.priority" />:&nbsp;</form:label></b>
+	<form:select path="priority">
+		<form:options items="${priorities}" />
+	</form:select>
 	<br />
 
-
-	<input type="submit" name="notify"
-		value="<spring:message code="message.notify"/>" />
+	<acme:submit name="notify" code="message.notify" />
 	&nbsp;
 
-	<input type="button" name="cancel"
-		value="<spring:message code="message.cancel" />"
-		onclick="javascript: relativeRedir('folder/list.do');" />
+	<acme:cancel url="folder/list.do" code="message.cancel" />
 
 </form:form>
