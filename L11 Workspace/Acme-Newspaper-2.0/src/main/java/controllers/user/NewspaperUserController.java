@@ -73,7 +73,7 @@ public class NewspaperUserController extends AbstractController {
 		Collection<Newspaper> newspapers;
 		Volume volume = volumeService.findOne(volumeId);
 
-		newspapers = newspaperService.findAll();
+		newspapers = newspaperService.findAvalibleNewspapers();
 
 		ModelAndView result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
