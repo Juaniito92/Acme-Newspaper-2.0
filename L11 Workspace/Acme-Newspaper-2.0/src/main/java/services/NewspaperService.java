@@ -15,12 +15,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.NewspaperRepository;
+import domain.Advertisement;
 import domain.Article;
 import domain.Configuration;
 import domain.Customer;
 import domain.Newspaper;
 import domain.SubscriptionNewspaper;
 import domain.User;
+import domain.Volume;
 import forms.NewspaperForm;
 
 @Service
@@ -71,6 +73,8 @@ public class NewspaperService {
 		result.setIsPrivate(false);
 		result.setPublisher(this.userService.findByPrincipal());
 		result.setArticles(new ArrayList<Article>());
+		result.setAdvertisements(new ArrayList<Advertisement>());
+		result.setVolumes(new ArrayList<Volume>());
 		result.setSubscriptionsNewspaper(new ArrayList<SubscriptionNewspaper>());
 
 		return result;
