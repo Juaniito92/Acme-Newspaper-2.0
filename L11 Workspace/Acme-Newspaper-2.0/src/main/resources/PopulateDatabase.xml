@@ -413,8 +413,7 @@
 		<property name="userAccount" ref="userAccount4" />
 		<property name="subscriptionsNewspaper">
 			<list>
-				<null/>
-				<ref bean="subscriptionNewspaper3" />
+				<ref bean="subscriptionNewspaper2" />
 			</list>
 		</property>
 		<property name="folders">
@@ -1745,14 +1744,6 @@
 		class="domain.SubscriptionNewspaper">
 		<property name="creditCard" ref="creditCard2" />
 		<property name="customer" ref="customer2" />
-		<property name="newspaper" ref="newspaper2" />
-	</bean>
-
-	<!-- SubscriptionNewspaper 3 -->
-	<bean id="subscriptionNewspaper3"
-		class="domain.SubscriptionNewspaper">
-		<property name="creditCard" ref="creditCard3" />
-		<property name="customer" ref="customer2" />
 		<property name="newspaper" ref="newspaper3" />
 	</bean>
 
@@ -1993,7 +1984,7 @@
 		</property>
 		<property name="subscriptionsNewspaper">
 			<list>
-				<ref bean="subscriptionNewspaper3" />
+				<ref bean="subscriptionNewspaper2" />
 			</list>
 		</property>
 		<property name="advertisements">
