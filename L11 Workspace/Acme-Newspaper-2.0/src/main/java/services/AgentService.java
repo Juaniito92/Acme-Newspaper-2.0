@@ -139,8 +139,10 @@ public class AgentService {
 		res.getUserAccount().setUsername(agentForm.getUsername());
 		res.getUserAccount().setPassword(agentForm.getPassword());
 
-		this.validator.validate(res, binding);
-
+		if(binding != null){
+			this.validator.validate(res, binding);
+		}
+		
 		return res;
 	}
 
@@ -161,6 +163,10 @@ public class AgentService {
 		editAgentForm.setTermsAndConditions(false);
 
 		return editAgentForm;
+	}
+	
+	public void flush() {
+		this.agentRepository.flush();
 	}
 
 }

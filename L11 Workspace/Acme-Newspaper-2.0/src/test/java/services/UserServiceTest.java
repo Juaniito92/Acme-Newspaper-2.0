@@ -28,7 +28,7 @@ public class UserServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/*
-	 * Caso de uso 4.1: Register to the system as a user.
+	 * Caso de uso 4.1: Register to the system as an user.
 	 */
 
 	@Test
@@ -47,7 +47,6 @@ public class UserServiceTest extends AbstractTest {
 				{ "user1", true, IllegalArgumentException.class }, /*
 																	 * Un
 																	 * usuario
-																	 * no
 																	 * autenticado
 																	 * no puede
 																	 * registrarse

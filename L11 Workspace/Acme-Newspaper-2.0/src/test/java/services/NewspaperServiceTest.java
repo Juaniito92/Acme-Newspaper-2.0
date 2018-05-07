@@ -35,6 +35,9 @@ public class NewspaperServiceTest extends AbstractTest {
 	@Autowired
 	private SubscriptionNewspaperService subscriptionService;
 
+	@Autowired
+	private AgentService agentService;
+
 	// Tests ------------------------------------------------------------------
 
 	/*
@@ -316,6 +319,108 @@ public class NewspaperServiceTest extends AbstractTest {
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
 			articleService.flush();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * Caso de uso 4.3: List the newspapers in which they have placed an
+	 * advertisement.
+	 */
+
+	@Test
+	public void driverListWithAdvertisement() {
+		final Object testingListWithAdvertisementData[][] = {
+
+				// Casos positivos
+				{ "agent1", null },
+				// Casos negativos
+				{ null, NullPointerException.class }, /*
+													 * Un anonimo no puede
+													 * acceder a la vista
+													 */
+				{ "user1", NullPointerException.class } /*
+														 * Un usuario no puede
+														 * acceder a la vista
+														 */
+		};
+
+		for (int i = 0; i < testingListWithAdvertisementData.length; i++)
+			this.templateListWithAdvertisement(
+					(String) testingListWithAdvertisementData[i][0],
+					(Class<?>) testingListWithAdvertisementData[i][1]);
+
+	}
+
+	protected void templateListWithAdvertisement(String authenticate,
+			Class<?> expected) {
+
+		Class<?> caught;
+		caught = null;
+
+		try {
+			super.authenticate(authenticate);
+			Collection<Newspaper> newspapers = newspaperService
+					.findByAdvertisementAgentId(agentService.findByPrincipal()
+							.getId());
+			if (!newspapers.isEmpty()) {
+				newspaperService.findOne(newspapers.iterator().next().getId());
+			}
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		this.checkExceptions(expected, caught);
+	}
+
+	/*
+	 * Caso de uso 4.4: List the newspapers in which they have not placed any
+	 * advertisements.
+	 */
+
+	@Test
+	public void driverListWithoutAdvertisement() {
+		final Object testingListWithoutAdvertisementData[][] = {
+
+				// Casos positivos
+				{ "agent1", null },
+				// Casos negativos
+				{ null, NullPointerException.class }, /*
+													 * Un anonimo no puede
+													 * acceder a la vista
+													 */
+				{ "user1", NullPointerException.class } /*
+														 * Un usuario no puede
+														 * acceder a la vista
+														 */
+		};
+
+		for (int i = 0; i < testingListWithoutAdvertisementData.length; i++)
+			this.templateListWithoutAdvertisement(
+					(String) testingListWithoutAdvertisementData[i][0],
+					(Class<?>) testingListWithoutAdvertisementData[i][1]);
+
+	}
+
+	protected void templateListWithoutAdvertisement(String authenticate,
+			Class<?> expected) {
+
+		Class<?> caught;
+		caught = null;
+
+		try {
+			super.authenticate(authenticate);
+			Collection<Newspaper> newspapers = newspaperService
+					.findByNotAdvertisementAgentId(agentService.findByPrincipal()
+							.getId());
+			if (!newspapers.isEmpty()) {
+				newspaperService.findOne(newspapers.iterator().next().getId());
+			}
+			super.unauthenticate();
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
 		}
 
 		this.checkExceptions(expected, caught);

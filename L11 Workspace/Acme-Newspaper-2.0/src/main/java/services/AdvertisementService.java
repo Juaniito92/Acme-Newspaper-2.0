@@ -34,6 +34,9 @@ public class AdvertisementService {
 
 	@Autowired
 	private AgentService			agentService;
+	
+	@Autowired
+	private AdminService	adminService;
 
 	@Autowired
 	private ConfigurationService	configService;
@@ -70,7 +73,9 @@ public class AdvertisementService {
 	}
 
 	public void delete(Advertisement ad) {
+		
 		Assert.notNull(ad);
+		Assert.notNull(adminService.findByPrincipal());
 
 		Newspaper newspaper = this.newspaperService.findOne(ad.getNewspaper().getId());
 		Collection<Advertisement> ads = newspaper.getAdvertisements();
@@ -110,6 +115,9 @@ public class AdvertisementService {
 	}
 
 	public Collection<Advertisement> getAdvertisementsTabooWords() {
+		
+		Assert.notNull(adminService.findByPrincipal());
+		
 		String pattern = "^";
 		for (String tabooWord : this.configService.getTabooWordsFromConfiguration())
 			pattern += ".*" + tabooWord + ".*" + "|";
@@ -173,6 +181,10 @@ public class AdvertisementService {
 		}
 
 		return res;
+	}
+	
+	public void flush(){
+		advertisementRepository.flush();
 	}
 
 }

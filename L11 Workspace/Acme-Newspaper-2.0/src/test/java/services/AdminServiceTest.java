@@ -23,7 +23,7 @@ public class AdminServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/*
-	 * Caso de uso 7.3 y 17.6: Display a dashboard with the following
+	 * Caso de uso 7.3, 17.6, 5.3 y 11.1: Display a dashboard with the following
 	 * information.
 	 */
 
@@ -69,6 +69,10 @@ public class AdminServiceTest extends AbstractTest {
 			adminService.avgNumberOfFollowUpsPerArticleAfter2Week();
 			adminService.avgStddevNumberOfChirpPerUser();
 			adminService.ratioUsersMorePostedChirpsOfAveragePerUser();
+			adminService.ratioNewspapersAds();
+			adminService.ratioAdsTabooWords();
+			adminService.avgNumberOfNewspapersPerVolume();
+			adminService.ratioSubscriptionsVolumeVersusSubscriptionsNewspaper();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
