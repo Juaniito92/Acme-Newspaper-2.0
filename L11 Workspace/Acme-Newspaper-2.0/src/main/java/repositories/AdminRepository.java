@@ -74,9 +74,16 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	
 	// ACME_NEWSPAPER 2.0
 	
+	// C-1
+	// The ratio of newspapers that have at least one advertisement versus the newspapers that haven’t any
+	@Query("select sum(case when n.advertisements.size>0 then 1.0 else 0.0 end)/count(n)from Newspaper n")
+	Double ratioNewspapersWithVsWithoutAdvertisements();
+	
+	// C-2
+	// The ratio of advertisements that have taboo words
+	
 	// B-1
 	// The average number of newspapers per volume
-	
 	@Query("select avg(v.newspapers.size) from Volume v")
 	Double avgNumberOfNewspapersPerVolume();
 	

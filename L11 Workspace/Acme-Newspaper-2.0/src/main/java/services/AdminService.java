@@ -32,6 +32,8 @@ public class AdminService {
 	@Autowired
 	private ActorService actorService;
 	@Autowired
+	private AdvertisementService advertisementService;
+	@Autowired
 	private ConfigurationService configurationService;
 
 	// Constructors
@@ -269,6 +271,16 @@ public class AdminService {
 	}
 
 	// ACME-NEWSPAPER 2.0
+	
+	// C-1
+	public Double ratioNewspapersAds() {
+		return this.adminRepository.ratioNewspapersWithVsWithoutAdvertisements();
+	}
+	
+	// C-2
+	public Double ratioAdsTabooWords() {
+		return (double) this.advertisementService.getAdvertisementsTabooWords().size() / (double) this.advertisementService.findAll().size();
+	}
 
 	// B-1
 	public Double avgNumberOfNewspapersPerVolume() {

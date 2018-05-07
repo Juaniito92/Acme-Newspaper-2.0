@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.AdminService;
-import services.AdvertisementService;
-import services.NewspaperService;
 import domain.Newspaper;
 
 @Controller
@@ -29,11 +27,6 @@ public class AdminController extends AbstractController {
 
 	@Autowired
 	private AdminService			adminService;
-	@Autowired
-	private NewspaperService		newspaperService;
-	@Autowired
-	private AdvertisementService	advertisementService;
-
 
 	// Constructors -----------------------------------------------------------
 
@@ -78,8 +71,8 @@ public class AdminController extends AbstractController {
 		avgNumberOfFollowUpsPerArticleAfter2Week = this.adminService.avgNumberOfFollowUpsPerArticleAfter2Week();
 		avgStddevNumberOfChirpPerUser = this.adminService.avgStddevNumberOfChirpPerUser();
 		ratioUsersMorePostedChirpsOfAveragePerUser = this.adminService.ratioUsersMorePostedChirpsOfAveragePerUser();
-		newspaperWithAdsRatio = this.newspaperService.ratioNewspapersAds();
-		advertisementTabooWordsRatio = this.advertisementService.ratioAdsTabooWords();
+		newspaperWithAdsRatio = this.adminService.ratioNewspapersAds();
+		advertisementTabooWordsRatio = this.adminService.ratioAdsTabooWords();
 		avgNumberOfNewspapersPerVolume = adminService.avgNumberOfNewspapersPerVolume();
 		ratioSubscriptionsVolumeVersusSubscriptionsNewspaper = adminService.ratioSubscriptionsVolumeVersusSubscriptionsNewspaper();
 
