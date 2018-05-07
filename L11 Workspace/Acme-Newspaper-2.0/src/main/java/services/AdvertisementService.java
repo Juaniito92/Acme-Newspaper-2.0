@@ -13,12 +13,15 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.AdvertisementRepository;
 import domain.Advertisement;
 import domain.Agent;
 import domain.CreditCard;
 import domain.Newspaper;
+import forms.AdvertisementForm;
 
 @Service
 @Transactional
@@ -34,12 +37,15 @@ public class AdvertisementService {
 
 	@Autowired
 	private AgentService			agentService;
-	
+
 	@Autowired
-	private AdminService	adminService;
+	private AdminService			adminService;
 
 	@Autowired
 	private ConfigurationService	configService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	// Constructors
@@ -73,9 +79,9 @@ public class AdvertisementService {
 	}
 
 	public void delete(Advertisement ad) {
-		
+
 		Assert.notNull(ad);
-		Assert.notNull(adminService.findByPrincipal());
+		Assert.notNull(this.adminService.findByPrincipal());
 
 		Newspaper newspaper = this.newspaperService.findOne(ad.getNewspaper().getId());
 		Collection<Advertisement> ads = newspaper.getAdvertisements();
@@ -115,9 +121,9 @@ public class AdvertisementService {
 	}
 
 	public Collection<Advertisement> getAdvertisementsTabooWords() {
-		
-		Assert.notNull(adminService.findByPrincipal());
-		
+
+		Assert.notNull(this.adminService.findByPrincipal());
+
 		String pattern = "^";
 		for (String tabooWord : this.configService.getTabooWordsFromConfiguration())
 			pattern += ".*" + tabooWord + ".*" + "|";
@@ -182,9 +188,71 @@ public class AdvertisementService {
 
 		return res;
 	}
-	
-	public void flush(){
-		advertisementRepository.flush();
+
+	public AdvertisementForm construct(final Advertisement advertisement) {
+
+		Assert.notNull(advertisement);
+
+		AdvertisementForm advertisementForm;
+
+		advertisementForm = new AdvertisementForm();
+
+		advertisementForm.setId(advertisement.getId());
+		advertisementForm.setAgentId(advertisement.getAgent().getId());
+		advertisementForm.setNewspaperId(advertisement.getNewspaper().getId());
+		advertisementForm.setTitle(advertisement.getTitle());
+		advertisementForm.setBanner(advertisement.getBanner());
+		advertisementForm.setPage(advertisement.getPage());
+
+		if (advertisement.getId() == 0) {
+			advertisementForm.setHolder(null);
+			advertisementForm.setBrand(null);
+			advertisementForm.setNumber(null);
+			advertisementForm.setExpirationMonth(null);
+			advertisementForm.setExpirationYear(null);
+			advertisementForm.setCvv(null);
+		} else {
+			advertisementForm.setHolder(advertisement.getCreditCard().getHolder());
+			advertisementForm.setBrand(advertisement.getCreditCard().getBrand());
+			advertisementForm.setNumber(advertisement.getCreditCard().getNumber());
+			advertisementForm.setExpirationMonth(advertisement.getCreditCard().getExpirationMonth());
+			advertisementForm.setExpirationYear(advertisement.getCreditCard().getExpirationYear());
+			advertisementForm.setCvv(advertisement.getCreditCard().getCvv());
+		}
+
+		return advertisementForm;
+	}
+
+	public Advertisement reconstruct(final AdvertisementForm advertisementForm, final BindingResult binding) {
+
+		Assert.notNull(advertisementForm);
+
+		Advertisement advertisement;
+
+		if (advertisementForm.getId() != 0)
+			advertisement = this.findOne(advertisementForm.getId());
+		else
+			advertisement = this.create(advertisementForm.getNewspaperId());
+
+		advertisement.setTitle(advertisementForm.getTitle());
+		advertisement.setBanner(advertisementForm.getBanner());
+		advertisement.setPage(advertisementForm.getPage());
+
+		advertisement.getCreditCard().setHolder(advertisementForm.getHolder());
+		advertisement.getCreditCard().setBrand(advertisementForm.getBrand());
+		advertisement.getCreditCard().setNumber(advertisementForm.getNumber());
+		advertisement.getCreditCard().setExpirationMonth(advertisementForm.getExpirationMonth());
+		advertisement.getCreditCard().setExpirationYear(advertisementForm.getExpirationYear());
+		advertisement.getCreditCard().setCvv(advertisementForm.getCvv());
+
+		if (binding != null)
+			this.validator.validate(advertisement, binding);
+
+		return advertisement;
+	}
+
+	public void flush() {
+		this.advertisementRepository.flush();
 	}
 
 }

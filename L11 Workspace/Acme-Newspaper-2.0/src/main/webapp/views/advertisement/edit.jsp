@@ -10,11 +10,11 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="advertisement/agent/edit.do" modelAttribute="advertisement">
+<form:form action="advertisement/agent/edit.do" modelAttribute="advertisementForm">
 
 	<form:hidden path="id" />
-	<form:hidden path="version" />
-	<form:hidden path="agent" />
+	<form:hidden path="agentId" />
+	<form:hidden path="newspaperId" />
 	
 	<form:label path="title">
 		<spring:message code="advertisement.title" />:
@@ -57,64 +57,49 @@
 	<fieldset>
 	<legend><spring:message code="advertisement.introduceCreditCard"/></legend><br/>
 	
-	<form:label path="creditCard.holder">
+	<form:label path="holder">
 		<spring:message code="creditCard.holderName" />:
 	</form:label>
-	<form:input path="creditCard.holder" />
-	<form:errors cssClass="error" path="creditCard.holder" />
+	<form:input path="holder" />
+	<form:errors cssClass="error" path="holder" />
 	<br/>
 	
-	<form:label path="creditCard.brand">
+	<form:label path="brand">
 		<spring:message code="creditCard.brandName" />:
 	</form:label>
-	<form:input path="creditCard.brand" />
-	<form:errors cssClass="error" path="creditCard.brand" />
+	<form:input path="brand" />
+	<form:errors cssClass="error" path="brand" />
 	<br/>
 
-	<form:label path="creditCard.number">
+	<form:label path="number">
 		<spring:message code="creditCard.number"/>:
 	</form:label>
-	<form:input path="creditCard.number" />
-	<form:errors cssClass="error" path="creditCard.number"/>
+	<form:input path="number" />
+	<form:errors cssClass="error" path="number"/>
 	<br/>
 
-	<form:label path="creditCard.expirationMonth">
+	<form:label path="expirationMonth">
 		<spring:message code="creditCard.expirationMonth" />:
 	</form:label>
-	<form:input path="creditCard.expirationMonth" />
-	<form:errors cssClass="error" path="creditCard.expirationMonth" />
+	<form:input path="expirationMonth" />
+	<form:errors cssClass="error" path="expirationMonth" />
 	<br/>
 
-	<form:label path="creditCard.expirationYear">
+	<form:label path="expirationYear">
 		<spring:message code="creditCard.expirationYear" />:
 	</form:label>
-	<form:input path="creditCard.expirationYear" />
-	<form:errors cssClass="error" path="creditCard.expirationYear" />
+	<form:input path="expirationYear" />
+	<form:errors cssClass="error" path="expirationYear" />
 	<br/>
 
-	<form:label path="creditCard.cvv">
+	<form:label path="cvv">
 		<spring:message code="creditCard.CVV" />:
 	</form:label>
-	<form:input path="creditCard.cvv" />
-	<form:errors cssClass="error" path="creditCard.cvv" />
+	<form:input path="cvv" />
+	<form:errors cssClass="error" path="cvv" />
 	<br/>
 	</fieldset>
 
-	<br/>
-	
-	<form:label path="newspaper">
-		<spring:message code="advertisement.newspaper"/>:
-	</form:label>
-	<form:select path="newspaper">
-		<form:option value="0">----</form:option>
-		<form:options
-			items="${newspapers}"
-			itemLabel="title"
-			itemValue="id"
-		/>
-	</form:select>
-	<form:errors cssClass="error" path="newspaper"/>
-	
 	<br/>
 	
 	<input type="submit" name="save"
