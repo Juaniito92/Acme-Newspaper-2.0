@@ -1,12 +1,4 @@
-<%--
- * edit.jsp
- *
- * Copyright (C) 2017 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- --%>
+
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -19,89 +11,112 @@
 <%@taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${actionURI}" modelAttribute="messageEdit">
+<form:form action="message/edit.do" modelAttribute="messageForm">
 
 	<form:hidden path="id" />
-	<form:hidden path="version" />
+	<form:hidden path="senderId" />
+	<jstl:choose>
+		<jstl:when test="${messageForm.id == 0}">
+			<form:hidden path="folderId" />
+		</jstl:when>
+		<jstl:otherwise>
+			<form:hidden path="recipientId"/>
+			<form:hidden path="subject"/>
+			<form:hidden path="body"/>
+			<form:hidden path="priority" />
+		</jstl:otherwise>
+	</jstl:choose>
 	<form:hidden path="moment" />
-	<form:hidden path="sender" />
-	<%-- <form:hidden path="recipient"/> --%>
-	<form:hidden path="folder" />
-	<%-- <form:hidden path="priority"/> --%>
 
-	<b><form:label path="recipient">
-		<spring:message code="message.recipient" />:&nbsp;</form:label></b>
-
-		<form:select path="recipient">
-			<form:option label="----" value="0" />
-			<form:options items="${actors}" itemLabel="name" itemValue="id" />
-		</form:select>
-	<form:errors path="recipient" cssClass="error" />
-	<br />
-
-	<b><form:label path="subject">
-			<spring:message code="message.subject" />:&nbsp;</form:label></b>
 	<jstl:choose>
-		<jstl:when test="${messageEdit.id == 0}">
-			<form:input path="subject" />
+		<jstl:when test="${messageForm.id == 0}">
+			<acme:select items="${actors}" itemLabel="name"
+				code="message.recipient" path="recipientId" />
 		</jstl:when>
 		<jstl:otherwise>
-			<input value="${messageEdit.subject}" readonly="readonly" />
+			<b><label> <spring:message code="message.recipient" />:&nbsp;
+			</label></b>
+			<input value="${recipientName}" readonly="readonly" />
+			<br />
+
+			<b><label> <spring:message code="message.sender" />:&nbsp;
+			</label></b>
+			<input value="${senderName}" readonly="readonly" />
+			<br />
+
+			<b><label> <spring:message code="message.moment" />:&nbsp;
+			</label></b>
+			<spring:message code="message.pattern.date" var="patternDate" />
+			<fmt:formatDate value="${messageForm.moment}"
+				pattern="${patternDate}" />
+			<br />
 		</jstl:otherwise>
 	</jstl:choose>
-	<form:errors path="subject" cssClass="error" />
-	<br />
 
-	<b><form:label path="body">
-			<spring:message code="message.body" />:&nbsp;</form:label></b>
 	<jstl:choose>
-		<jstl:when test="${messageEdit.id == 0}">
-			<form:textarea path="body" />
+		<jstl:when test="${messageForm.id == 0}">
+			<acme:textbox code="message.subject" path="subject" />
 		</jstl:when>
 		<jstl:otherwise>
+			<b><label> <spring:message code="message.subject" />:&nbsp;
+			</label></b>
+			<input value="${messageForm.subject}" readonly="readonly" />
+			<br />
+		</jstl:otherwise>
+	</jstl:choose>
+
+	<jstl:choose>
+		<jstl:when test="${messageForm.id == 0}">
+			<acme:textarea code="message.body" path="body" />
+		</jstl:when>
+		<jstl:otherwise>
+			<b><label> <spring:message code="message.body" />:&nbsp;
+			</label></b>
 			<textarea readonly="readonly">
-				<jstl:out value="${messageEdit.body}" />
+				<jstl:out value="${messageForm.body}" />
 			</textarea>
+			<br />
 		</jstl:otherwise>
 	</jstl:choose>
-	<form:errors path="body" cssClass="error" />
-	<br />
 
-	<b><form:label path="priority">
-			<spring:message code="message.priority" />:&nbsp;</form:label></b>
 	<jstl:choose>
-		<jstl:when test="${messageEdit.id == 0}">
+		<jstl:when test="${messageForm.id == 0}">
+			<b><form:label path="priority">
+					<spring:message code="message.priority" />:&nbsp;</form:label></b>
 			<form:select path="priority">
 				<form:options items="${priorities}" />
 			</form:select>
+			<br />
 		</jstl:when>
 		<jstl:otherwise>
-			<input value="${messageEdit.priority}" readonly="readonly" />
+			<b><label> <spring:message code="message.priority" />:&nbsp;
+			</label></b>
+			<input value="${messageForm.priority}" readonly="readonly" />
+			<br />
 		</jstl:otherwise>
 	</jstl:choose>
-	<form:errors path="priority" cssClass="error" />
-	<br />
+
+	<jstl:if test="${messageForm.id != 0}">
+		<acme:selectObligatory items="${folders}" itemLabel="name"
+			code="message.folder" path="folderId" />
+	</jstl:if>
 
 	<jstl:choose>
-		<jstl:when test="${messageEdit.id == 0}">
-			<input type="submit" name="save"
-				value="<spring:message code="message.send"/>" />
+		<jstl:when test="${messageForm.id == 0}">
+			<acme:submit name="save" code="message.send" />
 			&nbsp;
 		</jstl:when>
-		<jstl:when test="${messageEdit.id != 0}">
-			<input type="submit" name="save"
-				value="<spring:message code="message.save"/>" />
+		<jstl:when test="${messageForm.id != 0}">
+			<acme:submit name="save" code="message.save" />
 			&nbsp;
 		</jstl:when>
 	</jstl:choose>
-	<jstl:if test="${messageEdit.id != 0}">
-		<input type="submit" name="delete"
-			value="<spring:message code="message.delete"/>" />
+	<jstl:if test="${messageForm.id != 0}">
+		<acme:submit name="delete" code="message.delete" />
 		&nbsp;
 	</jstl:if>
-	<input type="button" name="cancel"
-		value="<spring:message code="message.cancel" />"
-		onclick="javascript: relativeRedir('folder/list.do');" />
+	<acme:cancel url="folder/list.do" code="message.cancel" />
 
 </form:form>

@@ -22,6 +22,7 @@ import domain.Actor;
 import domain.Folder;
 import domain.Message;
 import domain.Priority;
+import forms.MessageForm;
 
 @Controller
 @RequestMapping("/message/admin")
@@ -54,8 +55,9 @@ public class MessageAdminController extends AbstractController {
 		Message message;
 
 		message = this.messageService.create();
+		MessageForm messageForm = messageService.construct(message);
 
-		result = this.createEditModelAndView(message);
+		result = this.createEditModelAndView(messageForm);
 
 		return result;
 	}
@@ -63,18 +65,19 @@ public class MessageAdminController extends AbstractController {
 	// Edition -------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Message message, final BindingResult binding) {
+	public ModelAndView save(@Valid final MessageForm messageForm, final BindingResult binding) {
 
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(message);
+			result = this.createEditModelAndView(messageForm);
 		else
 			try {
+				Message message = messageService.reconstruct(messageForm, binding);
 				final Message saved = this.messageService.notify(message);
 				result = new ModelAndView("redirect:list.do?folderId=" + saved.getFolder().getId());
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(message, "message.commit.error");
+				result = this.createEditModelAndView(messageForm, "message.commit.error");
 			}
 
 		return result;
@@ -88,8 +91,10 @@ public class MessageAdminController extends AbstractController {
 		Message message = null;
 
 		message = this.messageService.create();
+		MessageForm messageForm = messageService.construct(message);
 		message.setRecipient(this.actorService.findByPrincipal());
-		result = this.createNotificationModelAndView(message);
+		
+		result = this.createNotificationModelAndView(messageForm);
 
 		return result;
 	}
@@ -97,18 +102,19 @@ public class MessageAdminController extends AbstractController {
 	// Notificate a  message -----------------------------------------
 
 	@RequestMapping(value = "/notification", method = RequestMethod.POST, params = "notify")
-	public ModelAndView notification(@Valid @ModelAttribute("messageNotification") final Message message, final BindingResult binding) {
+	public ModelAndView notification(@Valid @ModelAttribute("messageNotification") final MessageForm messageForm, final BindingResult binding) {
 
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createNotificationModelAndView(message);
+			result = this.createNotificationModelAndView(messageForm);
 		else
 			try {
+				Message message = messageService.reconstruct(messageForm, binding);
 				final Message saved = this.messageService.notify(message);
 				result = new ModelAndView("redirect:../list.do?folderId=" + saved.getFolder().getId());
 			} catch (final Throwable oops) {
-				result = this.createNotificationModelAndView(message, "message.commit.error");
+				result = this.createNotificationModelAndView(messageForm, "message.commit.error");
 			}
 
 		return result;
@@ -116,16 +122,16 @@ public class MessageAdminController extends AbstractController {
 
 	// Ancillary methods ---------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final Message message) {
+	protected ModelAndView createEditModelAndView(final MessageForm messageForm) {
 
 		ModelAndView result;
 
-		result = this.createEditModelAndView(message, null);
+		result = this.createEditModelAndView(messageForm, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Message message, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final MessageForm messageForm, final String messageCode) {
 
 		ModelAndView result;
 		Collection<Actor> actors;
@@ -143,7 +149,7 @@ public class MessageAdminController extends AbstractController {
 		folders = this.folderService.findByPrincipal();
 
 		result = new ModelAndView("message/edit");
-		result.addObject("messageEdit", message);
+		result.addObject("messageForm", messageForm);
 		result.addObject("actors", actors);
 		result.addObject("priorities", priorities);
 		result.addObject("folders", folders);
@@ -153,15 +159,15 @@ public class MessageAdminController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createNotificationModelAndView(final Message message) {
+	protected ModelAndView createNotificationModelAndView(final MessageForm messageForm) {
 		ModelAndView result;
 
-		result = this.createNotificationModelAndView(message, null);
+		result = this.createNotificationModelAndView(messageForm, null);
 
 		return result;
 	}
 
-	protected ModelAndView createNotificationModelAndView(final Message message, final String messageCode) {
+	protected ModelAndView createNotificationModelAndView(final MessageForm messageForm, final String messageCode) {
 
 		ModelAndView result = null;
 		Collection<Actor> actors = null;
@@ -176,7 +182,7 @@ public class MessageAdminController extends AbstractController {
 		priorities.add(Priority.HIGH);
 
 		result = new ModelAndView("message/notify");
-		result.addObject("messageNotification", message);
+		result.addObject("messageForm", messageForm);
 		result.addObject("priorities", priorities);
 		result.addObject("actionURI", "message/admin/notification.do");
 

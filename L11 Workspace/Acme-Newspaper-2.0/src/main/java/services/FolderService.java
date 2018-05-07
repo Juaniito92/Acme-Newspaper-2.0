@@ -9,6 +9,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.FolderRepository;
 import security.LoginService;
@@ -16,6 +18,7 @@ import security.UserAccount;
 import domain.Actor;
 import domain.Folder;
 import domain.Message;
+import forms.FolderForm;
 
 @Service
 @Transactional
@@ -33,6 +36,9 @@ public class FolderService {
 
 	@Autowired
 	private MessageService		messageService;
+	
+	@Autowired
+	private Validator validator;
 
 
 	// Constructors -----------------------------------------------------------
@@ -121,6 +127,45 @@ public class FolderService {
 	}
 
 	// Other business methods -------------------------------------------------
+	
+	public FolderForm construct(final Folder folder) {
+
+		Assert.notNull(folder);
+
+		FolderForm folderForm;
+
+		folderForm = new FolderForm();
+
+		folderForm.setId(folder.getId());
+		if(folder.getParent() == null){
+			folderForm.setParentId(null);
+		}else{
+			folderForm.setParentId(folder.getParent().getId());
+		}
+		folderForm.setName(folder.getName());
+
+		return folderForm;
+	}
+
+	public Folder reconstruct(final FolderForm folderForm, final BindingResult binding) {
+
+		Assert.notNull(folderForm);
+
+		Folder folder;
+
+		if (folderForm.getId() != 0)
+			folder = this.findOne(folderForm.getId());
+		else
+			folder = this.create(false, null);
+
+		folder.setParent(findOne(folderForm.getParentId()));
+		folder.setName(folderForm.getName());
+
+		if (binding != null)
+			this.validator.validate(folder, binding);
+
+		return folder;
+	}
 
 	public Collection<Folder> defaultFolders() {
 

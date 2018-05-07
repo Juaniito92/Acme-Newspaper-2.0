@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.FolderService;
 import domain.Folder;
+import forms.FolderForm;
 
 @Controller
 @RequestMapping("/folder")
@@ -57,8 +58,9 @@ public class FolderController extends AbstractController {
 		Folder folder;
 
 		folder = this.folderService.create(false, null);
+		FolderForm folderForm = folderService.construct(folder);
 
-		result = this.createEditModelAndView(folder);
+		result = this.createEditModelAndView(folderForm);
 
 		return result;
 	}
@@ -72,40 +74,43 @@ public class FolderController extends AbstractController {
 		Folder folder;
 
 		folder = this.folderService.findOneToEdit(folderId);
+		FolderForm folderForm = folderService.construct(folder);
 
-		result = this.createEditModelAndView(folder);
+		result = this.createEditModelAndView(folderForm);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Folder folder, final BindingResult binding) {
+	public ModelAndView save(@Valid final FolderForm folderForm, final BindingResult binding) {
 
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(folder);
+			result = this.createEditModelAndView(folderForm);
 		else
 			try {
+				Folder folder = folderService.reconstruct(folderForm, binding);
 				this.folderService.save(folder);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(folder, "folder.commit.error");
+				result = this.createEditModelAndView(folderForm, "folder.commit.error");
 			}
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Folder folder, final BindingResult binding) {
+	public ModelAndView delete(final FolderForm folderForm, final BindingResult binding) {
 
 		ModelAndView result;
 
 		try {
+			Folder folder = folderService.reconstruct(folderForm, binding);
 			this.folderService.delete(folder);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(folder, "folder.commit.error");
+			result = this.createEditModelAndView(folderForm, "folder.commit.error");
 		}
 
 		return result;
@@ -113,25 +118,25 @@ public class FolderController extends AbstractController {
 
 	// Ancillary methods ---------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final Folder folder) {
+	protected ModelAndView createEditModelAndView(final FolderForm folderForm) {
 
 		ModelAndView result;
 
-		result = this.createEditModelAndView(folder, null);
+		result = this.createEditModelAndView(folderForm, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Folder folder, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final FolderForm folderForm, final String messageCode) {
 
 		ModelAndView result;
 		Collection<Folder> folders;
 
 		folders = this.folderService.findByPrincipal();
-		folders.remove(folder);
+		folders.remove(folderService.findOne(folderForm.getId()));
 
 		result = new ModelAndView("folder/edit");
-		result.addObject("folder", folder);
+		result.addObject("folderForm", folderForm);
 		result.addObject("folders", folders);
 
 		return result;
