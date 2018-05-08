@@ -21,6 +21,7 @@ import domain.Admin;
 import domain.Advertisement;
 import domain.Agent;
 import domain.Newspaper;
+import forms.AdvertisementForm;
 
 @Controller
 @RequestMapping("/advertisement/agent")
@@ -85,12 +86,14 @@ public class AdvertisementAgentController {
 	public ModelAndView create(@RequestParam int newspaperId) {
 		ModelAndView res;
 		Advertisement advertisement;
+		AdvertisementForm form;
 		Collection<Newspaper> newspapers;
 
 		advertisement = this.advertisementService.create(newspaperId);
+		form = this.advertisementService.construct(advertisement);
 		newspapers = this.newspaperService.findAll();
 
-		res = this.createEditModelAndView(advertisement);
+		res = this.createEditModelAndView(form);
 
 		return res;
 	}
@@ -101,31 +104,33 @@ public class AdvertisementAgentController {
 	public ModelAndView edit(@RequestParam final int advertisementId) {
 		ModelAndView result;
 		Advertisement advertisement;
+		AdvertisementForm form;
 
 		advertisement = this.advertisementService.findOneToEdit(advertisementId);
+		form = this.advertisementService.construct(advertisement);
 
-		result = this.createEditModelAndView(advertisement);
-		result.addObject("advertisement", advertisement);
+		result = this.createEditModelAndView(form);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Advertisement advertisement, final BindingResult binding) {
+	public ModelAndView save(@Valid final AdvertisementForm advertisementForm, final BindingResult binding) {
 		ModelAndView res;
 
 		if (binding.hasErrors())
-			res = this.createEditModelAndView(advertisement);
+			res = this.createEditModelAndView(advertisementForm);
 		else
 			try {
+				Advertisement advertisement = this.advertisementService.reconstruct(advertisementForm, binding);
 				this.advertisementService.save(advertisement);
 				res = new ModelAndView("redirect:list.do");
 
 			} catch (final Throwable oops) {
 				if (oops.getMessage() == "cardExpireError")
-					res = this.createEditModelAndView(advertisement, "creditCard.expiration.error");
+					res = this.createEditModelAndView(advertisementForm, "creditCard.expiration.error");
 				else
-					res = this.createEditModelAndView(advertisement, "application.commit.error");
+					res = this.createEditModelAndView(advertisementForm, "application.commit.error");
 
 			}
 		return res;
@@ -149,22 +154,22 @@ public class AdvertisementAgentController {
 
 	// Ancillary methods
 	// -------------------------------------------------------------------
-	protected ModelAndView createEditModelAndView(final Advertisement advertisement) {
+	protected ModelAndView createEditModelAndView(final AdvertisementForm advertisementForm) {
 		ModelAndView res;
 
-		res = this.createEditModelAndView(advertisement, null);
+		res = this.createEditModelAndView(advertisementForm, null);
 
 		return res;
 	}
 
-	protected ModelAndView createEditModelAndView(final Advertisement advertisement, final String message) {
+	protected ModelAndView createEditModelAndView(final AdvertisementForm advertisementForm, final String message) {
 		ModelAndView res;
 		Collection<Newspaper> newspapers;
 
 		res = new ModelAndView("advertisement/edit");
 		newspapers = this.newspaperService.findAll();
 
-		res.addObject("advertisement", advertisement);
+		res.addObject("advertisementForm", advertisementForm);
 		res.addObject("message", message);
 		res.addObject("newspapers", newspapers);
 
