@@ -226,8 +226,9 @@ public class UserService {
 		res.getUserAccount().setUsername(userForm.getUsername());
 		res.getUserAccount().setPassword(userForm.getPassword());
 
-		this.validator.validate(res, binding);
-
+		if(binding != null)
+			this.validator.validate(res, binding);
+		
 		return res;
 	}
 

@@ -133,9 +133,13 @@ public class ArticleService {
 
 		Assert.notNull(article);
 		Assert.isTrue(article.getId() != 0);
+		
+		Collection<FollowUp> followUps = new ArrayList<FollowUp>();
+		followUps.addAll(article.getFollowUps());
 
 		article.getWriter().getArticles().remove(article);
-		for (FollowUp followUp : article.getFollowUps()) {
+		article.getNewspaper().getArticles().remove(article);
+		for (FollowUp followUp : followUps) {
 			this.followUpService.delete(followUp);
 		}
 

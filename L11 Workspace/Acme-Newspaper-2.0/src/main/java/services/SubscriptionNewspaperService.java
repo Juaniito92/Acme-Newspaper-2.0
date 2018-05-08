@@ -75,6 +75,7 @@ public class SubscriptionNewspaperService {
 
 		subscription.getCustomer().getSubscriptionsNewspaper()
 				.remove(subscription);
+		subscription.getNewspaper().getSubscriptionsNewspaper().remove(subscription);
 		subscriptionNewspaperRepository.delete(subscription);
 
 	}

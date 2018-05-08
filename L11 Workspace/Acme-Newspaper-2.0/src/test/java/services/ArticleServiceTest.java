@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Article;
+import domain.FollowUp;
 import domain.Newspaper;
 
 @ContextConfiguration(locations = { "classpath:spring/junit.xml" })
@@ -207,7 +209,7 @@ public class ArticleServiceTest extends AbstractTest {
 				{ "admin", "article1", null },
 
 				// Cassos negativos
-				{ "user1", "article1", IllegalArgumentException.class }, /*
+				{ "user1", "article2", IllegalArgumentException.class }, /*
 																		 * Solamente
 																		 * el
 																		 * admin
@@ -245,13 +247,18 @@ public class ArticleServiceTest extends AbstractTest {
 			int articleId = super.getEntityId(articleBean);
 			super.authenticate(authenticate);
 			Article article = articleService.findOne(articleId);
+			
+			Collection<FollowUp> followUps = new ArrayList<FollowUp>();
+			
+			followUps.addAll(article.getFollowUps());
+			
 			articleService.delete(article);
 			articleService.flush();
 			Assert.isTrue(!article.getNewspaper().getArticles()
 					.contains(article));
 			Assert.isTrue(!article.getWriter().getArticles().contains(article));
 			Assert.isTrue(!followUpService.findAll().containsAll(
-					article.getFollowUps()));
+					followUps));
 			Assert.isTrue(!articleService.findAll().contains(article));
 			super.unauthenticate();
 		} catch (final Throwable oops) {

@@ -2,6 +2,7 @@ package services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -15,8 +16,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.Advertisement;
 import domain.Article;
 import domain.Newspaper;
+import domain.SubscriptionNewspaper;
 import forms.ArticleForm;
 
 @ContextConfiguration(locations = { "classpath:spring/junit.xml" })
@@ -31,9 +34,12 @@ public class NewspaperServiceTest extends AbstractTest {
 
 	@Autowired
 	private ArticleService articleService;
-
+	
 	@Autowired
-	private SubscriptionNewspaperService subscriptionService;
+	private AdvertisementService advertisementService;
+	
+	@Autowired
+	private SubscriptionNewspaperService subscriptionNewspaperService;
 
 	@Autowired
 	private AgentService agentService;
@@ -268,7 +274,7 @@ public class NewspaperServiceTest extends AbstractTest {
 				{ "admin", "newspaper1", null },
 
 				// Cassos negativos
-				{ "user1", "newspaper1", IllegalArgumentException.class }, /*
+				{ "user1", "newspaper4", IllegalArgumentException.class }, /*
 																			 * Solamente
 																			 * el
 																			 * admin
@@ -306,19 +312,30 @@ public class NewspaperServiceTest extends AbstractTest {
 			int newspaperId = super.getEntityId(newspaperBean);
 			super.authenticate(authenticate);
 			Newspaper newspaper = newspaperService.findOne(newspaperId);
+			
+			Collection<Article> articles = new ArrayList<Article>();
+			Collection<SubscriptionNewspaper> subscriptionsNewspaper = new ArrayList<SubscriptionNewspaper>();
+			Collection<Advertisement> advertisements = new ArrayList<Advertisement>();
+			
+			articles.addAll(newspaper.getArticles());
+			subscriptionsNewspaper.addAll(newspaper.getSubscriptionsNewspaper());
+			advertisements.addAll(newspaper.getAdvertisements());
+			
 			newspaperService.delete(newspaper);
-			newspaperService.flush();
 			Assert.isTrue(!articleService.findAll().containsAll(
-					newspaper.getArticles()));
+					articles));
 			Assert.isTrue(!newspaper.getPublisher().getNewspapers()
 					.contains(newspaper));
-			Assert.isTrue(!subscriptionService.findAll().containsAll(
-					newspaper.getSubscriptionsNewspaper()));
+			Assert.isTrue(!subscriptionNewspaperService.findAll().containsAll(
+					subscriptionsNewspaper));
+			Assert.isTrue(!advertisementService.findAll().containsAll(
+					advertisements));
 			Assert.isTrue(!newspaperService.findAll().contains(newspaper));
+			newspaperService.flush();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();
-			articleService.flush();
+			newspaperService.flush();
 		}
 
 		this.checkExceptions(expected, caught);

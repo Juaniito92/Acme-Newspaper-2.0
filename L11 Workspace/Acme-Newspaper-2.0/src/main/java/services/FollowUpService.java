@@ -107,6 +107,7 @@ public class FollowUpService {
 		Assert.isTrue(followUp.getId() != 0);
 		Assert.isTrue(this.followUpRepository.exists(followUp.getId()));
 
+		followUp.getArticle().getFollowUps().remove(followUp);
 		this.followUpRepository.delete(followUp);
 	}
 
