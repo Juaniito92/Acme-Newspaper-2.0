@@ -13,8 +13,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Advertisement;
-import domain.Article;
-import domain.Newspaper;
+import forms.AdvertisementForm;
 
 @ContextConfiguration(locations = { "classpath:spring/junit.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,7 +32,7 @@ public class AdvertisementServiceTest extends AbstractTest {
 	 */
 
 	@Test
-	public void driverCreateAndEdit() {
+	public void driverCreate() {
 		final Object testingCreateData[][] = {
 
 				// Casos positivos
@@ -48,20 +47,20 @@ public class AdvertisementServiceTest extends AbstractTest {
 																		 * un
 																		 * anuncio
 																		 */
-				{ "agent2", "newspaperTest", false, NumberFormatException.class }, /*
-																					 * No
-																					 * se
-																					 * puede
-																					 * crear
-																					 * un
-																					 * anuncio
-																					 * para
-																					 * un
-																					 * pediódico
-																					 * que
-																					 * no
-																					 * existe
-																					 */
+				{ "agent2", "newspaperTest", NumberFormatException.class }, /*
+																			 * No
+																			 * se
+																			 * puede
+																			 * crear
+																			 * un
+																			 * anuncio
+																			 * para
+																			 * un
+																			 * pediódico
+																			 * que
+																			 * no
+																			 * existe
+																			 */
 		};
 
 		for (int i = 0; i < testingCreateData.length; i++)
@@ -84,18 +83,18 @@ public class AdvertisementServiceTest extends AbstractTest {
 					.create(newspaperId);
 			AdvertisementForm advertisementForm = advertisementService
 					.construct(advertisement);
-			advertisement.setTitle("Advertisement title");
-			advertisement
+			advertisementForm.setTitle("Advertisement title");
+			advertisementForm
 					.setBanner("http://www.pngall.com/wp-content/uploads/2016/07/Advertising-PNG-Image-180x180.png");
-			advertisement.setPage("http://www.pngall.com/advertising-png");
-			advertisement.getCreditCard().setHolder("Agent");
-			advertisement.getCreditCard().setBrand("Visa");
-			advertisement.getCreditCard().setNumber("4532851367456386");
-			advertisement.getCreditCard().setExpirationMonth(03);
-			advertisement.getCreditCard().setExpirationYear(2020);
-			advertisement.getCreditCard().setCvv(856);
+			advertisementForm.setPage("http://www.pngall.com/advertising-png");
+			advertisementForm.setHolder("Agent");
+			advertisementForm.setBrand("Visa");
+			advertisementForm.setNumber("4532851367456386");
+			advertisementForm.setExpirationMonth(03);
+			advertisementForm.setExpirationYear(2020);
+			advertisementForm.setCvv(856);
 			Advertisement advertisement2 = advertisementService.reconstruct(
-					advertisement, null);
+					advertisementForm, null);
 			advertisementService.save(advertisement2);
 			advertisementService.flush();
 			super.unauthenticate();
@@ -173,14 +172,14 @@ public class AdvertisementServiceTest extends AbstractTest {
 
 				// Cassos negativos
 				{ "user1", "advertisement1", IllegalArgumentException.class }, /*
-																			 * Solamente
-																			 * el
-																			 * admin
-																			 * puede
-																			 * borrar
-																			 * los
-																			 * periódicos
-																			 */
+																				 * Solamente
+																				 * el
+																				 * admin
+																				 * puede
+																				 * borrar
+																				 * los
+																				 * periódicos
+																				 */
 				{ "admin", "newspaperTest", NumberFormatException.class },/*
 																		 * No se
 																		 * puede

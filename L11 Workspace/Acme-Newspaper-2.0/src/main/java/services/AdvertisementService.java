@@ -237,7 +237,6 @@ public class AdvertisementService {
 		advertisement.setTitle(advertisementForm.getTitle());
 		advertisement.setBanner(advertisementForm.getBanner());
 		advertisement.setPage(advertisementForm.getPage());
-		System.out.println("Hasta aquí llegamos");
 		advertisement.getCreditCard().setHolder(advertisementForm.getHolder());
 		advertisement.getCreditCard().setBrand(advertisementForm.getBrand());
 		advertisement.getCreditCard().setNumber(advertisementForm.getNumber());

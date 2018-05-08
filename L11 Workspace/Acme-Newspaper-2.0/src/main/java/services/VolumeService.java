@@ -186,6 +186,7 @@ public class VolumeService {
 		Volume volume = findOne(volumeId);
 		Newspaper newspaper = newspaperService.findOne(newspaperId);
 
+		Assert.isTrue(newspaperService.findAvalibleNewspapers().contains(newspaper));
 		Assert.isTrue(!volume.getNewspapers().contains(newspaper));
 
 		volume.getNewspapers().add(newspaper);
@@ -200,10 +201,14 @@ public class VolumeService {
 		Volume volume = findOne(volumeId);
 		Newspaper newspaper = newspaperService.findOne(newspaperId);
 
+		Assert.isTrue(newspaperService.findAvalibleNewspapers().contains(newspaper));
 		Assert.isTrue(volume.getNewspapers().contains(newspaper));
 
 		volume.getNewspapers().remove(newspaper);
 		newspaper.getVolumes().remove(volume);
 	}
 
+	public void flush(){
+		volumeRepository.flush();
+	}
 }

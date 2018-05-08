@@ -78,4 +78,8 @@ public class SubscriptionNewspaperService {
 		subscriptionNewspaperRepository.delete(subscription);
 
 	}
+	
+	public void flush(){
+		subscriptionNewspaperRepository.flush();
+	}
 }

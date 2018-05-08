@@ -144,5 +144,9 @@ public class SubscriptionVolumeService {
 
 		return subscriptionVolume;
 	}
+	
+	public void flush(){
+		subscriptionVolumeRepository.flush();
+	}
 
 }
