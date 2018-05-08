@@ -59,12 +59,14 @@ public class AdvertisementService {
 		Assert.notNull(this.agentService.findByPrincipal());
 
 		final Advertisement res = new Advertisement();
+		final CreditCard c = new CreditCard();
 		final Newspaper newspaper = this.newspaperService.findOne(newspaperId);
 
 		Assert.notNull(newspaper);
 
 		final Agent agent = this.agentService.findByPrincipal();
 		res.setAgent(agent);
+		res.setCreditCard(c);
 		res.setNewspaper(newspaper);
 		return res;
 	}
@@ -78,13 +80,13 @@ public class AdvertisementService {
 		return res;
 	}
 
-	public void delete(Advertisement ad) {
+	public void delete(final Advertisement ad) {
 
 		Assert.notNull(ad);
 		Assert.notNull(this.adminService.findByPrincipal());
 
-		Newspaper newspaper = this.newspaperService.findOne(ad.getNewspaper().getId());
-		Collection<Advertisement> ads = newspaper.getAdvertisements();
+		final Newspaper newspaper = this.newspaperService.findOne(ad.getNewspaper().getId());
+		final Collection<Advertisement> ads = newspaper.getAdvertisements();
 		ads.remove(ad);
 		newspaper.setAdvertisements(ads);
 
@@ -111,10 +113,10 @@ public class AdvertisementService {
 		return res;
 	}
 
-	public Advertisement getRandomForNewspaper(int newspaperId) {
-		Random rn = new Random();
+	public Advertisement getRandomForNewspaper(final int newspaperId) {
+		final Random rn = new Random();
 		Advertisement ans = null;
-		Collection<Advertisement> ads = this.advertisementRepository.findRandomForNewspaper(newspaperId);
+		final Collection<Advertisement> ads = this.advertisementRepository.findRandomForNewspaper(newspaperId);
 		if (ads.size() > 0)
 			ans = (Advertisement) ads.toArray()[rn.nextInt(ads.size())];
 		return ans;
@@ -125,16 +127,15 @@ public class AdvertisementService {
 		Assert.notNull(this.adminService.findByPrincipal());
 
 		String pattern = "^";
-		for (String tabooWord : this.configService.getTabooWordsFromConfiguration())
+		for (final String tabooWord : this.configService.getTabooWordsFromConfiguration())
 			pattern += ".*" + tabooWord + ".*" + "|";
 		pattern = pattern.substring(0, pattern.length() - 1);
 		pattern += "$";
 
-		List<Advertisement> ans = new ArrayList<Advertisement>();
-		for (Advertisement a : this.advertisementRepository.findAll()) {
+		final List<Advertisement> ans = new ArrayList<Advertisement>();
+		for (final Advertisement a : this.advertisementRepository.findAll())
 			if (a.getTitle().matches(pattern))
 				ans.add(a);
-		}
 		return new HashSet<Advertisement>(ans);
 	}
 
@@ -171,7 +172,7 @@ public class AdvertisementService {
 		return result;
 	}
 
-	public void checkPrincipal(Advertisement s) {
+	public void checkPrincipal(final Advertisement s) {
 		Agent agent;
 
 		agent = this.agentService.findByPrincipal();
@@ -179,12 +180,11 @@ public class AdvertisementService {
 		Assert.isTrue(agent.getAdvertisements().contains(s));
 	}
 
-	public boolean checkExpiration(CreditCard c) {
+	public boolean checkExpiration(final CreditCard c) {
 		Boolean res = true;
 
-		if ((c.getExpirationYear() == LocalDate.now().getYear() && (c.getExpirationMonth() == LocalDate.now().getMonthOfYear() || c.getExpirationMonth() < LocalDate.now().getMonthOfYear())) || c.getExpirationYear() < LocalDate.now().getYear()) {
+		if ((c.getExpirationYear() == LocalDate.now().getYear() && (c.getExpirationMonth() == LocalDate.now().getMonthOfYear() || c.getExpirationMonth() < LocalDate.now().getMonthOfYear())) || c.getExpirationYear() < LocalDate.now().getYear())
 			res = false;
-		}
 
 		return res;
 	}
@@ -237,7 +237,7 @@ public class AdvertisementService {
 		advertisement.setTitle(advertisementForm.getTitle());
 		advertisement.setBanner(advertisementForm.getBanner());
 		advertisement.setPage(advertisementForm.getPage());
-
+		System.out.println("Hasta aquí llegamos");
 		advertisement.getCreditCard().setHolder(advertisementForm.getHolder());
 		advertisement.getCreditCard().setBrand(advertisementForm.getBrand());
 		advertisement.getCreditCard().setNumber(advertisementForm.getNumber());
