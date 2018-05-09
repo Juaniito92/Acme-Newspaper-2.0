@@ -91,6 +91,9 @@ public class FolderService {
 	public Folder save(final Folder folder) {
 
 		Assert.notNull(folder);
+		if(folder.getParent() != null){
+			checkPrincipal(folder.getParent());
+		}
 
 		Actor actor;
 		Folder saved, parent;
@@ -104,6 +107,9 @@ public class FolderService {
 				parent.getChildren().add(saved);
 		} else
 			saved = this.folderRepository.save(folder);
+			if(!saved.getParent().getChildren().contains(saved)){
+				saved.getParent().getChildren().add(saved);
+			}
 
 		return saved;
 	}
@@ -280,8 +286,8 @@ public class FolderService {
 		Assert.notNull(folder);
 
 		final Actor actor = this.actorService.findByPrincipal();
-		final Folder folderActor = this.findByFolderName(actor.getUserAccount().getId(), folder.getName());
-		Assert.isTrue(folder.equals(folderActor));
+		final Collection<Folder> foldersActor = actorService.findFoldersByUserAccountId(actor.getUserAccount().getId());
+		Assert.isTrue(foldersActor.contains(folder));
 	}
 
 	public Collection<Folder> save(final Collection<Folder> folders) {

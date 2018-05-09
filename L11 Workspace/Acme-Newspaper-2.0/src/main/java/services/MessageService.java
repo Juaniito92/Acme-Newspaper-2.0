@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.ArrayList;
@@ -29,19 +28,22 @@ public class MessageService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private MessageRepository		messageRepository;
+	private MessageRepository messageRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private FolderService			folderService;
+	private FolderService folderService;
 
 	@Autowired
-	private ActorService			actorService;
-
-	@Autowired
-	private ConfigurationService	configurationService;
+	private ActorService actorService;
 	
+	@Autowired
+	private AdminService adminService;
+
+	@Autowired
+	private ConfigurationService configurationService;
+
 	@Autowired
 	private Validator validator;
 
@@ -65,7 +67,8 @@ public class MessageService {
 		actor = this.actorService.findByPrincipal();
 		message.setSender(actor);
 
-		folder = this.folderService.findByFolderName(actor.getUserAccount().getId(), "out box");
+		folder = this.folderService.findByFolderName(actor.getUserAccount()
+				.getId(), "out box");
 		message.setFolder(folder);
 
 		return message;
@@ -80,7 +83,8 @@ public class MessageService {
 		Folder trashbox;
 
 		actor = this.actorService.findByPrincipal();
-		trashbox = this.folderService.findByFolderName(actor.getUserAccount().getId(), "trash box");
+		trashbox = this.folderService.findByFolderName(actor.getUserAccount()
+				.getId(), "trash box");
 
 		if (message.getFolder() != trashbox) {
 			message.setFolder(trashbox);
@@ -116,6 +120,7 @@ public class MessageService {
 	public Message save(final Message message) {
 
 		Assert.notNull(message);
+		folderService.checkPrincipal(message.getFolder());
 
 		Message saved, copy;
 		Message savedCopy = null;
@@ -125,13 +130,15 @@ public class MessageService {
 			final Date newMoment = new Date(System.currentTimeMillis() - 1000);
 			copy = this.copy(message);
 			if (this.isSpamMessage(message)) {
-				spamboxRecipient = this.folderService.findByFolderName(copy.getRecipient().getUserAccount().getId(), "spam box");
+				spamboxRecipient = this.folderService.findByFolderName(copy
+						.getRecipient().getUserAccount().getId(), "spam box");
 				copy.setFolder(spamboxRecipient);
 				savedCopy = this.messageRepository.save(copy);
 				savedCopy.setMoment(newMoment);
 				spamboxRecipient.getMessages().add(savedCopy);
 			} else {
-				inboxRecipient = this.folderService.findByFolderName(copy.getRecipient().getUserAccount().getId(), "in box");
+				inboxRecipient = this.folderService.findByFolderName(copy
+						.getRecipient().getUserAccount().getId(), "in box");
 				copy.setFolder(inboxRecipient);
 				savedCopy = this.messageRepository.save(copy);
 				savedCopy.setMoment(newMoment);
@@ -144,6 +151,9 @@ public class MessageService {
 			outboxSender.getMessages().add(saved);
 		} else
 			saved = this.messageRepository.save(message);
+			if(!saved.getFolder().getMessages().contains(saved)){
+				saved.getFolder().getMessages().add(saved);
+			}
 
 		return saved;
 	}
@@ -152,6 +162,7 @@ public class MessageService {
 
 		Assert.isTrue(!this.isSpamMessage(message));
 		Assert.notNull(message);
+		Assert.notNull(adminService.findByPrincipal());
 
 		Message saved = null;
 		Message copy, savedCopy;
@@ -159,7 +170,8 @@ public class MessageService {
 		Folder notificationboxRecipient;
 
 		message.setMoment(new Date(System.currentTimeMillis() - 1000));
-		outboxSender = this.folderService.findByFolderName(message.getSender().getUserAccount().getId(), "out box");
+		outboxSender = this.folderService.findByFolderName(message.getSender()
+				.getUserAccount().getId(), "out box");
 		message.setFolder(outboxSender);
 		final Collection<Actor> recipients = this.actorService.findAll();
 		recipients.remove(this.actorService.findByPrincipal());
@@ -167,7 +179,8 @@ public class MessageService {
 			message.setRecipient(recipient);
 			copy = this.copy(message);
 
-			notificationboxRecipient = this.folderService.findByFolderName(recipient.getUserAccount().getId(), "notification box");
+			notificationboxRecipient = this.folderService.findByFolderName(
+					recipient.getUserAccount().getId(), "notification box");
 			copy.setFolder(notificationboxRecipient);
 			saved = this.messageRepository.save(message);
 			outboxSender.getMessages().add(saved);
@@ -177,8 +190,9 @@ public class MessageService {
 
 		return saved;
 	}
+
 	// Other business methods -------------------------------------------------
-	
+
 	public MessageForm construct(final Message message) {
 
 		Assert.notNull(message);
@@ -189,9 +203,9 @@ public class MessageService {
 
 		messageForm.setId(message.getId());
 		messageForm.setSenderId(message.getSender().getId());
-		if(message.getRecipient() == null){
+		if (message.getRecipient() == null) {
 			messageForm.setRecipientId(null);
-		}else{
+		} else {
 			messageForm.setRecipientId(message.getRecipient().getId());
 		}
 		messageForm.setFolderId(message.getFolder().getId());
@@ -199,11 +213,12 @@ public class MessageService {
 		messageForm.setSubject(message.getSubject());
 		messageForm.setBody(message.getBody());
 		messageForm.setPriority(message.getPriority());
-		
+
 		return messageForm;
 	}
 
-	public Message reconstruct(final MessageForm messageForm, final BindingResult binding) {
+	public Message reconstruct(final MessageForm messageForm,
+			final BindingResult binding) {
 
 		Assert.notNull(messageForm);
 
@@ -219,10 +234,11 @@ public class MessageService {
 		message.setBody(messageForm.getBody());
 		message.setPriority(messageForm.getPriority());
 		message.setSender(actorService.findOne(messageForm.getSenderId()));
-		if(messageForm.getRecipientId() == null){
+		if (messageForm.getRecipientId() == null) {
 			message.setRecipient(actorService.findOne(messageForm.getSenderId()));
-		}else{
-			message.setRecipient(actorService.findOne(messageForm.getRecipientId()));
+		} else {
+			message.setRecipient(actorService.findOne(messageForm
+					.getRecipientId()));
 		}
 		message.setFolder(folderService.findOne(messageForm.getFolderId()));
 
@@ -276,9 +292,11 @@ public class MessageService {
 
 		Assert.isTrue(actor.getFolders().contains(message.getFolder()));
 
-		final List<Message> messages = new ArrayList<Message>(folder.getMessages());
+		final List<Message> messages = new ArrayList<Message>(
+				folder.getMessages());
 		final Folder folderSource = message.getFolder();
-		final List<Message> messages2 = new ArrayList<Message>(folderSource.getMessages());
+		final List<Message> messages2 = new ArrayList<Message>(
+				folderSource.getMessages());
 
 		messages.add(message);
 		folder.setMessages(messages);
@@ -295,7 +313,8 @@ public class MessageService {
 		Assert.notNull(message);
 
 		final Actor actor = this.actorService.findByPrincipal();
-		Assert.isTrue(message.getRecipient().equals(actor) || message.getSender().equals(actor));
+		Assert.isTrue(message.getRecipient().equals(actor)
+				|| message.getSender().equals(actor));
 	}
 
 	private boolean isSpamMessage(final Message message) {
@@ -318,7 +337,8 @@ public class MessageService {
 		Pattern result;
 		List<String> spamWords;
 
-		final String spamlist = this.configurationService.findAll().iterator().next().getTabooWords();
+		final String spamlist = this.configurationService.findAll().iterator()
+				.next().getTabooWords();
 		spamWords = Arrays.asList(spamlist.split(","));
 
 		String str = ".*\\b(";
@@ -331,6 +351,10 @@ public class MessageService {
 		result = Pattern.compile(str, Pattern.CASE_INSENSITIVE);
 
 		return result;
+	}
+
+	public void flush() {
+		messageRepository.flush();
 	}
 
 }
