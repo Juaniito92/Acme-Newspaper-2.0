@@ -18,7 +18,7 @@ import forms.VolumeForm;
 @ContextConfiguration(locations = { "classpath:spring/junit.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class VolumerServiceTest extends AbstractTest {
+public class VolumeServiceTest extends AbstractTest {
 
 	// System under test ------------------------------------------------------
 
