@@ -105,12 +105,14 @@ public class FolderService {
 			parent = folder.getParent();
 			if (parent != null)
 				parent.getChildren().add(saved);
-		} else
+		} else {
 			saved = this.folderRepository.save(folder);
-			if(!saved.getParent().getChildren().contains(saved)){
-				saved.getParent().getChildren().add(saved);
+			if(saved.getParent() != null){
+				if(!saved.getParent().getChildren().contains(saved)){
+					saved.getParent().getChildren().add(saved);
+				}
 			}
-
+		}
 		return saved;
 	}
 

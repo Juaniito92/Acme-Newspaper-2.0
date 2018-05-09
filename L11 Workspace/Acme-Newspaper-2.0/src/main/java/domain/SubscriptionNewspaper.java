@@ -1,20 +1,17 @@
-
 package domain;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-		@Index(columnList = "customer_id, newspaper_id")
-	})
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"customer_id", "newspaper_id"}) })
 public class SubscriptionNewspaper extends DomainEntity {
 
 	// Constructors
@@ -23,11 +20,9 @@ public class SubscriptionNewspaper extends DomainEntity {
 		super();
 	}
 
-
 	// Attributes
 
-	private CreditCard	creditCard;
-
+	private CreditCard creditCard;
 
 	@Valid
 	@NotNull
@@ -39,12 +34,10 @@ public class SubscriptionNewspaper extends DomainEntity {
 		this.creditCard = creditCard;
 	}
 
-
 	// Relationships
 
-	private Customer	customer;
-	private Newspaper	newspaper;
-
+	private Customer customer;
+	private Newspaper newspaper;
 
 	@Valid
 	@NotNull
